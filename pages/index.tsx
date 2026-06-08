@@ -11,37 +11,42 @@ type InsightData = {
 
 export default function Home({ data }: { data: InsightData }) {
   return (
-    <div className="min-h-screen bg-zinc-50 p-8 font-sans">
+    <div className="min-h-screen bg-zinc-950 p-8 font-sans text-zinc-100">
       <header className="mb-12 flex justify-between items-center">
         <div>
-          <h1 className="text-4xl font-bold tracking-tight text-zinc-900">AFL Footy Narrative Engine</h1>
-          <p className="text-xl text-zinc-600">Round {data.round} Insights</p>
+          <h1 className="text-4xl font-bold tracking-tight text-white">AFL Footy Narrative Engine</h1>
+          <p className="text-xl text-zinc-400">Round {data.round} Insights</p>
         </div>
-        <Link href="/players" className="text-blue-600 hover:underline font-semibold">
-          View All Player Ratings →
-        </Link>
+        <div className="flex space-x-6">
+          <Link href="/teams" className="text-blue-400 hover:underline font-semibold">
+            View Team Insights →
+          </Link>
+          <Link href="/players" className="text-blue-400 hover:underline font-semibold">
+            View Player Ratings →
+          </Link>
+        </div>
       </header>
 
       <main className="grid gap-12">
         <section className="grid md:grid-cols-2 gap-12">
           <div>
-            <h2 className="text-2xl font-semibold mb-6">Trending Teams</h2>
+            <h2 className="text-2xl font-semibold mb-6 text-zinc-200">Trending Teams</h2>
             <ul className="space-y-4">
               {data.teams.map((t, i) => (
-                <li key={i} className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm border border-zinc-200">
-                  <span className="font-medium">{t.name} ({t.status})</span>
-                  <span className="text-sm font-bold bg-zinc-900 text-white px-3 py-1 rounded-full">{t.contenderScore}/100</span>
+                <li key={i} className="flex justify-between items-center p-4 bg-zinc-900 rounded-lg shadow-sm border border-zinc-800">
+                  <span className="font-medium text-zinc-200">{t.name} ({t.status})</span>
+                  <span className="text-sm font-bold bg-zinc-800 text-zinc-100 px-3 py-1 rounded-full border border-zinc-700">{t.contenderScore}/100</span>
                 </li>
               ))}
             </ul>
           </div>
           <div>
-            <h2 className="text-2xl font-semibold mb-6">Breakout Watch (Top PIR)</h2>
+            <h2 className="text-2xl font-semibold mb-6 text-zinc-200">Breakout Watch (Top PIR)</h2>
             <ul className="space-y-4">
               {data.top_players.map((p, i) => (
-                <li key={i} className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm border border-zinc-200">
-                  <span className="font-medium">{p.name}</span>
-                  <span className="text-sm font-bold bg-zinc-900 text-white px-3 py-1 rounded-full">PIR: {p.pir_per_game.toFixed(1)}</span>
+                <li key={i} className="flex justify-between items-center p-4 bg-zinc-900 rounded-lg shadow-sm border border-zinc-800">
+                  <span className="font-medium text-zinc-200">{p.name}</span>
+                  <span className="text-sm font-bold bg-zinc-800 text-zinc-100 px-3 py-1 rounded-full border border-zinc-700">PIR: {p.pir_per_game.toFixed(1)}</span>
                 </li>
               ))}
             </ul>
