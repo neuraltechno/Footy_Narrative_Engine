@@ -13,7 +13,7 @@
     "player.surname": "Noble",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 174.8832,
-    "Latest_Round_PIR": 237.501
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1000223",
@@ -21,7 +21,7 @@
     "player.surname": "Baker",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 125.7849,
-    "Latest_Round_PIR": 190.834
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1000860",
@@ -37,7 +37,7 @@
     "player.surname": "Bramble",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 113.4124,
-    "Latest_Round_PIR": 121.3642
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1000887",
@@ -45,7 +45,7 @@
     "player.surname": "Lewis",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 146.2641,
-    "Latest_Round_PIR": 71.121
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1000937",
@@ -53,7 +53,7 @@
     "player.surname": "Henry",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 131.8179,
-    "Latest_Round_PIR": 206.075
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1000953",
@@ -61,7 +61,7 @@
     "player.surname": "McKay",
     "team.name": "Carlton",
     "Season_Avg_PIR": 168.4966,
-    "Latest_Round_PIR": 225.288
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1000963",
@@ -77,7 +77,7 @@
     "player.surname": "Drew",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 183.7872,
-    "Latest_Round_PIR": 156.8
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1000978",
@@ -93,7 +93,7 @@
     "player.surname": "Meek",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 176.521,
-    "Latest_Round_PIR": 281.5498
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1000981",
@@ -101,7 +101,7 @@
     "player.surname": "Rioli",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 127.9592,
-    "Latest_Round_PIR": 129.068
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1001017",
@@ -109,7 +109,7 @@
     "player.surname": "Larkey",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 129.882,
-    "Latest_Round_PIR": 80.432
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1001024",
@@ -117,7 +117,7 @@
     "player.surname": "Reeves",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 188.5128,
-    "Latest_Round_PIR": 185.4588
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1001026",
@@ -133,7 +133,7 @@
     "player.surname": "Silvagni",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 142.8232,
-    "Latest_Round_PIR": 166.5
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1001195",
@@ -165,7 +165,7 @@
     "player.surname": "Kennedy",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 188.1336,
-    "Latest_Round_PIR": 95.6287
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1001438",
@@ -189,7 +189,7 @@
     "player.surname": "McKay",
     "team.name": "Essendon",
     "Season_Avg_PIR": 113.1695,
-    "Latest_Round_PIR": 123.802
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1002220",
@@ -197,7 +197,7 @@
     "player.surname": "Ratugolea",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 157.8624,
-    "Latest_Round_PIR": 263.8
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1002222",
@@ -229,7 +229,7 @@
     "player.surname": "Brayshaw",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 192.0953,
-    "Latest_Round_PIR": 270.714
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1002235",
@@ -237,7 +237,7 @@
     "player.surname": "Rayner",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 155.4452,
-    "Latest_Round_PIR": 93.208
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1002239",
@@ -245,7 +245,7 @@
     "player.surname": "Cerra",
     "team.name": "Carlton",
     "Season_Avg_PIR": 161.7629,
-    "Latest_Round_PIR": 195.5235
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1002245",
@@ -285,7 +285,7 @@
     "player.surname": "Davies-Uniacke",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 219.0022,
-    "Latest_Round_PIR": 169.9
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1002282",
@@ -293,7 +293,7 @@
     "player.surname": "Spargo",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 96.1966,
-    "Latest_Round_PIR": 79.0357
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1002312",
@@ -301,7 +301,7 @@
     "player.surname": "Bailey",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 194.5823,
-    "Latest_Round_PIR": 144.996
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1002401",
@@ -309,7 +309,7 @@
     "player.surname": "Starcevich",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 112.7914,
-    "Latest_Round_PIR": 112.7914
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1002403",
@@ -325,7 +325,7 @@
     "player.surname": "Naughton",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 160.6928,
-    "Latest_Round_PIR": 138.4
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1002795",
@@ -341,7 +341,7 @@
     "player.surname": "Curtis",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 162.1331,
-    "Latest_Round_PIR": 104.44
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1003130",
@@ -357,7 +357,7 @@
     "player.surname": "McLean",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 194.1178,
-    "Latest_Round_PIR": 191.1473
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1003520",
@@ -365,7 +365,7 @@
     "player.surname": "Joyce",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 81.3333,
-    "Latest_Round_PIR": 81.5
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1004095",
@@ -381,7 +381,7 @@
     "player.surname": "Ryan",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 128.2246,
-    "Latest_Round_PIR": 247.2264
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1004385",
@@ -397,7 +397,7 @@
     "player.surname": "Wehr",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 85.5519,
-    "Latest_Round_PIR": 113.7799
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1004592",
@@ -405,7 +405,7 @@
     "player.surname": "English",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 229.7692,
-    "Latest_Round_PIR": 146.3067
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1004757",
@@ -421,7 +421,7 @@
     "player.surname": "Stephens",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 121.2549,
-    "Latest_Round_PIR": 74.402
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1004863",
@@ -437,7 +437,7 @@
     "player.surname": "Guthrie",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 150.0446,
-    "Latest_Round_PIR": 126.538
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1004882",
@@ -452,7 +452,7 @@
     "player.surname": "De Koning",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 174.5121,
-    "Latest_Round_PIR": 159.5096
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1004938",
@@ -460,7 +460,7 @@
     "player.surname": "Miers",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 132.3983,
-    "Latest_Round_PIR": 130.9
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1004965",
@@ -468,7 +468,7 @@
     "player.surname": "Xerri",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 273.7921,
-    "Latest_Round_PIR": 118.1626
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1004995",
@@ -476,7 +476,7 @@
     "player.surname": "Butts",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 126.2576,
-    "Latest_Round_PIR": 152.513
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1004998",
@@ -484,7 +484,7 @@
     "player.surname": "Marshall",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 125.8089,
-    "Latest_Round_PIR": 88.1058
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1005000",
@@ -500,7 +500,7 @@
     "player.surname": "Answerth",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 76.9186,
-    "Latest_Round_PIR": 103.727
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1005054",
@@ -516,7 +516,7 @@
     "player.surname": "D'Ambrosio",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 147.9852,
-    "Latest_Round_PIR": 168.1737
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1005247",
@@ -532,7 +532,7 @@
     "player.surname": "Mead",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 111.7515,
-    "Latest_Round_PIR": 140.212
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1005330",
@@ -548,7 +548,7 @@
     "player.surname": "Draper",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 173.048,
-    "Latest_Round_PIR": 178.0617
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1005717",
@@ -556,7 +556,7 @@
     "player.surname": "Coffield",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 109.2697,
-    "Latest_Round_PIR": 129.6518
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1005972",
@@ -564,7 +564,7 @@
     "player.surname": "Murdock",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 173.6983,
-    "Latest_Round_PIR": 85.0642
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1005986",
@@ -572,7 +572,7 @@
     "player.surname": "Rosas",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 128.876,
-    "Latest_Round_PIR": 164.0569
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1005988",
@@ -588,7 +588,7 @@
     "player.surname": "Jeffrey",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 155.2053,
-    "Latest_Round_PIR": 123.35
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1006013",
@@ -596,7 +596,7 @@
     "player.surname": "Peatling",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 190.4468,
-    "Latest_Round_PIR": 213.293
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1006028",
@@ -604,7 +604,7 @@
     "player.surname": "Blakey",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 196.7974,
-    "Latest_Round_PIR": 151.116
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1006059",
@@ -620,7 +620,7 @@
     "player.surname": "Walsh",
     "team.name": "Carlton",
     "Season_Avg_PIR": 197.1365,
-    "Latest_Round_PIR": 85.6028
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1006096",
@@ -628,7 +628,7 @@
     "player.surname": "Duursma",
     "team.name": "Essendon",
     "Season_Avg_PIR": 137.616,
-    "Latest_Round_PIR": 156.156
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1006103",
@@ -644,7 +644,7 @@
     "player.surname": "Williams",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 227.7384,
-    "Latest_Round_PIR": 217.3508
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1006121",
@@ -652,7 +652,7 @@
     "player.surname": "Butters",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 238.2481,
-    "Latest_Round_PIR": 234.58
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1006126",
@@ -660,7 +660,7 @@
     "player.surname": "Rowbottom",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 174.5198,
-    "Latest_Round_PIR": 184.5406
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1006127",
@@ -668,7 +668,7 @@
     "player.surname": "West",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 132.1865,
-    "Latest_Round_PIR": 119.15
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1006130",
@@ -676,7 +676,7 @@
     "player.surname": "Smith",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 247.8246,
-    "Latest_Round_PIR": 204.714
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1006133",
@@ -700,7 +700,7 @@
     "player.surname": "King",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 122.9194,
-    "Latest_Round_PIR": 149.7
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1006152",
@@ -708,7 +708,7 @@
     "player.surname": "Clark",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 152.7814,
-    "Latest_Round_PIR": 120.995
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1006203",
@@ -724,7 +724,7 @@
     "player.surname": "Wicks",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 121.3197,
-    "Latest_Round_PIR": 98.404
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1006314",
@@ -732,7 +732,7 @@
     "player.surname": "Moore",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 145.7059,
-    "Latest_Round_PIR": 138.004
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1007053",
@@ -756,7 +756,7 @@
     "player.surname": "O'Connor",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 123.0109,
-    "Latest_Round_PIR": 65.782
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1007124",
@@ -772,7 +772,7 @@
     "player.surname": "Powell",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 151.8858,
-    "Latest_Round_PIR": 132.47
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1008083",
@@ -796,7 +796,7 @@
     "player.surname": "Amartey",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 137.7483,
-    "Latest_Round_PIR": 89.455
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1008123",
@@ -828,7 +828,7 @@
     "player.surname": "McCartin",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 182.5905,
-    "Latest_Round_PIR": 113.9361
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1008224",
@@ -836,7 +836,7 @@
     "player.surname": "Bice",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 152.2351,
-    "Latest_Round_PIR": 129.81
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1008230",
@@ -852,7 +852,7 @@
     "player.surname": "Richards",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 147.0762,
-    "Latest_Round_PIR": 159.919
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1008280",
@@ -860,7 +860,7 @@
     "player.surname": "Richards",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 226.7628,
-    "Latest_Round_PIR": 244.258
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1008312",
@@ -868,7 +868,7 @@
     "player.surname": "Stocker",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 84.2415,
-    "Latest_Round_PIR": 125.4308
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1008384",
@@ -892,7 +892,7 @@
     "player.surname": "Budarick",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 130.4163,
-    "Latest_Round_PIR": 64.654
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1008478",
@@ -908,7 +908,7 @@
     "player.surname": "Durdin",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 118.3691,
-    "Latest_Round_PIR": 111.8017
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1008541",
@@ -932,7 +932,7 @@
     "player.surname": "Day",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 244.0332,
-    "Latest_Round_PIR": 299.1901
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1008691",
@@ -980,7 +980,7 @@
     "player.surname": "McNeil",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 104.6012,
-    "Latest_Round_PIR": 58.7805
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1009029",
@@ -988,7 +988,7 @@
     "player.surname": "Borlase",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 136.4411,
-    "Latest_Round_PIR": 103.49
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1009191",
@@ -1004,7 +1004,7 @@
     "player.surname": "Anderson",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 207.0368,
-    "Latest_Round_PIR": 183.56
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1009208",
@@ -1012,7 +1012,7 @@
     "player.surname": "Rowell",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 200.3775,
-    "Latest_Round_PIR": 143.775
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1009229",
@@ -1020,7 +1020,7 @@
     "player.surname": "De Koning",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 174.6564,
-    "Latest_Round_PIR": 293.9524
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1009241",
@@ -1028,7 +1028,7 @@
     "player.surname": "Kemp",
     "team.name": "Carlton",
     "Season_Avg_PIR": 126.9069,
-    "Latest_Round_PIR": 168.42
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1009253",
@@ -1044,7 +1044,7 @@
     "player.surname": "Young",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 210.8884,
-    "Latest_Round_PIR": 282.7187
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1009260",
@@ -1068,7 +1068,7 @@
     "player.surname": "Reville",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 137.5535,
-    "Latest_Round_PIR": 133.7148
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1009378",
@@ -1100,7 +1100,7 @@
     "player.surname": "Prior",
     "team.name": "Essendon",
     "Season_Avg_PIR": 141.7991,
-    "Latest_Round_PIR": 201.555
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1009392",
@@ -1116,7 +1116,7 @@
     "player.surname": "Jackson",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 270.1201,
-    "Latest_Round_PIR": 274.3021
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1009410",
@@ -1164,7 +1164,7 @@
     "player.surname": "Georgiades",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 148.2194,
-    "Latest_Round_PIR": 148.475
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1010708",
@@ -1188,7 +1188,7 @@
     "player.surname": "Dudley",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 119.5224,
-    "Latest_Round_PIR": 101.1444
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1011583",
@@ -1196,7 +1196,7 @@
     "player.surname": "Jones",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 114.2614,
-    "Latest_Round_PIR": 114.9394
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1011640",
@@ -1204,7 +1204,7 @@
     "player.surname": "Horne-Francis",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 200.3427,
-    "Latest_Round_PIR": 228.482
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1011659",
@@ -1220,7 +1220,7 @@
     "player.surname": "Jones",
     "team.name": "Essendon",
     "Season_Avg_PIR": 102.5382,
-    "Latest_Round_PIR": 102.5382
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1011771",
@@ -1228,7 +1228,7 @@
     "player.surname": "Perez",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 92.3096,
-    "Latest_Round_PIR": 71.3975
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1011803",
@@ -1236,7 +1236,7 @@
     "player.surname": "Weightman",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 108.0899,
-    "Latest_Round_PIR": 108.0899
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1011936",
@@ -1244,7 +1244,7 @@
     "player.surname": "McInerney",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 192.5691,
-    "Latest_Round_PIR": 163.9297
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1011950",
@@ -1260,7 +1260,7 @@
     "player.surname": "Bryan",
     "team.name": "Essendon",
     "Season_Avg_PIR": 159.6882,
-    "Latest_Round_PIR": 157.3133
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1011981",
@@ -1268,7 +1268,7 @@
     "player.surname": "Worrell",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 187.115,
-    "Latest_Round_PIR": 203.376
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1011985",
@@ -1284,7 +1284,7 @@
     "player.surname": "Byrnes",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 91.5235,
-    "Latest_Round_PIR": 61.798
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1012002",
@@ -1300,7 +1300,7 @@
     "player.surname": "Warner",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 210.1463,
-    "Latest_Round_PIR": 200.94
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1012210",
@@ -1308,7 +1308,7 @@
     "player.surname": "Roberts",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 153.0948,
-    "Latest_Round_PIR": 118.906
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1012218",
@@ -1332,7 +1332,7 @@
     "player.surname": "Bruhn",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 150.8216,
-    "Latest_Round_PIR": 92.886
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1012807",
@@ -1340,7 +1340,7 @@
     "player.surname": "Berry",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 222.3242,
-    "Latest_Round_PIR": 214.2594
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1012817",
@@ -1348,7 +1348,7 @@
     "player.surname": "Reid",
     "team.name": "Essendon",
     "Season_Avg_PIR": 115.1159,
-    "Latest_Round_PIR": 271.409
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1012819",
@@ -1356,7 +1356,7 @@
     "player.surname": "Treacy",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 203.8538,
-    "Latest_Round_PIR": 173.124
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1012825",
@@ -1380,7 +1380,7 @@
     "player.surname": "Ginnivan",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 159.2536,
-    "Latest_Round_PIR": 149.52
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1012860",
@@ -1388,7 +1388,7 @@
     "player.surname": "Henry",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 130.3443,
-    "Latest_Round_PIR": 150.2433
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1012862",
@@ -1444,7 +1444,7 @@
     "player.surname": "O'Driscoll",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 168.9446,
-    "Latest_Round_PIR": 180.6178
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1013224",
@@ -1452,7 +1452,7 @@
     "player.surname": "Chapman",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 134.3085,
-    "Latest_Round_PIR": 82.79
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1013230",
@@ -1460,7 +1460,7 @@
     "player.surname": "McDonald",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 144.2565,
-    "Latest_Round_PIR": 219.084
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1013233",
@@ -1500,7 +1500,7 @@
     "player.surname": "Jordon",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 139.3614,
-    "Latest_Round_PIR": 138.1704
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1013462",
@@ -1508,7 +1508,7 @@
     "player.surname": "Burgoyne",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 165.1208,
-    "Latest_Round_PIR": 140.722
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1013464",
@@ -1532,7 +1532,7 @@
     "player.surname": "Croft",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 111.1852,
-    "Latest_Round_PIR": 135.85
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1014026",
@@ -1540,7 +1540,7 @@
     "player.surname": "Lohmann",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 146.7487,
-    "Latest_Round_PIR": 114.4791
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1014038",
@@ -1572,7 +1572,7 @@
     "player.surname": "Michalanney",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 105.492,
-    "Latest_Round_PIR": 99.061
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1015507",
@@ -1580,7 +1580,7 @@
     "player.surname": "Wanganeen-Milera",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 211.8369,
-    "Latest_Round_PIR": 218.0665
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1015515",
@@ -1588,7 +1588,7 @@
     "player.surname": "Adams",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 96.0119,
-    "Latest_Round_PIR": 91.5082
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1015777",
@@ -1604,7 +1604,7 @@
     "player.surname": "Comben",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 141.5347,
-    "Latest_Round_PIR": 88.21
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1015810",
@@ -1612,7 +1612,7 @@
     "player.surname": "Durham",
     "team.name": "Essendon",
     "Season_Avg_PIR": 165.2961,
-    "Latest_Round_PIR": 262.882
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1015827",
@@ -1620,7 +1620,7 @@
     "player.surname": "Cox",
     "team.name": "Essendon",
     "Season_Avg_PIR": 100.2758,
-    "Latest_Round_PIR": 86.067
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1015862",
@@ -1636,7 +1636,7 @@
     "player.surname": "Perkins",
     "team.name": "Essendon",
     "Season_Avg_PIR": 104.9434,
-    "Latest_Round_PIR": 63.9554
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1015883",
@@ -1660,7 +1660,7 @@
     "player.surname": "Holmes",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 215.2564,
-    "Latest_Round_PIR": 227.4
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1015919",
@@ -1668,7 +1668,7 @@
     "player.surname": "El-Hawli",
     "team.name": "Essendon",
     "Season_Avg_PIR": 111.6636,
-    "Latest_Round_PIR": 7.6992
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1015929",
@@ -1684,7 +1684,7 @@
     "player.surname": "Derksen",
     "team.name": "Carlton",
     "Season_Avg_PIR": 110.9237,
-    "Latest_Round_PIR": 119.157
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1016433",
@@ -1692,7 +1692,7 @@
     "player.surname": "Neale",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 172.1094,
-    "Latest_Round_PIR": 156.1516
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1016825",
@@ -1708,7 +1708,7 @@
     "player.surname": "Rachele",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 173.9862,
-    "Latest_Round_PIR": 123.974
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1017057",
@@ -1732,7 +1732,7 @@
     "player.surname": "Taylor",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 128.6349,
-    "Latest_Round_PIR": 184.05
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1017067",
@@ -1740,7 +1740,7 @@
     "player.surname": "Wilmot",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 177.0823,
-    "Latest_Round_PIR": 212.15
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1017086",
@@ -1764,7 +1764,7 @@
     "player.surname": "Serong",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 157.1487,
-    "Latest_Round_PIR": 210.311
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1017094",
@@ -1772,7 +1772,7 @@
     "player.surname": "Macdonald",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 171.3589,
-    "Latest_Round_PIR": 134
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1017109",
@@ -1780,7 +1780,7 @@
     "player.surname": "Soligo",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 153.6117,
-    "Latest_Round_PIR": 154.8367
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1017110",
@@ -1788,7 +1788,7 @@
     "player.surname": "Ward",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 159.2814,
-    "Latest_Round_PIR": 201.376
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1017114",
@@ -1836,7 +1836,7 @@
     "player.surname": "Evans",
     "team.name": "Carlton",
     "Season_Avg_PIR": 127.5112,
-    "Latest_Round_PIR": 95.5054
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1017396",
@@ -1844,7 +1844,7 @@
     "player.surname": "Andrew",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 172.7926,
-    "Latest_Round_PIR": 161.658
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1017665",
@@ -1852,7 +1852,7 @@
     "player.surname": "Uwland",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 194.3993,
-    "Latest_Round_PIR": 166.688
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1017703",
@@ -1860,7 +1860,7 @@
     "player.surname": "McVee",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 120.6369,
-    "Latest_Round_PIR": 88.3797
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1017718",
@@ -1868,7 +1868,7 @@
     "player.surname": "Bazzo",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 125.4194,
-    "Latest_Round_PIR": 131.29
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1017720",
@@ -1884,7 +1884,7 @@
     "player.surname": "Voss",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 153.704,
-    "Latest_Round_PIR": 291.45
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1017757",
@@ -1892,7 +1892,7 @@
     "player.surname": "Edwards",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 118.312,
-    "Latest_Round_PIR": 198.075
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1017939",
@@ -1900,7 +1900,7 @@
     "player.surname": "Sanders",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 192.2819,
-    "Latest_Round_PIR": 218.439
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1018018",
@@ -1908,7 +1908,7 @@
     "player.surname": "Sharman",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 141.4706,
-    "Latest_Round_PIR": 188.84
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1018123",
@@ -1932,7 +1932,7 @@
     "player.surname": "Cook",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 148.9859,
-    "Latest_Round_PIR": 119.85
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1018424",
@@ -1948,7 +1948,7 @@
     "player.surname": "Young",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 127.9253,
-    "Latest_Round_PIR": 127.508
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1018987",
@@ -1980,7 +1980,7 @@
     "player.surname": "Evans",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 129.6034,
-    "Latest_Round_PIR": 110.2
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1020097",
@@ -1996,7 +1996,7 @@
     "player.surname": "Phillipou",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 147.0604,
-    "Latest_Round_PIR": 53.7004
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1020250",
@@ -2004,7 +2004,7 @@
     "player.surname": "Erasmus",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 126.7606,
-    "Latest_Round_PIR": 226.5
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1020339",
@@ -2012,7 +2012,7 @@
     "player.surname": "Sheldrick",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 174.0156,
-    "Latest_Round_PIR": 146.8192
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1020371",
@@ -2028,7 +2028,7 @@
     "player.surname": "Jones",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 122.3586,
-    "Latest_Round_PIR": 75.25
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1020594",
@@ -2036,7 +2036,7 @@
     "player.surname": "Amiss",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 147.1855,
-    "Latest_Round_PIR": 166.65
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1020621",
@@ -2044,7 +2044,7 @@
     "player.surname": "Sellwood",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 115.1313,
-    "Latest_Round_PIR": 118.2
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1020670",
@@ -2068,7 +2068,7 @@
     "player.surname": "Hall",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 202.9893,
-    "Latest_Round_PIR": 304.6844
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1020877",
@@ -2076,7 +2076,7 @@
     "player.surname": "Young",
     "team.name": "Carlton",
     "Season_Avg_PIR": 98.9157,
-    "Latest_Round_PIR": 105.1303
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1020881",
@@ -2084,7 +2084,7 @@
     "player.surname": "Wiltshire",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 88.9564,
-    "Latest_Round_PIR": 108.1378
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1020887",
@@ -2100,7 +2100,7 @@
     "player.surname": "Newcombe",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 208.3188,
-    "Latest_Round_PIR": 293.25
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1020930",
@@ -2116,7 +2116,7 @@
     "player.surname": "Murray",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 109.4789,
-    "Latest_Round_PIR": 78.2437
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1020959",
@@ -2132,7 +2132,7 @@
     "player.surname": "Moyle",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 188.9253,
-    "Latest_Round_PIR": 175.3963
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1021015",
@@ -2140,7 +2140,7 @@
     "player.surname": "Worner",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 147.45,
-    "Latest_Round_PIR": 73.3
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1021031",
@@ -2148,7 +2148,7 @@
     "player.surname": "Nankervis",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 124.7813,
-    "Latest_Round_PIR": 142.087
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1021103",
@@ -2164,7 +2164,7 @@
     "player.surname": "Tunstill",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 94.5343,
-    "Latest_Round_PIR": 70.6916
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1021122",
@@ -2180,7 +2180,7 @@
     "player.surname": "McAndrew",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 209.9646,
-    "Latest_Round_PIR": 239.6564
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1021353",
@@ -2188,7 +2188,7 @@
     "player.surname": "Cowan",
     "team.name": "Carlton",
     "Season_Avg_PIR": 120.7748,
-    "Latest_Round_PIR": 117.8129
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1022371",
@@ -2196,7 +2196,7 @@
     "player.surname": "Cochrane",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 137.9734,
-    "Latest_Round_PIR": 137.9734
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1022383",
@@ -2220,7 +2220,7 @@
     "player.surname": "Ryan",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 70.2876,
-    "Latest_Round_PIR": 78.7238
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1022486",
@@ -2268,7 +2268,7 @@
     "player.surname": "Ginbey",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 167.2189,
-    "Latest_Round_PIR": 212.5643
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1023056",
@@ -2284,7 +2284,7 @@
     "player.surname": "Hough",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 87.7046,
-    "Latest_Round_PIR": 78.0357
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1023261",
@@ -2308,7 +2308,7 @@
     "player.surname": "Windhager",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 151.0478,
-    "Latest_Round_PIR": 82.6
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1023272",
@@ -2316,7 +2316,7 @@
     "player.surname": "Owens",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 150.2776,
-    "Latest_Round_PIR": 96.1734
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1023273",
@@ -2324,7 +2324,7 @@
     "player.surname": "Hall-Kahan",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 132.6288,
-    "Latest_Round_PIR": 132.6288
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1023275",
@@ -2348,7 +2348,7 @@
     "player.surname": "Watson",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 193.0734,
-    "Latest_Round_PIR": 222.4638
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1023477",
@@ -2356,7 +2356,7 @@
     "player.surname": "Wardlaw",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 209.2009,
-    "Latest_Round_PIR": 226.9177
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1023482",
@@ -2364,7 +2364,7 @@
     "player.surname": "Mackenzie",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 155.4792,
-    "Latest_Round_PIR": 134.2204
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1023486",
@@ -2388,7 +2388,7 @@
     "player.surname": "Reid",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 192.852,
-    "Latest_Round_PIR": 203.15
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1023494",
@@ -2396,7 +2396,7 @@
     "player.surname": "Duursma",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 102.7814,
-    "Latest_Round_PIR": 42.1322
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1023495",
@@ -2412,7 +2412,7 @@
     "player.surname": "Humphrey",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 153.7695,
-    "Latest_Round_PIR": 44.6496
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1023515",
@@ -2420,7 +2420,7 @@
     "player.surname": "Roberts",
     "team.name": "Essendon",
     "Season_Avg_PIR": 175.6066,
-    "Latest_Round_PIR": 145.718
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1023517",
@@ -2428,7 +2428,7 @@
     "player.surname": "Ashcroft",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 173.7584,
-    "Latest_Round_PIR": 152.8994
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1023518",
@@ -2436,7 +2436,7 @@
     "player.surname": "Sheezel",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 211.4259,
-    "Latest_Round_PIR": 163.505
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1023530",
@@ -2444,7 +2444,7 @@
     "player.surname": "Konstanty",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 88.2274,
-    "Latest_Round_PIR": 48.2407
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1023534",
@@ -2468,7 +2468,7 @@
     "player.surname": "Hardeman",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 31.5699,
-    "Latest_Round_PIR": 32.7106
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1023640",
@@ -2492,7 +2492,7 @@
     "player.surname": "Fletcher",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 121.2162,
-    "Latest_Round_PIR": 74.574
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1023736",
@@ -2500,7 +2500,7 @@
     "player.surname": "Walter",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 123.0272,
-    "Latest_Round_PIR": 75.198
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1023743",
@@ -2524,7 +2524,7 @@
     "player.surname": "Caminiti",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 97.7811,
-    "Latest_Round_PIR": 148.55
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1023785",
@@ -2532,7 +2532,7 @@
     "player.surname": "Tsatas",
     "team.name": "Essendon",
     "Season_Avg_PIR": 166.9374,
-    "Latest_Round_PIR": 219.5866
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1024023",
@@ -2540,7 +2540,7 @@
     "player.surname": "Curtin",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 154.7758,
-    "Latest_Round_PIR": 260.106
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1024047",
@@ -2548,7 +2548,7 @@
     "player.surname": "Lake",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 104.4338,
-    "Latest_Round_PIR": 104.4338
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1024057",
@@ -2556,7 +2556,7 @@
     "player.surname": "Cleary",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 107.73,
-    "Latest_Round_PIR": 143.698
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1024272",
@@ -2564,7 +2564,7 @@
     "player.surname": "McKercher",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 121.1335,
-    "Latest_Round_PIR": 106.7118
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1024304",
@@ -2587,7 +2587,7 @@
     "player.surname": "Mullin",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 127.0532,
-    "Latest_Round_PIR": 102.6113
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1025034",
@@ -2595,7 +2595,7 @@
     "player.surname": "Dempsey",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 154.588,
-    "Latest_Round_PIR": 156.234
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1026960",
@@ -2603,7 +2603,7 @@
     "player.surname": "Graham",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 122.7124,
-    "Latest_Round_PIR": 91.383
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1026974",
@@ -2659,7 +2659,7 @@
     "player.surname": "Wilson",
     "team.name": "Carlton",
     "Season_Avg_PIR": 113.8173,
-    "Latest_Round_PIR": 112.0604
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1027687",
@@ -2691,7 +2691,7 @@
     "player.surname": "Freijah",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 168.484,
-    "Latest_Round_PIR": 137.09
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1027790",
@@ -2699,7 +2699,7 @@
     "player.surname": "Garcia",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 205.4,
-    "Latest_Round_PIR": 271.6826
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1027821",
@@ -2723,7 +2723,7 @@
     "player.surname": "Hastie",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 110.8514,
-    "Latest_Round_PIR": 110.8514
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1027875",
@@ -2731,7 +2731,7 @@
     "player.surname": "Wilson",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 161.7445,
-    "Latest_Round_PIR": 188.8
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1027877",
@@ -2739,7 +2739,7 @@
     "player.surname": "O'Sullivan",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 157.2712,
-    "Latest_Round_PIR": 229.722
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1027887",
@@ -2747,7 +2747,7 @@
     "player.surname": "Mackinlay",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 112.6232,
-    "Latest_Round_PIR": 71.374
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1027899",
@@ -2755,7 +2755,7 @@
     "player.surname": "Caddy",
     "team.name": "Essendon",
     "Season_Avg_PIR": 136.3494,
-    "Latest_Round_PIR": 123.963
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1027921",
@@ -2779,7 +2779,7 @@
     "player.surname": "Weddle",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 147.2216,
-    "Latest_Round_PIR": 198.6
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1027964",
@@ -2803,7 +2803,7 @@
     "player.surname": "Johnston",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 77.9525,
-    "Latest_Round_PIR": 62.4389
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1027971",
@@ -2819,7 +2819,7 @@
     "player.surname": "Morris",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 169.3316,
-    "Latest_Round_PIR": 375.1531
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1028105",
@@ -2827,7 +2827,7 @@
     "player.surname": "Brain",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 116.058,
-    "Latest_Round_PIR": 116.058
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1028196",
@@ -2835,7 +2835,7 @@
     "player.surname": "Blakiston",
     "team.name": "Essendon",
     "Season_Avg_PIR": 113.6628,
-    "Latest_Round_PIR": 150.5523
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1028449",
@@ -2843,7 +2843,7 @@
     "player.surname": "Allan",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 116.422,
-    "Latest_Round_PIR": 167.104
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1028485",
@@ -2891,7 +2891,7 @@
     "player.surname": "Reid",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 165.1524,
-    "Latest_Round_PIR": 216.592
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1028515",
@@ -2899,7 +2899,7 @@
     "player.surname": "Smith",
     "team.name": "Carlton",
     "Season_Avg_PIR": 163.4771,
-    "Latest_Round_PIR": 137.3878
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1028519",
@@ -2939,7 +2939,7 @@
     "player.surname": "Berry",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 125.8381,
-    "Latest_Round_PIR": 145.1454
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1028531",
@@ -2971,7 +2971,7 @@
     "player.surname": "Dawson",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 76.5171,
-    "Latest_Round_PIR": 18.4516
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1028554",
@@ -2987,7 +2987,7 @@
     "player.surname": "Ashcroft",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 145.6623,
-    "Latest_Round_PIR": 74.104
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1028562",
@@ -3003,7 +3003,7 @@
     "player.surname": "Moraes",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 103.9467,
-    "Latest_Round_PIR": 99.7863
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1028671",
@@ -3019,7 +3019,7 @@
     "player.surname": "Duff-Tytler",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 114.4159,
-    "Latest_Round_PIR": 136.7405
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1029030",
@@ -3043,7 +3043,7 @@
     "player.surname": "Champion",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 76.9614,
-    "Latest_Round_PIR": 46.5538
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1029148",
@@ -3059,7 +3059,7 @@
     "player.surname": "Macdonald",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 119.3479,
-    "Latest_Round_PIR": 119.3805
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1029262",
@@ -3075,7 +3075,7 @@
     "player.surname": "Day-Wicks",
     "team.name": "Essendon",
     "Season_Avg_PIR": 97.9073,
-    "Latest_Round_PIR": 67.722
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1029297",
@@ -3091,7 +3091,7 @@
     "player.surname": "Lombard",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 121.2065,
-    "Latest_Round_PIR": 122.816
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1029304",
@@ -3099,7 +3099,7 @@
     "player.surname": "Gulbin",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 93.6764,
-    "Latest_Round_PIR": 75.495
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1029307",
@@ -3107,7 +3107,7 @@
     "player.surname": "Murray",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 73.7437,
-    "Latest_Round_PIR": 73.7437
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1029326",
@@ -3131,7 +3131,7 @@
     "player.surname": "Maric",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 118.4986,
-    "Latest_Round_PIR": 63.1
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1029456",
@@ -3139,7 +3139,7 @@
     "player.surname": "Hynes",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 93.0933,
-    "Latest_Round_PIR": 149.485
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1029603",
@@ -3155,7 +3155,7 @@
     "player.surname": "El Achkar",
     "team.name": "Essendon",
     "Season_Avg_PIR": 93.7769,
-    "Latest_Round_PIR": 98.9204
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1030433",
@@ -3163,7 +3163,7 @@
     "player.surname": "Tauru",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 100.592,
-    "Latest_Round_PIR": 91.2115
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1031792",
@@ -3187,7 +3187,7 @@
     "player.surname": "Shanahan",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 112.6763,
-    "Latest_Round_PIR": 119.396
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1031988",
@@ -3195,7 +3195,7 @@
     "player.surname": "Trembath",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 133.9952,
-    "Latest_Round_PIR": 142.582
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1032042",
@@ -3211,7 +3211,7 @@
     "player.surname": "Whitlock",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 103.2893,
-    "Latest_Round_PIR": 9.0958
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1032081",
@@ -3251,7 +3251,7 @@
     "player.surname": "Nairn",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 75.6641,
-    "Latest_Round_PIR": 81.0591
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1032624",
@@ -3259,7 +3259,7 @@
     "player.surname": "Davis",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 121.0972,
-    "Latest_Round_PIR": 141.8634
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1032629",
@@ -3291,7 +3291,7 @@
     "player.surname": "O'Donnell",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 122.1359,
-    "Latest_Round_PIR": 100.992
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1033042",
@@ -3323,7 +3323,7 @@
     "player.surname": "Ison",
     "team.name": "Carlton",
     "Season_Avg_PIR": 114.503,
-    "Latest_Round_PIR": 52.68
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1033072",
@@ -3355,7 +3355,7 @@
     "player.surname": "Dean",
     "team.name": "Carlton",
     "Season_Avg_PIR": 114.0826,
-    "Latest_Round_PIR": 148.525
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1033115",
@@ -3363,7 +3363,7 @@
     "player.surname": "Duursma",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 173.9936,
-    "Latest_Round_PIR": 179.1807
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1034235",
@@ -3379,7 +3379,7 @@
     "player.surname": "Farrow",
     "team.name": "Essendon",
     "Season_Avg_PIR": 119.1561,
-    "Latest_Round_PIR": 142.3953
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1034411",
@@ -3387,7 +3387,7 @@
     "player.surname": "Gallop",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 99.54,
-    "Latest_Round_PIR": 73.7652
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1035198",
@@ -3427,7 +3427,7 @@
     "player.surname": "Lewis",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 107.4951,
-    "Latest_Round_PIR": 53.85
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1036123",
@@ -3443,7 +3443,7 @@
     "player.surname": "McCarthy",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 167.4941,
-    "Latest_Round_PIR": 195.534
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1036426",
@@ -3451,7 +3451,7 @@
     "player.surname": "Byrne",
     "team.name": "Carlton",
     "Season_Avg_PIR": 94.4891,
-    "Latest_Round_PIR": 133.9854
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1036579",
@@ -3467,7 +3467,7 @@
     "player.surname": "Kondogiannis",
     "team.name": "Essendon",
     "Season_Avg_PIR": 82.3341,
-    "Latest_Round_PIR": 73.1834
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1036769",
@@ -3491,7 +3491,7 @@
     "player.surname": "Kyle",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 142.8051,
-    "Latest_Round_PIR": 124.4733
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1040300",
@@ -3499,7 +3499,7 @@
     "player.surname": "Lai",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 117.6718,
-    "Latest_Round_PIR": 72.8828
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I1040573",
@@ -3515,7 +3515,7 @@
     "player.surname": "Robey",
     "team.name": "Essendon",
     "Season_Avg_PIR": 132.2121,
-    "Latest_Round_PIR": 134.8573
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I260257",
@@ -3539,7 +3539,7 @@
     "player.surname": "Dangerfield",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 161.1696,
-    "Latest_Round_PIR": 269.0073
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I280317",
@@ -3555,7 +3555,7 @@
     "player.surname": "Walker",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 127.4998,
-    "Latest_Round_PIR": 145.45
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I280824",
@@ -3603,7 +3603,7 @@
     "player.surname": "Parker",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 167.3783,
-    "Latest_Round_PIR": 124.144
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I290799",
@@ -3627,7 +3627,7 @@
     "player.surname": "Darling",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 173.3772,
-    "Latest_Round_PIR": 116.8834
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I291313",
@@ -3667,7 +3667,7 @@
     "player.surname": "Treloar",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 116.9567,
-    "Latest_Round_PIR": 100.9649
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I291800",
@@ -3675,7 +3675,7 @@
     "player.surname": "Stewart",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 180.5291,
-    "Latest_Round_PIR": 112.858
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I291849",
@@ -3699,7 +3699,7 @@
     "player.surname": "Witts",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 176.0615,
-    "Latest_Round_PIR": 70.0558
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I291978",
@@ -3715,7 +3715,7 @@
     "player.surname": "Yeo",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 190.3057,
-    "Latest_Round_PIR": 198.167
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I293222",
@@ -3723,7 +3723,7 @@
     "player.surname": "Laird",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 143.8282,
-    "Latest_Round_PIR": 116.756
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I293535",
@@ -3731,7 +3731,7 @@
     "player.surname": "Neale",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 232.7072,
-    "Latest_Round_PIR": 327.12
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I293581",
@@ -3763,7 +3763,7 @@
     "player.surname": "Cameron",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 165.8893,
-    "Latest_Round_PIR": 31.023
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I293871",
@@ -3787,7 +3787,7 @@
     "player.surname": "Grundy",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 287.1893,
-    "Latest_Round_PIR": 194.651
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I294036",
@@ -3795,7 +3795,7 @@
     "player.surname": "Hewett",
     "team.name": "Carlton",
     "Season_Avg_PIR": 191.4941,
-    "Latest_Round_PIR": 212.0034
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I294305",
@@ -3811,7 +3811,7 @@
     "player.surname": "Wines",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 169.4841,
-    "Latest_Round_PIR": 209.7
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I294469",
@@ -3819,7 +3819,7 @@
     "player.surname": "Aliir",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 170.016,
-    "Latest_Round_PIR": 137.15
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I294508",
@@ -3843,7 +3843,7 @@
     "player.surname": "O'Meara",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 138.7674,
-    "Latest_Round_PIR": 148.1587
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I294674",
@@ -3867,7 +3867,7 @@
     "player.surname": "Daniel",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 152.9902,
-    "Latest_Round_PIR": 159.366
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I295203",
@@ -3891,7 +3891,7 @@
     "player.surname": "Haynes",
     "team.name": "Carlton",
     "Season_Avg_PIR": 144.8964,
-    "Latest_Round_PIR": 150.596
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I295340",
@@ -3899,7 +3899,7 @@
     "player.surname": "Wood",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 145.5849,
-    "Latest_Round_PIR": 103.9589
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I295342",
@@ -3907,7 +3907,7 @@
     "player.surname": "Lloyd",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 140.0443,
-    "Latest_Round_PIR": 130.758
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I295344",
@@ -3923,7 +3923,7 @@
     "player.surname": "Collins",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 172.7564,
-    "Latest_Round_PIR": 176.908
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I295461",
@@ -3939,7 +3939,7 @@
     "player.surname": "Macrae",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 159.3636,
-    "Latest_Round_PIR": 159.2109
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I295584",
@@ -3947,7 +3947,7 @@
     "player.surname": "Hill",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 140.4657,
-    "Latest_Round_PIR": 157.704
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I295898",
@@ -3955,7 +3955,7 @@
     "player.surname": "Kelly",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 200.063,
-    "Latest_Round_PIR": 188.3469
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I296190",
@@ -3963,7 +3963,7 @@
     "player.surname": "Martin",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 134.8287,
-    "Latest_Round_PIR": 146.0383
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I296205",
@@ -3979,7 +3979,7 @@
     "player.surname": "Impey",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 155.0551,
-    "Latest_Round_PIR": 209.0651
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I296269",
@@ -3987,7 +3987,7 @@
     "player.surname": "Gardiner",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 110.7012,
-    "Latest_Round_PIR": 66.95
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I296291",
@@ -3995,7 +3995,7 @@
     "player.surname": "Kolodjashnij",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 127.5589,
-    "Latest_Round_PIR": 140.75
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I296294",
@@ -4003,7 +4003,7 @@
     "player.surname": "Acres",
     "team.name": "Carlton",
     "Season_Avg_PIR": 146.9883,
-    "Latest_Round_PIR": 162.69
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I296324",
@@ -4019,7 +4019,7 @@
     "player.surname": "McDonald",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 108.1773,
-    "Latest_Round_PIR": 45.65
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I296359",
@@ -4035,7 +4035,7 @@
     "player.surname": "Neal-Bullen",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 153.9654,
-    "Latest_Round_PIR": 198.15
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I296422",
@@ -4043,7 +4043,7 @@
     "player.surname": "Wilkie",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 207.1468,
-    "Latest_Round_PIR": 133.647
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I296733",
@@ -4051,7 +4051,7 @@
     "player.surname": "Blicavs",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 138.3185,
-    "Latest_Round_PIR": 137.6746
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I297255",
@@ -4059,7 +4059,7 @@
     "player.surname": "McGovern",
     "team.name": "Carlton",
     "Season_Avg_PIR": 139.5777,
-    "Latest_Round_PIR": 111.1373
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I297354",
@@ -4067,7 +4067,7 @@
     "player.surname": "Amon",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 142.6323,
-    "Latest_Round_PIR": 116.014
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I297373",
@@ -4075,7 +4075,7 @@
     "player.surname": "Bontempelli",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 250.1582,
-    "Latest_Round_PIR": 271.604
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I297456",
@@ -4107,7 +4107,7 @@
     "player.surname": "Sicily",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 202.6898,
-    "Latest_Round_PIR": 258.604
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I297907",
@@ -4115,7 +4115,7 @@
     "player.surname": "Newman",
     "team.name": "Carlton",
     "Season_Avg_PIR": 147.8982,
-    "Latest_Round_PIR": 120.3
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I298174",
@@ -4131,7 +4131,7 @@
     "player.surname": "Petracca",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 257.1431,
-    "Latest_Round_PIR": 169.8
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I298211",
@@ -4139,7 +4139,7 @@
     "player.surname": "Fort",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 188.5781,
-    "Latest_Round_PIR": 205.8013
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I298264",
@@ -4155,7 +4155,7 @@
     "player.surname": "Duggan",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 134.6123,
-    "Latest_Round_PIR": 133.67
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I298272",
@@ -4163,7 +4163,7 @@
     "player.surname": "Miller",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 178.3957,
-    "Latest_Round_PIR": 126.045
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I298280",
@@ -4203,7 +4203,7 @@
     "player.surname": "Pittonet",
     "team.name": "Carlton",
     "Season_Avg_PIR": 193.5237,
-    "Latest_Round_PIR": 195.4448
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I298409",
@@ -4211,7 +4211,7 @@
     "player.surname": "Pearce",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 113.4419,
-    "Latest_Round_PIR": 68.8854
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I298421",
@@ -4227,7 +4227,7 @@
     "player.surname": "Ah Chee",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 116.804,
-    "Latest_Round_PIR": 115.3387
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I298524",
@@ -4235,7 +4235,7 @@
     "player.surname": "Weller",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 130.7507,
-    "Latest_Round_PIR": 52.24
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I298539",
@@ -4243,7 +4243,7 @@
     "player.surname": "Heeney",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 278.1979,
-    "Latest_Round_PIR": 321.135
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I298630",
@@ -4251,7 +4251,7 @@
     "player.surname": "Langford",
     "team.name": "Essendon",
     "Season_Avg_PIR": 145.2514,
-    "Latest_Round_PIR": 133.468
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I990290",
@@ -4275,7 +4275,7 @@
     "player.surname": "Cameron",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 159.008,
-    "Latest_Round_PIR": 163.2757
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I990704",
@@ -4283,7 +4283,7 @@
     "player.surname": "Cripps",
     "team.name": "Carlton",
     "Season_Avg_PIR": 216.1622,
-    "Latest_Round_PIR": 112.597
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I990740",
@@ -4291,7 +4291,7 @@
     "player.surname": "Lobb",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 163.1293,
-    "Latest_Round_PIR": 155.986
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I990827",
@@ -4307,7 +4307,7 @@
     "player.surname": "Milera",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 192.7363,
-    "Latest_Round_PIR": 118.002
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I991773",
@@ -4323,7 +4323,7 @@
     "player.surname": "Byrne-Jones",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 147.9722,
-    "Latest_Round_PIR": 134.446
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I992010",
@@ -4339,7 +4339,7 @@
     "player.surname": "Merrett",
     "team.name": "Essendon",
     "Season_Avg_PIR": 207.117,
-    "Latest_Round_PIR": 138.152
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I992049",
@@ -4355,7 +4355,7 @@
     "player.surname": "Switkowski",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 136.9797,
-    "Latest_Round_PIR": 216.4555
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I992242",
@@ -4363,7 +4363,7 @@
     "player.surname": "Dawson",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 216.8384,
-    "Latest_Round_PIR": 258.349
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I992330",
@@ -4371,7 +4371,7 @@
     "player.surname": "Sweet",
     "team.name": "Port Adelaide",
     "Season_Avg_PIR": 212.3841,
-    "Latest_Round_PIR": 244.3324
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I992351",
@@ -4395,7 +4395,7 @@
     "player.surname": "Marshall",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 186.2641,
-    "Latest_Round_PIR": 242.7796
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I992472",
@@ -4403,7 +4403,7 @@
     "player.surname": "McDonald",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 126.9532,
-    "Latest_Round_PIR": 137.432
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I993107",
@@ -4427,7 +4427,7 @@
     "player.surname": "Hardwick",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 153.4163,
-    "Latest_Round_PIR": 49.927
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I993799",
@@ -4451,7 +4451,7 @@
     "player.surname": "Cole",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 96.229,
-    "Latest_Round_PIR": 110.054
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I993832",
@@ -4467,7 +4467,7 @@
     "player.surname": "Dunkley",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 180.7473,
-    "Latest_Round_PIR": 206.7967
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I993878",
@@ -4475,7 +4475,7 @@
     "player.surname": "Mannagh",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 158.3455,
-    "Latest_Round_PIR": 137.2841
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I993902",
@@ -4499,7 +4499,7 @@
     "player.surname": "Mills",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 176.8381,
-    "Latest_Round_PIR": 193.5
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I993917",
@@ -4507,7 +4507,7 @@
     "player.surname": "Long",
     "team.name": "Gold Coast SUNS",
     "Season_Avg_PIR": 122.4528,
-    "Latest_Round_PIR": 126.4782
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I993940",
@@ -4515,7 +4515,7 @@
     "player.surname": "Wagner",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 128.6851,
-    "Latest_Round_PIR": 84.17
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I993946",
@@ -4523,7 +4523,7 @@
     "player.surname": "Keays",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 136.2233,
-    "Latest_Round_PIR": 174.05
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I993993",
@@ -4531,7 +4531,7 @@
     "player.surname": "Bolton",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 204.8678,
-    "Latest_Round_PIR": 168.482
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I993998",
@@ -4539,7 +4539,7 @@
     "player.surname": "Simpkin",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 151.8152,
-    "Latest_Round_PIR": 72.712
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I994077",
@@ -4547,7 +4547,7 @@
     "player.surname": "Chol",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 146.8607,
-    "Latest_Round_PIR": 128.3
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I994185",
@@ -4571,7 +4571,7 @@
     "player.surname": "Atkins",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 177.9463,
-    "Latest_Round_PIR": 129.9015
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I994389",
@@ -4579,7 +4579,7 @@
     "player.surname": "Sinclair",
     "team.name": "St Kilda",
     "Season_Avg_PIR": 196.4322,
-    "Latest_Round_PIR": 237.67
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I996059",
@@ -4587,7 +4587,7 @@
     "player.surname": "Andrews",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 188.538,
-    "Latest_Round_PIR": 192.023
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I996232",
@@ -4603,7 +4603,7 @@
     "player.surname": "Waterman",
     "team.name": "West Coast Eagles",
     "Season_Avg_PIR": 153.7786,
-    "Latest_Round_PIR": 202.007
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I996701",
@@ -4619,7 +4619,7 @@
     "player.surname": "Dale",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 186.3915,
-    "Latest_Round_PIR": 227.1639
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I996731",
@@ -4627,7 +4627,7 @@
     "player.surname": "Curnow",
     "team.name": "Sydney Swans",
     "Season_Avg_PIR": 160.6296,
-    "Latest_Round_PIR": 174.593
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I996743",
@@ -4659,7 +4659,7 @@
     "player.surname": "Redman",
     "team.name": "Essendon",
     "Season_Avg_PIR": 134.5662,
-    "Latest_Round_PIR": 114.8395
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I997100",
@@ -4667,7 +4667,7 @@
     "player.surname": "Hayward",
     "team.name": "Carlton",
     "Season_Avg_PIR": 132.1064,
-    "Latest_Round_PIR": 75.076
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I997142",
@@ -4699,7 +4699,7 @@
     "player.surname": "McKenna",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 117.6709,
-    "Latest_Round_PIR": 126.3707
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I997933",
@@ -4707,7 +4707,7 @@
     "player.surname": "Logue",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 98.8682,
-    "Latest_Round_PIR": 85.853
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I998102",
@@ -4723,7 +4723,7 @@
     "player.surname": "Florent",
     "team.name": "Carlton",
     "Season_Avg_PIR": 161.6266,
-    "Latest_Round_PIR": 123.464
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I998114",
@@ -4747,7 +4747,7 @@
     "player.surname": "Ainsworth",
     "team.name": "Carlton",
     "Season_Avg_PIR": 128.2055,
-    "Latest_Round_PIR": 141.6342
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I998133",
@@ -4755,7 +4755,7 @@
     "player.surname": "Berry",
     "team.name": "Brisbane Lions",
     "Season_Avg_PIR": 163.1384,
-    "Latest_Round_PIR": 200.9142
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I998134",
@@ -4763,7 +4763,7 @@
     "player.surname": "Battle",
     "team.name": "Hawthorn",
     "Season_Avg_PIR": 169.8786,
-    "Latest_Round_PIR": 85.059
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I998145",
@@ -4795,7 +4795,7 @@
     "player.surname": "Setterfield",
     "team.name": "Essendon",
     "Season_Avg_PIR": 168.7832,
-    "Latest_Round_PIR": 178.9677
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I998260",
@@ -4803,7 +4803,7 @@
     "player.surname": "Bowes",
     "team.name": "Geelong Cats",
     "Season_Avg_PIR": 161.8673,
-    "Latest_Round_PIR": 216.8839
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I998390",
@@ -4827,7 +4827,7 @@
     "player.surname": "Zurhaar",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 133.7192,
-    "Latest_Round_PIR": 110.25
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I998647",
@@ -4835,7 +4835,7 @@
     "player.surname": "Cox",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 110.7859,
-    "Latest_Round_PIR": 77.9358
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I998659",
@@ -4843,7 +4843,7 @@
     "player.surname": "Ryan",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 157.0707,
-    "Latest_Round_PIR": 174.4
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I998782",
@@ -4851,7 +4851,7 @@
     "player.surname": "Khamis",
     "team.name": "Western Bulldogs",
     "Season_Avg_PIR": 117.3679,
-    "Latest_Round_PIR": 102.65
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I999321",
@@ -4859,7 +4859,7 @@
     "player.surname": "Frederick",
     "team.name": "Fremantle",
     "Season_Avg_PIR": 127.2654,
-    "Latest_Round_PIR": 145.212
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I999326",
@@ -4875,7 +4875,7 @@
     "player.surname": "Fogarty",
     "team.name": "Adelaide Crows",
     "Season_Avg_PIR": 120.3327,
-    "Latest_Round_PIR": 83.502
+    "Latest_Round_PIR": 0
   },
   {
     "player.playerId": "CD_I999391",
@@ -4899,7 +4899,7 @@
     "player.surname": "Fisher",
     "team.name": "North Melbourne",
     "Season_Avg_PIR": 68.3488,
-    "Latest_Round_PIR": 68.3488
+    "Latest_Round_PIR": 0
   },
   {
     "Latest_Round_PIR": 0
