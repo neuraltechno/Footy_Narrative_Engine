@@ -1,0 +1,35 @@
+{
+  "round": 13,
+  "stories": [
+    {
+      "title": "Mid-season surge",
+      "summary": "The competition is heating up as teams fight for finals spots."
+    },
+    {
+      "title": "Emerging stars",
+      "summary": "New talent continues to impress in the 2026 season."
+    }
+  ],
+  "trendingTeams": [
+    {
+      "name": "Sydney",
+      "status": "Rising",
+      "contenderScore": 88
+    },
+    {
+      "name": "Brisbane",
+      "status": "Stable",
+      "contenderScore": 82
+    }
+  ],
+  "breakoutPlayers": [
+    {
+      "name": "Rising Star Candidate 1",
+      "impactRating": 85
+    },
+    {
+      "name": "Rising Star Candidate 2",
+      "impactRating": 81
+    }
+  ]
+}
