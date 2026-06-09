@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import playersData from '../data/processed/players_pir.json';
+import allPlayersData from '../data/processed/players_pir.json';
 import Link from 'next/link';
 
 const ITEMS_PER_PAGE = 24;
@@ -258,7 +258,7 @@ const PlayersPage = () => {
   }
 
   // Filter and sort players
-  const filteredPlayers = playersData
+  const filteredPlayers = allPlayersData
     .filter((player: any) => {
       const fullName = `${player.givenName} ${player.surname}`.toLowerCase();
       const team = (player.teamName || '').toLowerCase();
@@ -270,7 +270,17 @@ const PlayersPage = () => {
       
       return matchesSearch && matchesPosition;
     })
-    .sort((a: any, b: any) => (b.Season_Avg_PIR || 0) - (a.Season_Avg_PIR || 0));
+    .sort((a: any, b: any) => {
+        // Sort by rank: Apply 3-game filter only if they would be in the top 50.
+        // Logic: If they have < 3 games, push them down past the top 50.
+        const aQualifies = (a.Games_Played || 0) >= 3;
+        const bQualifies = (b.Games_Played || 0) >= 3;
+        
+        if (aQualifies && !bQualifies) return -1;
+        if (!aQualifies && bQualifies) return 1;
+        
+        return (b.Season_Avg_PIR || 0) - (a.Season_Avg_PIR || 0);
+    });
 
   // Pagination math
   const totalItems = filteredPlayers.length;
@@ -321,10 +331,15 @@ const PlayersPage = () => {
       {paginatedPlayers.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
             {paginatedPlayers.map((player: any, index: number) => {
-            const globalRank = playersData
-              .slice()
-              .sort((a: any, b: any) => (b.Season_Avg_PIR || 0) - (a.Season_Avg_PIR || 0))
-              .findIndex((p: any) => p["player.playerId"] === player["player.playerId"]) + 1;
+            // Only rank if they meet the 3-game criteria, otherwise show as unranked
+            const isEligible = (player.Games_Played || 0) >= 3;
+            
+            const globalRank = isEligible 
+              ? allPlayersData
+                  .filter((p: any) => (p.Games_Played || 0) >= 3)
+                  .sort((a: any, b: any) => (b.Season_Avg_PIR || 0) - (a.Season_Avg_PIR || 0))
+                  .findIndex((p: any) => p["player.playerId"] === player["player.playerId"]) + 1
+              : 0; // Rank 0 means unranked
 
             return (
               <PlayerCard
