@@ -4,14 +4,9 @@ library(jsonlite)
 # Load Raw - using absolute path
 raw_stats <- readRDS("data/raw/afl_stats_2026.rds")
 
-# Load player details
-player_details <- readRDS("data/raw/afl_player_details_2026.rds")
-
 # Transform and Calculate PIR
 processed_rounds <- raw_stats %>%
   mutate(
-    # Extract numeric part from player ID (e.g., 'CD_I1008091' -> 1008091)
-    player.playerId = as.integer(gsub("[^0-9]", "", player.playerId)),
     disposal_raw = (kicks * 2.0) + (handballs * 1.0),
     disposal_score = disposal_raw * (disposalEfficiency / 100),
     
@@ -73,27 +68,23 @@ processed_rounds$mapped_position <- sapply(processed_rounds$player.player.positi
 
 # Aggregate round PIR scores per player
 round_pir_series <- processed_rounds %>%
-  group_by(player.playerId) %>%
   arrange(round.roundNumber) %>%
+  group_by(player.playerId) %>%
   summarise(
     Games_Played = n_distinct(round.roundNumber),
     # Map round-by-round PIR stats
-    PIR_History = list(data.frame(round = round.roundNumber, pir = PIR)),
-    .groups = "drop"
+    PIR_History = list(data.frame(round = round.roundNumber, pir = PIR))
   )
 
 # Aggregate season-level and category-level details
 players_season <- processed_rounds %>%
-  group_by(player.playerId) %>%
+  group_by(player.playerId, player.givenName, player.surname, team.name) %>%
   summarise(
-    givenName = first(player.givenName),
-    surname = first(player.surname),
-    teamName = first(team.name),
     # Get the most common mapped position for the player
     Player_Position = names(sort(table(mapped_position), decreasing = TRUE))[1],
     photoURL = first(player.photoURL),
     playerJumperNumber = first(player.playerJumperNumber),
-    GamesPlayed = n_distinct(gamesPlayed),
+    Games_Played = n_distinct(gamesPlayed),
     Season_Avg_PIR = mean(PIR, na.rm = TRUE),
     Latest_Round_PIR = sum(ifelse(round.roundNumber == latest_round, PIR, 0), na.rm = TRUE),
     Avg_cat_disposal = mean(cat_disposal, na.rm = TRUE),
@@ -106,48 +97,7 @@ players_season <- processed_rounds %>%
   )
 
 # Merge season-level with their true history array
-final_processed_stats <- left_join(players_season, 
-                                   round_pir_series, 
-                                   by = "player.playerId")
-
-# Join with player details to add additional information
-cat("Player details columns:", names(player_details), "\n")
-# Find the ID column (could be named various things)
-id_col <- if ("id" %in% names(player_details)) "id" else if ("playerId" %in% names(player_details)) "playerId" else if ("ID" %in% names(player_details)) "ID" else NULL
-if (is.null(id_col)) {
-  stop("Could not find ID column in player_details. Available columns: ", paste(names(player_details), collapse = ", "))
-}
-player_details_clean <- player_details %>%
-  mutate(
-    # Combine firstName and surname for consistency
-    fullName = paste(firstName, surname),
-    # Ensure jumperNumber is numeric
-    jumperNumber = as.numeric(jumperNumber),
-    # Use providerId (the one that matches raw_stats) to create playerId
-    playerId = as.integer(gsub("[^0-9]", "", providerId)),
-    # Calculate Age
-    Age = as.integer(floor(as.numeric(difftime(Sys.Date(), as.Date(dateOfBirth), units = "days")) / 365.25))
-  ) %>%
-  select(
-    playerId,
-    fullName,
-    dateOfBirth,
-    Age,
-    heightInCm,
-    weightInKg,
-    debutYear,
-    recruitedFrom,
-    draftYear,
-    draftType,
-    draftPosition,
-    jumperNumber
-  )
-
-
-# Join player details with processed stats
-final_processed_stats <- final_processed_stats %>%
-  left_join(player_details_clean, by = c("player.playerId" = "playerId"), relationship = "one-to-one")
-
+final_processed_stats <- left_join(players_season, round_pir_series, by = "player.playerId")
 
 # Ensure output directory exists
 if (!dir.exists("data/processed")) {

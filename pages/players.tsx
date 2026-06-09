@@ -82,10 +82,10 @@ const PlayerCard = ({ player, rank, initialView = 'season' }: { player: any; ran
 
       <div>
         <div className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-0.5">
-          {player["team.name"]}
+          {player["teamName"]}
         </div>
         <h3 className="text-lg font-bold text-white line-clamp-1 leading-snug">
-          {player["player.givenName"]} {player["player.surname"]}
+          {player["givenName"]} {player["surname"]}
         </h3>
         <p className="text-xs text-zinc-400 font-medium mb-3">{position}</p>
       </div>
