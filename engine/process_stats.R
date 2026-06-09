@@ -44,7 +44,7 @@ map_position <- function(pos) {
   pos_map <- c(
     "BPL" = "Back Pocket",
     "BPR" = "Back Pocket",
-    "C" = "Centre",
+    "C" = "Inside Mid",
     "CHB" = "Centre Half Back",
     "CHF" = "Centre Half Forward",
     "FB" = "Full Back",
@@ -56,7 +56,7 @@ map_position <- function(pos) {
     "HFFL" = "Half Forward Flank",
     "HFFR" = "Half Forward Flank",
     "INT" = "Utility",
-    "R" = "Ruckman",
+    "R" = "Ruck Rover",
     "RK" = "Ruckman",
     "RR" = "Ruck Rover",
     "WL" = "Wing",

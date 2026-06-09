@@ -81,13 +81,19 @@ const PlayerCard = ({ player, rank, initialView = 'season' }: { player: any; ran
       </div>
 
       <div>
-        <div className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-0.5">
-          {player["teamName"]}
+        <div className="flex gap-4 items-start">
+          <img src={player.photoURL} alt={`${player.givenName} ${player.surname}`} className="w-16 h-16 rounded-lg bg-zinc-800 object-cover" />
+          <div className="flex-1">
+            <div className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-0.5">
+              {player.teamName} · #{player.jumperNumber}
+            </div>
+            <h3 className="text-lg font-bold text-white line-clamp-1 leading-snug">
+              {player.givenName} {player.surname}
+            </h3>
+            <p className="text-xs text-zinc-400 font-medium">{position}</p>
+            <p className="text-xs text-zinc-500">{player.Age} yrs · {player.heightInCm}cm</p>
+          </div>
         </div>
-        <h3 className="text-lg font-bold text-white line-clamp-1 leading-snug">
-          {player["givenName"]} {player["surname"]}
-        </h3>
-        <p className="text-xs text-zinc-400 font-medium mb-3">{position}</p>
       </div>
 
         {/* Primary Toggle & Main PIR display */}
@@ -239,6 +245,9 @@ const PlayersPage = () => {
   const [isClient, setIsClient] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
+  const [positionFilter, setPositionFilter] = useState('All');
+
+  const positions = ['All', 'Back Pocket', 'Centre Half Back', 'Centre Half Forward', 'Forward Pocket', 'Full Back', 'Full Forward', 'Half Back Flank', 'Half Forward Flank', 'Inside Mid', 'Ruck Rover', 'Ruckman', 'Utility', 'Wing'];
 
   useEffect(() => {
     setIsClient(true);
@@ -251,10 +260,15 @@ const PlayersPage = () => {
   // Filter and sort players
   const filteredPlayers = playersData
     .filter((player: any) => {
-      const fullName = `${player["player.givenName"]} ${player["player.surname"]}`.toLowerCase();
-      const team = (player["team.name"] || '').toLowerCase();
+      const fullName = `${player.givenName} ${player.surname}`.toLowerCase();
+      const team = (player.teamName || '').toLowerCase();
       const search = searchTerm.toLowerCase();
-      return fullName.includes(search) || team.includes(search);
+      const playerPos = player.Player_Position || "Midfielder";
+      
+      const matchesSearch = fullName.includes(search) || team.includes(search);
+      const matchesPosition = positionFilter === 'All' || playerPos === positionFilter;
+      
+      return matchesSearch && matchesPosition;
     })
     .sort((a: any, b: any) => (b.Season_Avg_PIR || 0) - (a.Season_Avg_PIR || 0));
 
@@ -275,6 +289,18 @@ const PlayersPage = () => {
           <p className="text-zinc-400">Complete statistical rating of all active AFL players.</p>
         </div>
         <div className="flex items-center gap-4">
+          <select
+            value={positionFilter}
+            onChange={(e) => {
+              setPositionFilter(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-zinc-200"
+          >
+            {positions.map(pos => (
+              <option key={pos} value={pos}>{pos}</option>
+            ))}
+          </select>
           <input
             type="text"
             placeholder="Search players or teams..."
@@ -294,7 +320,7 @@ const PlayersPage = () => {
       {/* Players Card Grid */}
       {paginatedPlayers.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
-          {paginatedPlayers.map((player: any, index: number) => {
+            {paginatedPlayers.map((player: any, index: number) => {
             const globalRank = playersData
               .slice()
               .sort((a: any, b: any) => (b.Season_Avg_PIR || 0) - (a.Season_Avg_PIR || 0))
@@ -302,7 +328,7 @@ const PlayersPage = () => {
 
             return (
               <PlayerCard
-                key={player.playerId || index}
+                key={player["player.playerId"] || index}
                 player={player}
                 rank={globalRank}
               />
