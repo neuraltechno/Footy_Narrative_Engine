@@ -295,16 +295,16 @@ const PlayersPage = () => {
       {paginatedPlayers.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
           {paginatedPlayers.map((player: any, index: number) => {
-            const rank = playersData
+            const globalRank = playersData
               .slice()
               .sort((a: any, b: any) => (b.Season_Avg_PIR || 0) - (a.Season_Avg_PIR || 0))
-              .findIndex((p: any) => p.playerId === player.playerId) + 1;
+              .findIndex((p: any) => p["player.playerId"] === player["player.playerId"]) + 1;
 
             return (
               <PlayerCard
                 key={player.playerId || index}
                 player={player}
-                rank={rank}
+                rank={globalRank}
               />
             );
           })}
