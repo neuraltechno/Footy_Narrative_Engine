@@ -23,8 +23,8 @@ const PlayerCard = ({ player, rank, initialView = 'season' }: { player: any; ran
   const [viewMode, setViewMode] = useState<'season' | 'latest'>(initialView);
 
   // Extract real variables from the newly processed JSON file
-  const gamesPlayed = player.Games_Played || 1;
-  const position = player.Player_Position || "Midfielder";
+  const gamesPlayed = player.Games_Played_2026 || 0;
+  const position = player.playerPosition || "Midfielder";
   const roundHistory = player.PIR_History || [];
 
   const hasLatestGame = player.Latest_Round_PIR && player.Latest_Round_PIR > 0;
@@ -69,12 +69,12 @@ const PlayerCard = ({ player, rank, initialView = 'season' }: { player: any; ran
   return (
     <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 hover:border-zinc-700 transition-all flex flex-col justify-between shadow-lg relative overflow-hidden">
       {/* Ranking & Games Badge */}
-      <div className="absolute top-0 right-0 flex items-center bg-zinc-950/40 border-b border-l border-zinc-800 rounded-bl-lg overflow-hidden">
+        <div className="absolute top-0 right-0 flex items-center bg-zinc-950/40 border-b border-l border-zinc-800 rounded-bl-lg overflow-hidden">
         <span className="text-[10px] font-bold text-zinc-400 px-2 py-1 border-r border-zinc-800 bg-zinc-900">
-          {gamesPlayed} GP
+          {gamesPlayed} GP(2026)
         </span>
         {rank > 0 && (
-          <span className="bg-blue-600/10 text-blue-400 px-3 py-1 text-xs font-bold">
+          <span className="bg-blue-600 text-white px-3 py-1 text-xs font-bold">
             #{rank}
           </span>
         )}
@@ -82,16 +82,19 @@ const PlayerCard = ({ player, rank, initialView = 'season' }: { player: any; ran
 
       <div>
         <div className="flex gap-4 items-start">
-          <img src={player.photoURL} alt={`${player.givenName} ${player.surname}`} className="w-16 h-16 rounded-lg bg-zinc-800 object-cover" />
+          <img src={player.photoURL} alt={`${player['player.givenName']} {player['player.surname']}`} className="w-16 h-16 rounded-lg bg-zinc-800 object-cover" />
           <div className="flex-1">
             <div className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-0.5">
-              {player.teamName} · #{player.jumperNumber}
+              {player['team.name']} · #{player.playerJumperNumber}
             </div>
             <h3 className="text-lg font-bold text-white line-clamp-1 leading-snug">
-              {player.givenName} {player.surname}
+              {player['player.givenName']} {player['player.surname']}
             </h3>
             <p className="text-xs text-zinc-400 font-medium">{position}</p>
-            <p className="text-xs text-zinc-500">{player.Age} yrs · {player.heightInCm}cm</p>
+            <p className="text-xs text-zinc-500">{player.Age} yrs · {player.heightInCm} · {player.weightInKg}</p>
+            <div className="text-[10px] text-zinc-500 mt-1">
+              {player.careerGames || 0} Games · {player.careerWins}W / {player.careerDraws || 0}D / {player.careerLosses || 0}L ({player.careerGames && player.careerGames > 0 ? ((player.careerWins / player.careerGames) * 100).toFixed(0) : 0}%)
+            </div>
           </div>
         </div>
       </div>
@@ -273,8 +276,8 @@ const PlayersPage = () => {
     .sort((a: any, b: any) => {
         // Sort by rank: Apply 3-game filter only if they would be in the top 50.
         // Logic: If they have < 3 games, push them down past the top 50.
-        const aQualifies = (a.Games_Played || 0) >= 3;
-        const bQualifies = (b.Games_Played || 0) >= 3;
+        const aQualifies = (a.Games_Played_2026 || 0) >= 3;
+        const bQualifies = (b.Games_Played_2026 || 0) >= 3;
         
         if (aQualifies && !bQualifies) return -1;
         if (!aQualifies && bQualifies) return 1;
@@ -331,14 +334,14 @@ const PlayersPage = () => {
       {paginatedPlayers.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
             {paginatedPlayers.map((player: any, index: number) => {
-            // Only rank if they meet the 3-game criteria, otherwise show as unranked
-            const isEligible = (player.Games_Played || 0) >= 3;
-            
+            // Rank based on all players, regardless of pagination
+            const allEligiblePlayers = allPlayersData
+              .filter((p: any) => (p.Games_Played_2026 || 0) >= 3)
+              .sort((a: any, b: any) => (b.Season_Avg_PIR || 0) - (a.Season_Avg_PIR || 0));
+
+            const isEligible = (player.Games_Played_2026 || 0) >= 3;
             const globalRank = isEligible 
-              ? allPlayersData
-                  .filter((p: any) => (p.Games_Played || 0) >= 3)
-                  .sort((a: any, b: any) => (b.Season_Avg_PIR || 0) - (a.Season_Avg_PIR || 0))
-                  .findIndex((p: any) => p["player.playerId"] === player["player.playerId"]) + 1
+              ? allEligiblePlayers.findIndex((p: any) => p["player.playerId"] === player["player.playerId"]) + 1
               : 0; // Rank 0 means unranked
 
             return (

@@ -2,16 +2,37 @@ library(dplyr)
 library(jsonlite)
 
 # Load Raw - using absolute path
-raw_stats <- readRDS("data/raw/afl_stats_2026.rds")
+raw_stats <- readRDS('data/raw/afl_combined_data_2026.rds')
 
-# Load player details
-player_details <- readRDS("data/raw/afl_player_details_2026.rds")
+# Helper to normalize team names
+normalize_team_name <- function(team) {
+  case_when(
+    team == "Adelaide" | team == "Adelaide Crows"    ~ "Adelaide Crows",
+    team == "Brisbane" | team == "Brisbane Lions"    ~ "Brisbane Lions",
+    team == "Carlton" | team == "Carlton Blues"      ~ "Carlton Blues",
+    team == "Collingwood"                            ~ "Collingwood Magpies",
+    team == "Essendon"                               ~ "Essendon Bombers",
+    team == "Fremantle"                              ~ "Fremantle Dockers",
+    team == "Geelong" | team == "Geelong Cats"       ~ "Geelong Cats",
+    team == "Gold Coast" | team == "Gold Coast SUNS" ~ "Gold Coast Suns",
+    team == "GWS" | team == "Greater Western Sydney" | team == "GWS GIANTS"  ~ "GWS Giants",
+    team == "Hawthorn"                               ~ "Hawthorn Hawks",
+    team == "Melbourne"                              ~ "Melbourne Demons",
+    team == "North Melbourne" | team == "North"      ~ "North Melbourne Kangaroos",
+    team == "Port Adelaide" | team == "Port"         ~ "Port Adelaide Power",
+    team == "Richmond"                               ~ "Richmond Tigers",
+    team == "St Kilda"                               ~ "St Kilda Saints",
+    team == "Sydney" | team == "Sydney Swans"        ~ "Sydney Swans",
+    team == "West Coast" | team == "West Coast Eagles" ~ "West Coast Eagles",
+    team == "Western Bulldogs" | team == "Western"   ~ "Western Bulldogs",
+    TRUE                                             ~ team
+  )
+}
 
 # Transform and Calculate PIR
 processed_rounds <- raw_stats %>%
   mutate(
-    # Extract numeric part from player ID (e.g., 'CD_I1008091' -> 1008091)
-    player.playerId = as.integer(gsub("[^0-9]", "", player.playerId)),
+    team.name = normalize_team_name(team.name),
     disposal_raw = (kicks * 2.0) + (handballs * 1.0),
     disposal_score = disposal_raw * (disposalEfficiency / 100),
     
@@ -31,40 +52,41 @@ processed_rounds <- raw_stats %>%
     
     PIR = (PIR_Positive * TOG_Modifier) - PIR_Negative
   )
+processed_rounds <- processed_rounds %>% filter(!is.na(jumperNumber) & jumperNumber != '')
 
-# Calculate latest round and aggregation
-latest_round <- 13
-print(paste("Latest round set to:", latest_round))
+# Calculate latest round dynamically
+latest_round <- max(processed_rounds$round.roundNumber, na.rm = TRUE)
+print(paste('Latest round detected as:', latest_round))
 
 # Helper to map AFL standard position shortcodes to clear full display strings
 map_position <- function(pos) {
   # Common mappings
-  if (is.na(pos) || pos == "" || pos == "EMERG") return("Emergency")
+  if (is.na(pos) || pos == '' || pos == 'EMERG') return('Emergency')
   
   pos_map <- c(
-    "BPL" = "Back Pocket",
-    "BPR" = "Back Pocket",
-    "C" = "Inside Mid",
-    "CHB" = "Centre Half Back",
-    "CHF" = "Centre Half Forward",
-    "FB" = "Full Back",
-    "FF" = "Full Forward",
-    "FPL" = "Forward Pocket",
-    "FPR" = "Forward Pocket",
-    "HBFL" = "Half Back Flank",
-    "HBFR" = "Half Back Flank",
-    "HFFL" = "Half Forward Flank",
-    "HFFR" = "Half Forward Flank",
-    "INT" = "Utility",
-    "R" = "Ruck Rover",
-    "RK" = "Ruckman",
-    "RR" = "Ruck Rover",
-    "WL" = "Wing",
-    "WR" = "Wing"
+    'BPL' = 'Back Pocket',
+    'BPR' = 'Back Pocket',
+    'C' = 'Inside/Outside Mid',
+    'CHB' = 'Centre Half Back',
+    'CHF' = 'Centre Half Forward',
+    'FB' = 'Full Back',
+    'FF' = 'Full Forward',
+    'FPL' = 'Forward Pocket',
+    'FPR' = 'Forward Pocket',
+    'HBFL' = 'Half Back Flank',
+    'HBFR' = 'Half Back Flank',
+    'HFFL' = 'Half Forward Flank',
+    'HFFR' = 'Half Forward Flank',
+    'INT' = 'Utility',
+    'R' = 'Inside Mid',
+    'RK' = 'Ruckman',
+    'RR' = 'Inside Mid',
+    'WL' = 'Wing',
+    'WR' = 'Wing'
   )
   
   resolved <- pos_map[pos]
-  if (is.na(resolved)) return("Midfielder")
+  if (is.na(resolved)) return('Midfielder')
   return(resolved)
 }
 
@@ -73,27 +95,31 @@ processed_rounds$mapped_position <- sapply(processed_rounds$player.player.positi
 
 # Aggregate round PIR scores per player
 round_pir_series <- processed_rounds %>%
-  group_by(player.playerId) %>%
   arrange(round.roundNumber) %>%
+  group_by(player.playerId) %>%
   summarise(
-    Games_Played = n_distinct(round.roundNumber),
+    Games_Played_2026 = n_distinct(round.roundNumber),
     # Map round-by-round PIR stats
-    PIR_History = list(data.frame(round = round.roundNumber, pir = PIR)),
-    .groups = "drop"
+    PIR_History = list(data.frame(round = round.roundNumber, pir = PIR))
   )
 
 # Aggregate season-level and category-level details
 players_season <- processed_rounds %>%
-  group_by(player.playerId) %>%
+  group_by(player.playerId, player.givenName, player.surname, team.name) %>%
   summarise(
-    givenName = first(player.givenName),
-    surname = first(player.surname),
-    teamName = first(team.name),
     # Get the most common mapped position for the player
-    Player_Position = names(sort(table(mapped_position), decreasing = TRUE))[1],
+    playerPosition = paste(first(position), names(sort(table(mapped_position), decreasing = TRUE))[1]),
     photoURL = first(player.photoURL),
-    playerJumperNumber = first(player.playerJumperNumber),
-    GamesPlayed = n_distinct(gamesPlayed),
+    playerJumperNumber = first(jumperNumber),
+    dateOfBirth = first(dateOfBirth),
+    dob = as.Date(dateOfBirth),
+    Age = as.integer(format(Sys.Date(), '%Y')) - as.integer(format(dob, '%Y')) - (format(Sys.Date(), '%m%d') < format(dob, '%m%d')),
+    heightInCm = first(HT),
+    weightInKg = first(WT),
+    careerGames = first(careerGames),
+    careerWins = first(careerWins),
+    careerDraws = first(careerDraws),
+    careerLosses = first(careerLosses),
     Season_Avg_PIR = mean(PIR, na.rm = TRUE),
     Latest_Round_PIR = sum(ifelse(round.roundNumber == latest_round, PIR, 0), na.rm = TRUE),
     Avg_cat_disposal = mean(cat_disposal, na.rm = TRUE),
@@ -102,60 +128,21 @@ players_season <- processed_rounds %>%
     Avg_cat_defensive_grit = mean(cat_defensive_grit, na.rm = TRUE),
     Avg_cat_ruck = mean(cat_ruck, na.rm = TRUE),
     Avg_PIR_Negative = mean(PIR_Negative, na.rm = TRUE),
-    .groups = "drop"
+    .groups = 'drop'
   )
 
 # Merge season-level with their true history array
-final_processed_stats <- left_join(players_season, 
-                                   round_pir_series, 
-                                   by = "player.playerId")
-
-# Join with player details to add additional information
-cat("Player details columns:", names(player_details), "\n")
-# Find the ID column (could be named various things)
-id_col <- if ("id" %in% names(player_details)) "id" else if ("playerId" %in% names(player_details)) "playerId" else if ("ID" %in% names(player_details)) "ID" else NULL
-if (is.null(id_col)) {
-  stop("Could not find ID column in player_details. Available columns: ", paste(names(player_details), collapse = ", "))
-}
-player_details_clean <- player_details %>%
-  mutate(
-    # Combine firstName and surname for consistency
-    fullName = paste(firstName, surname),
-    # Ensure jumperNumber is numeric
-    jumperNumber = as.numeric(jumperNumber),
-    # Use providerId (the one that matches raw_stats) to create playerId
-    playerId = as.integer(gsub("[^0-9]", "", providerId)),
-    # Calculate Age
-    Age = as.integer(floor(as.numeric(difftime(Sys.Date(), as.Date(dateOfBirth), units = "days")) / 365.25))
-  ) %>%
-  select(
-    playerId,
-    fullName,
-    dateOfBirth,
-    Age,
-    heightInCm,
-    weightInKg,
-    debutYear,
-    recruitedFrom,
-    draftYear,
-    draftType,
-    draftPosition,
-    jumperNumber
-  )
-
-
-# Join player details with processed stats
-final_processed_stats <- final_processed_stats %>%
-  left_join(player_details_clean, by = c("player.playerId" = "playerId"), relationship = "one-to-one")
-
+final_processed_stats <- left_join(players_season, round_pir_series, by = 'player.playerId')
 
 # Ensure output directory exists
-if (!dir.exists("data/processed")) {
-  dir.create("data/processed", recursive = TRUE)
+if (!dir.exists('data/processed')) {
+  dir.create('data/processed', recursive = TRUE)
 }
 
-# Save results for frontend
-saveRDS(final_processed_stats, "data/processed/round_13_pir.rds")
+# Save results for frontend with dynamic round number
+saveRDS(final_processed_stats, paste0('data/processed/2026_round_', latest_round, '_pir.rds'))
 
 # Convert to JSON for React frontend
-write_json(final_processed_stats, "data/processed/players_pir.json", pretty = TRUE)
+write_json(final_processed_stats, 'data/processed/players_pir.json', pretty = TRUE)
+
+

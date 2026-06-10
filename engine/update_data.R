@@ -1,17 +1,83 @@
 
 library(fitzRoy)
 library(dplyr)
+library(tidyr)
+library(stringr)
 
-# Fetch data for 2026
-stats <- fitzRoy::fetch_player_stats(season = 2026, source = "AFL")
-player_details <- fitzRoy::fetch_player_details(season = 2026, source = "AFL")
-
-# Use relative path which is cleaner and works when R is run from project root
-# Ensure the directory exists first
-if (!dir.exists("../data/raw")) {
-  dir.create("../data/raw", recursive = TRUE)
+# Define a standard naming convention
+normalize_team_name <- function(team) {
+    case_when(
+      team == "Adelaide" | team == "Adelaide Crows"    ~ "Adelaide Crows",
+      team == "Brisbane" | team == "Brisbane Lions"    ~ "Brisbane Lions",
+      team == "Carlton" | team == "Carlton Blues"      ~ "Carlton Blues",
+      team == "Collingwood"                            ~ "Collingwood Magpies",
+      team == "Essendon"                               ~ "Essendon Bombers",
+      team == "Fremantle"                              ~ "Fremantle Dockers",
+      team == "Geelong" | team == "Geelong Cats"       ~ "Geelong Cats",
+      team == "Gold Coast" | team == "Gold Coast SUNS" ~ "Gold Coast Suns",
+      team == "GWS" | team == "Greater Western Sydney" | team == "GWS GIANTS"  ~ "GWS Giants",
+      team == "Hawthorn"                               ~ "Hawthorn Hawks",
+      team == "Melbourne"                              ~ "Melbourne Demons",
+      team == "North Melbourne" | team == "North"      ~ "North Melbourne Kangaroos",
+      team == "Port Adelaide" | team == "Port"         ~ "Port Adelaide Power",
+      team == "Richmond"                               ~ "Richmond Tigers",
+      team == "St Kilda"                               ~ "St Kilda Saints",
+      team == "Sydney" | team == "Sydney Swans"        ~ "Sydney Swans",
+      team == "West Coast" | team == "West Coast Eagles" ~ "West Coast Eagles",
+      team == "Western Bulldogs" | team == "Western"   ~ "Western Bulldogs",
+      TRUE                                             ~ team
+    )
 }
 
-saveRDS(stats, "data/raw/afl_stats_2026.rds")
-saveRDS(player_details, "data/raw/afl_player_details_2026.rds")
+# 1. Fetch data
+stats <- fitzRoy::fetch_player_stats(season = 2026, source = "AFL")
+player_details_afl <- fitzRoy::fetch_player_details(season = 2026, source = "AFL")
+
+# Fetch full career history from afltables
+player_details_afltables_all <- fitzRoy::fetch_player_details(season = 2026, source = "afltables")
+
+# Aggregate career stats globally per player to get correct career totals
+player_career_stats <- player_details_afltables_all %>%
+  separate(Player, into = c("givenName", "surname"), sep = " ", extra = "merge") %>%
+  mutate(Team = normalize_team_name(Team)) %>%
+  group_by(givenName, surname) %>%
+  summarise(
+    careerGames = sum(as.numeric(Games), na.rm = TRUE),
+    careerWins = sum(as.numeric(Wins), na.rm = TRUE),
+    careerDraws = sum(as.numeric(Draws), na.rm = TRUE),
+    careerLosses = sum(as.numeric(Losses), na.rm = TRUE),
+    .groups = 'drop'
+  )
+
+# Keep the original joined details for 2026 for other metadata
+# Filter to 2026 to ensure unique mapping per player-team combination
+player_details_afltables_2026 <- player_details_afltables_all %>%
+  separate(Player, into = c("givenName", "surname"), sep = " ", extra = "merge") %>%
+  mutate(Team = normalize_team_name(Team)) %>%
+  filter(str_detect(Seasons, "2026"))
+
+# 3. Join: Combine stats with player details
+# Join on stats: player.player.player.playerId and player_details_afl: providerId
+stats_with_details <- stats %>%
+  left_join(player_details_afl, by = c("player.player.player.playerId" = "providerId")) %>%
+  mutate(team.name = normalize_team_name(team.name))
+
+# 4. Join 2: Combine with AFLTables
+# Join 2026 details for metadata, then join aggregated career stats
+final_data <- stats_with_details %>%
+  left_join(player_details_afltables_2026, 
+            by = c("player.player.player.givenName" = "givenName",
+                   "player.player.player.surname" = "surname",
+                   "team.name" = "Team")) %>%
+  left_join(player_career_stats, 
+            by = c("player.player.player.givenName" = "givenName",
+                   "player.player.player.surname" = "surname"))
+
+
+# Save
+if (!dir.exists("data/raw")) {
+  dir.create("data/raw", recursive = TRUE)
+}
+
+saveRDS(final_data, "data/raw/afl_combined_data_2026.rds")
 
