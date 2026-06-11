@@ -19,7 +19,40 @@ const getEstimatedPosition = (player: any) => {
   return top ? top.name : 'Midfielder';
 };
 
-const PlayerCard = ({ player, rank, initialView = 'season' }: { player: any; rank: number; initialView?: 'season' | 'latest' }) => {
+const calculateThresholds = (allPlayers: any[], statKey: string, isNegativeMetric = false) => {
+  const values = allPlayers.map(p => p[statKey] || 0).sort((a, b) => isNegativeMetric ? a - b : b - a);
+  const n = values.length;
+  
+  return {
+    unicorn: values[Math.floor(n * 0.01)],
+    elite: values[Math.floor(n * 0.12)],
+    aflStandard: values[Math.floor(n * 0.65)],
+    stateLeague: values[Math.floor(n * 0.90)],
+  };
+};
+
+const getStatTier = (statKey: string, val: number, thresholds: any) => {
+  const t = thresholds[statKey];
+  if (!t) return { label: '-', color: 'text-zinc-600' };
+
+  if (statKey === 'Avg_PIR_Negative') {
+    // For negative drag, lower values are better (less drag).
+    // Swap tier logic: Lower val = higher tier (better performance).
+    if (val <= t.unicorn) return { label: 'Low', color: 'text-emerald-400' };
+    if (val <= t.elite) return { label: 'Low', color: 'text-blue-400' };
+    if (val <= t.aflStandard) return { label: 'Average', color: 'text-zinc-400' };
+    if (val <= t.stateLeague) return { label: 'High', color: 'text-amber-400' };
+    return { label: 'Very High', color: 'text-red-500' };
+  }
+
+  if (val >= t.unicorn) return { label: 'Unicorn', color: 'text-purple-400' };
+  if (val >= t.elite) return { label: 'Elite', color: 'text-amber-400' };
+  if (val >= t.aflStandard) return { label: 'AFL Standard', color: 'text-blue-400' };
+  if (val >= t.stateLeague) return { label: 'State League', color: 'text-emerald-500' };
+  return { label: 'Local Footy', color: 'text-zinc-600' };
+};
+
+const PlayerCard = ({ player, rank, initialView = 'season', thresholds, isExpanded, onToggle }: { player: any; rank: number; initialView?: 'season' | 'latest', thresholds: any, isExpanded: boolean, onToggle: () => void }) => {
   const [viewMode, setViewMode] = useState<'season' | 'latest'>(initialView);
 
   // Extract real variables from the newly processed JSON file
@@ -40,7 +73,7 @@ const PlayerCard = ({ player, rank, initialView = 'season' }: { player: any; ran
   ];
 
   const stats = rawStats.map((stat) => {
-    // Determine the latest game category score dynamically based on the proportional shift of total PIR
+    // Determine the latest game category score dynamically
     let latestVal = 0;
     if (hasLatestGame) {
       const scalar = player.Latest_Round_PIR / (player.Season_Avg_PIR || 100);
@@ -51,11 +84,17 @@ const PlayerCard = ({ player, rank, initialView = 'season' }: { player: any; ran
 
     const currentVal = viewMode === 'latest' && hasLatestGame ? latestVal : (stat.seasonVal || 0);
     const delta = hasLatestGame ? latestVal - (stat.seasonVal || 0) : 0;
+    
+    // Determine if the tag should be shown
+    const showTag = !(stat.key === 'Avg_cat_ruck' && currentVal <= 0);
+    const tier = showTag ? getStatTier(stat.key, currentVal, thresholds) : null;
 
     return {
       ...stat,
       currentVal: typeof currentVal === 'number' ? currentVal : 0,
-      delta: typeof delta === 'number' ? delta : 0
+      delta: typeof delta === 'number' ? delta : 0,
+      tier,
+      showTag
     };
   });
 
@@ -67,7 +106,10 @@ const PlayerCard = ({ player, rank, initialView = 'season' }: { player: any; ran
     .slice(0, 2);
 
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 hover:border-zinc-700 transition-all flex flex-col justify-between shadow-lg relative overflow-hidden">
+    <div 
+      className={`bg-zinc-900 border border-zinc-800 rounded-xl p-5 hover:border-zinc-700 transition-all flex flex-col justify-between shadow-lg relative overflow-hidden ${!isExpanded ? 'cursor-pointer' : ''}`}
+      onClick={onToggle}
+    >
       {/* Ranking & Games Badge */}
         <div className="absolute top-0 right-0 flex items-center bg-zinc-950/40 border-b border-l border-zinc-800 rounded-bl-lg overflow-hidden">
         <span className="text-[10px] font-bold text-zinc-400 px-2 py-1 border-r border-zinc-800 bg-zinc-900">
@@ -100,7 +142,7 @@ const PlayerCard = ({ player, rank, initialView = 'season' }: { player: any; ran
       </div>
 
         {/* Primary Toggle & Main PIR display */}
-        <div className="my-3 p-3 bg-zinc-950/50 rounded-lg border border-zinc-800/60">
+        <div className="my-3 p-3 bg-zinc-950/50 rounded-lg border border-zinc-800/60" onClick={(e) => e.stopPropagation()}>
           <div className="flex justify-between items-center mb-2.5">
             <div className="flex bg-zinc-900 p-0.5 rounded-md border border-zinc-800">
               <button
@@ -175,71 +217,86 @@ const PlayerCard = ({ player, rank, initialView = 'season' }: { player: any; ran
         </div>
       </div>
 
-      {/* Interactive Sparkline / Round History Bar Chart */}
-      {roundHistory.length > 0 && (
-        <div className="mb-4 bg-zinc-950/40 border border-zinc-800/50 rounded-lg p-2.5">
-          <div className="text-[9px] uppercase tracking-wider text-zinc-500 font-bold mb-2 flex justify-between items-center">
-            <span>PIR Form History</span>
-            <span className="text-[8px] text-zinc-600">Rounds {roundHistory[0].round}–{roundHistory[roundHistory.length - 1].round}</span>
-          </div>
-          <div className="flex items-end justify-between gap-1 h-9 pt-1.5 px-1">
-            {roundHistory.map((h: any, idx: number) => {
-              // Normalize heights relative to a max potential PIR of 220
-              const maxPIRVal = 220;
-              const heightPercent = Math.min(100, Math.max(10, (h.pir / maxPIRVal) * 100));
-              
-              // Tier color scheme
-              let barColor = 'bg-zinc-700 hover:bg-zinc-600'; // Standard Contributions (<100)
-              if (h.pir >= 200) {
-                barColor = 'bg-amber-400 hover:bg-amber-300'; // Immortal Zone
-              } else if (h.pir >= 150) {
-                barColor = 'bg-emerald-500 hover:bg-emerald-400'; // Match Winner
-              } else if (h.pir >= 100) {
-                barColor = 'bg-blue-500 hover:bg-blue-400'; // Game Changer
-              }
-
-              return (
-                <div
-                  key={idx}
-                  style={{ height: `${heightPercent}%` }}
-                  className={`flex-1 min-w-[6px] rounded-t-sm transition-all duration-300 cursor-pointer relative group ${barColor}`}
-                >
-                  {/* Micro Hover Tooltip */}
-                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 hidden group-hover:block bg-zinc-950 text-[9px] font-bold text-white py-0.5 px-1.5 rounded border border-zinc-800 shadow-xl whitespace-nowrap z-30">
-                    R{h.round}: {h.pir != null ? h.pir.toFixed(1) : "0.0"}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* Stat Breakdown */}
-      <div className="mt-2 pt-3 border-t border-zinc-800/60 space-y-2">
-        <div className="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">PIR Breakdown</div>
-        {stats.map((stat) => (
-          <div key={stat.label} className="flex justify-between items-center text-xs">
-            <span className="text-zinc-400">{stat.label}</span>
-            <div className="flex items-center gap-1.5 font-mono">
-              {viewMode === 'latest' && hasLatestGame && (
-                <span className={`text-[10px] font-bold ${
-                  stat.delta != null && stat.delta >= 0 
-                    ? stat.isNegative ? 'text-red-400/80' : 'text-emerald-400/80' 
-                    : stat.isNegative ? 'text-emerald-400/80' : 'text-red-400/80'
-                }`}>
-                  {typeof stat.delta === 'number' ? (stat.delta >= 0 ? '+' : '') + stat.delta.toFixed(1) : '0.0'}
-                </span>
-              )}
-              <span className={`${stat.isNegative ? 'text-red-400' : 'text-emerald-400'} font-semibold`}>
-                {typeof stat.currentVal === 'number' 
-                  ? (stat.isNegative ? `-${stat.currentVal.toFixed(1)}` : stat.currentVal.toFixed(1)) 
-                  : "0.0"}
-              </span>
-            </div>
-          </div>
-        ))}
+      <div className="text-[10px] text-zinc-600 text-center -mt-2 mb-2 font-bold opacity-70">
+        {isExpanded ? '▲ Collapse' : '▼ Expand'}
       </div>
+
+      {isExpanded && (
+        <>
+          {/* Interactive Sparkline / Round History Bar Chart */}
+          {roundHistory.length > 0 && (
+            <div className="mb-4 bg-zinc-950/40 border border-zinc-800/50 rounded-lg p-2.5">
+              <div className="text-[9px] uppercase tracking-wider text-zinc-500 font-bold mb-2 flex justify-between items-center">
+                <span>PIR Form History</span>
+                <span className="text-[8px] text-zinc-600">Rounds {roundHistory[0].round}–{roundHistory[roundHistory.length - 1].round}</span>
+              </div>
+              <div className="flex items-end justify-between gap-1 h-9 pt-1.5 px-1">
+                {roundHistory.map((h: any, idx: number) => {
+                  // Normalize heights relative to a max potential PIR of 220
+                  const maxPIRVal = 220;
+                  const heightPercent = Math.min(100, Math.max(10, (h.pir / maxPIRVal) * 100));
+                  
+                  // Tier color scheme
+                  let barColor = 'bg-zinc-700 hover:bg-zinc-600'; // Standard Contributions (<100)
+                  if (h.pir >= 200) {
+                    barColor = 'bg-amber-400 hover:bg-amber-300'; // Immortal Zone
+                  } else if (h.pir >= 150) {
+                    barColor = 'bg-emerald-500 hover:bg-emerald-400'; // Match Winner
+                  } else if (h.pir >= 100) {
+                    barColor = 'bg-blue-500 hover:bg-blue-400'; // Game Changer
+                  }
+
+                  return (
+                    <div
+                      key={idx}
+                      style={{ height: `${heightPercent}%` }}
+                      className={`flex-1 min-w-[6px] rounded-t-sm transition-all duration-300 cursor-pointer relative group ${barColor}`}
+                    >
+                      {/* Micro Hover Tooltip */}
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 hidden group-hover:block bg-zinc-950 text-[9px] font-bold text-white py-0.5 px-1.5 rounded border border-zinc-800 shadow-xl whitespace-nowrap z-30">
+                        R{h.round}: {h.pir != null ? h.pir.toFixed(1) : "0.0"}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Stat Breakdown */}
+          <div className="mt-2 pt-3 border-t border-zinc-800/60 space-y-2">
+            <div className="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">PIR Breakdown</div>
+            {stats.map((stat) => (
+              <div key={stat.label} className="flex justify-between items-center text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="text-zinc-400">{stat.label}</span>
+                  {stat.showTag && (
+                    <span className={`text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-sm ${stat.tier.color} bg-zinc-800/30`}>
+                      {stat.tier.label}
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-center gap-1.5 font-mono">
+                  {viewMode === 'latest' && hasLatestGame && (
+                    <span className={`text-[10px] font-bold ${
+                      stat.delta != null && stat.delta >= 0 
+                        ? stat.isNegative ? 'text-red-400/80' : 'text-emerald-400/80' 
+                        : stat.isNegative ? 'text-emerald-400/80' : 'text-red-400/80'
+                    }`}>
+                      {typeof stat.delta === 'number' ? (stat.delta >= 0 ? '+' : '') + stat.delta.toFixed(1) : '0.0'}
+                    </span>
+                  )}
+                  <span className={`${stat.isNegative ? 'text-red-400' : 'text-emerald-400'} font-semibold`}>
+                    {typeof stat.currentVal === 'number' 
+                      ? (stat.isNegative ? `-${stat.currentVal.toFixed(1)}` : stat.currentVal.toFixed(1)) 
+                      : "0.0"}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };
@@ -249,8 +306,26 @@ const PlayersPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [positionFilter, setPositionFilter] = useState('All');
+  const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
 
   const positions = ['All', 'Back Pocket', 'Centre Half Back', 'Centre Half Forward', 'Forward Pocket', 'Full Back', 'Full Forward', 'Half Back Flank', 'Half Forward Flank', 'Inside Mid', 'Ruck Rover', 'Ruckman', 'Utility', 'Wing'];
+
+  const toggleCard = (id: string) => {
+    setExpandedCards(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const expandAll = () => {
+    setExpandedCards(new Set(paginatedPlayers.map((p: any) => p["player.playerId"] || p.id)));
+  };
+
+  const collapseAll = () => {
+    setExpandedCards(new Set());
+  };
 
   useEffect(() => {
     setIsClient(true);
@@ -285,6 +360,15 @@ const PlayersPage = () => {
         return (b.Season_Avg_PIR || 0) - (a.Season_Avg_PIR || 0);
     });
 
+  const thresholds = {
+    Avg_cat_disposal: calculateThresholds(allPlayersData, 'Avg_cat_disposal'),
+    Avg_cat_contest_clearance: calculateThresholds(allPlayersData, 'Avg_cat_contest_clearance'),
+    Avg_cat_damaging_impact: calculateThresholds(allPlayersData, 'Avg_cat_damaging_impact'),
+    Avg_cat_defensive_grit: calculateThresholds(allPlayersData, 'Avg_cat_defensive_grit'),
+    Avg_cat_ruck: calculateThresholds(allPlayersData, 'Avg_cat_ruck'),
+    Avg_PIR_Negative: calculateThresholds(allPlayersData, 'Avg_PIR_Negative', true),
+  };
+
   // Pagination math
   const totalItems = filteredPlayers.length;
   const totalPages = Math.max(1, Math.ceil(totalItems / ITEMS_PER_PAGE));
@@ -302,6 +386,8 @@ const PlayersPage = () => {
           <p className="text-zinc-400">Complete statistical rating of all active AFL players.</p>
         </div>
         <div className="flex items-center gap-4">
+          <button onClick={expandAll} className="text-xs font-bold text-zinc-400 hover:text-white">Expand All</button>
+          <button onClick={collapseAll} className="text-xs font-bold text-zinc-400 hover:text-white">Collapse All</button>
           <select
             value={positionFilter}
             onChange={(e) => {
@@ -332,7 +418,7 @@ const PlayersPage = () => {
 
       {/* Players Card Grid */}
       {paginatedPlayers.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8 items-start">
             {paginatedPlayers.map((player: any, index: number) => {
             // Rank based on all players, regardless of pagination
             const allEligiblePlayers = allPlayersData
@@ -343,12 +429,17 @@ const PlayersPage = () => {
             const globalRank = isEligible 
               ? allEligiblePlayers.findIndex((p: any) => p["player.playerId"] === player["player.playerId"]) + 1
               : 0; // Rank 0 means unranked
+            
+            const playerId = player["player.playerId"] || index.toString();
 
             return (
               <PlayerCard
-                key={player["player.playerId"] || index}
+                key={playerId}
                 player={player}
                 rank={globalRank}
+                thresholds={thresholds}
+                isExpanded={expandedCards.has(playerId)}
+                onToggle={() => toggleCard(playerId)}
               />
             );
           })}

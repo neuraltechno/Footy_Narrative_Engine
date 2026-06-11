@@ -33,23 +33,64 @@ normalize_team_name <- function(team) {
 processed_rounds <- raw_stats %>%
   mutate(
     team.name = normalize_team_name(team.name),
+    # ==============================================================================
+    # PIR RATING CALCULATION (Touch-Relative Efficiency Model)
+    # ==============================================================================
+    
+    # 1. Raw Disposal Score (Efficiency-Weighted)
     disposal_raw = (kicks * 2.0) + (handballs * 1.0),
     disposal_score = disposal_raw * (disposalEfficiency / 100),
     
-    # Category Breakdowns
-    cat_disposal = disposal_score + (metresGained * 0.05) + (bounces * 1.5) + (extendedStats.kickins * 0.5) + (extendedStats.kickinsPlayon * 1.0),
-    cat_contest_clearance = (contestedPossessions * 4.0) + (uncontestedPossessions * 0.5) + (clearances.centreClearances * 6.0) + (clearances.stoppageClearances * 4.5) + (contestedMarks * 8.0) + (marks * 1.0) + (marksInside50 * 4.0) + (extendedStats.marksOnLead * 2.5) + (extendedStats.groundBallGets * 2.0) + (extendedStats.f50GroundBallGets * 4.0),
-    cat_damaging_impact = (goals * 15.0) + (behinds * 2.0) + (goalAssists * 8.0) + (scoreInvolvements * 3.0) + (extendedStats.scoreLaunches * 6.0),
-    cat_defensive_grit = (tackles * 3.0) + (tacklesInside50 * 5.0) + (extendedStats.defHalfPressureActs * 1.0) + (extendedStats.pressureActs * 0.5) + (onePercenters * 2.0) + (extendedStats.spoils * 3.0) + (intercepts * 5.0) + (extendedStats.interceptMarks * 4.0),
-    cat_ruck = ((hitouts * 0.2) * (extendedStats.hitoutToAdvantageRate / 100)) + (extendedStats.hitoutsToAdvantage * 5.0),
+    # 2. Category Breakdowns (Positive Contribution)
+    cat_disposal = disposal_score + (metresGained * 0.05) + (bounces * 1.5) + 
+      (extendedStats.kickins * 0.5) + (extendedStats.kickinsPlayon * 1.0),
     
+    cat_contest_clearance = (contestedPossessions * 4.0) + (uncontestedPossessions * 0.5) + 
+      (clearances.centreClearances * 6.0) + (clearances.stoppageClearances * 4.5) + 
+      (contestedMarks * 8.0) + (marks * 1.0) + (marksInside50 * 4.0) + 
+      (extendedStats.marksOnLead * 2.5) + (extendedStats.groundBallGets * 2.0) + 
+      (extendedStats.f50GroundBallGets * 4.0),
+    
+    cat_damaging_impact = (goals * 15.0) + (behinds * 2.0) + (goalAssists * 8.0) + 
+      (scoreInvolvements * 3.0) + (extendedStats.scoreLaunches * 6.0),
+    
+    cat_defensive_grit = (tackles * 3.0) + (tacklesInside50 * 5.0) + 
+      (extendedStats.defHalfPressureActs * 1.0) + (extendedStats.pressureActs * 0.5) + 
+      (onePercenters * 2.0) + (extendedStats.spoils * 3.0) + 
+      (intercepts * 5.0) + (extendedStats.interceptMarks * 4.0),
+    
+    cat_ruck = ((hitouts * 0.2) * (extendedStats.hitoutToAdvantageRate / 100)) + 
+      (extendedStats.hitoutsToAdvantage * 5.0),
+    
+    # Total Positive PIR
     PIR_Positive = (cat_disposal + cat_contest_clearance + cat_damaging_impact + cat_defensive_grit + cat_ruck),
     
-    PIR_Negative = (clangers * 5.0) + (turnovers * 3.0) + (freesAgainst * 4.0) + (extendedStats.contestDefLosses * 4.0),
     
+    # ==============================================================================
+    # 3. Touch-Relative Negative Drag (Tuned for Elite High-Volume Players)
+    # ==============================================================================
+    total_touches = pmax((kicks + handballs), 1.0),
+    
+    raw_mistake_points = (clangers * 5.0) + (turnovers * 3.0) + 
+      (freesAgainst * 4.0) + (extendedStats.contestDefLosses * 4.0),
+    
+    mistake_rate = raw_mistake_points / total_touches,
+    
+    # Dampening Coefficient (k)
+    # Raise this to protect high-volume players more; lower it to punish them more.
+    # Setting k = 2.5 provides a strong buffer for elite mid/ruck volume.
+    k = 1.0,
+    
+    # Tuned Negative Drag calculation
+    PIR_Negative = raw_mistake_points * (mistake_rate / (mistake_rate + k)),
+    
+    
+    # 4. Time On Ground (TOG) Normalization
     TOG_Floor = pmax(timeOnGroundPercentage, 15.0),
     TOG_Modifier = ifelse(timeOnGroundPercentage >= 80.0, 1.0, 1.0 + ((80.0 - TOG_Floor) / 100) * 0.7),
     
+    
+    # 5. Final PIR Output
     PIR = (PIR_Positive * TOG_Modifier) - PIR_Negative
   )
 processed_rounds <- processed_rounds %>% filter(!is.na(jumperNumber) & jumperNumber != '')
