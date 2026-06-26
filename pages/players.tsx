@@ -1,9 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import allPlayersData from '../data/processed/players_pir.json';
 import Link from 'next/link';
 import RankingMomentum from '../components/RankingMomentum';
+import RoundHistoryChart from '../components/RoundHistoryChart';
 
 const ITEMS_PER_PAGE = 24;
+
+// Two-tier position relationship mapping matching process_stats.R outputs
+const POSITION_STRUCTURE = {
+  All: [],
+  Backs: ['Key Backs', 'General Backs'],
+  Midfield: ['Midfield'],
+  Ruck: [],
+  Forwards: ['Key Forwards', 'General Forwards'],
+  Interchange: []
+} as const;
+
+type PositionLine = keyof typeof POSITION_STRUCTURE;
 
 const calculateThresholds = (allPlayers: any[], statKey: string, isNegativeMetric = false) => {
   // Only use players with >= 3 games for threshold calculation
@@ -44,7 +57,12 @@ const PlayerCard = ({ player, rank, filteredHistory, initialView = 'season', thr
   const [viewMode, setViewMode] = useState<'season' | 'latest'>(initialView);
 
   const gamesPlayed = player.Games_Played_2026 || 0;
-  const position = player.playerPosition || "Midfielder";
+  
+  // Clean dynamic display representing the hierarchical status of the player
+  const positionDisplay = player.playerPosition 
+    ? `${player.playerPosition} (${player.playerGroup || 'Utility'})`
+    : "Midfielder";
+
   const roundHistory = player.PIR_History || [];
   const hasLatestGame = player.Latest_Round_PIR && player.Latest_Round_PIR > 0;
 
@@ -80,11 +98,8 @@ const PlayerCard = ({ player, rank, filteredHistory, initialView = 'season', thr
     };
   });
 
-  const topStrengths = [...rawStats]
-    .filter(s => !s.isNegative)
-    .map(s => ({ ...s, seasonVal: s.seasonVal || 0 }))
-    .sort((a, b) => b.seasonVal - a.seasonVal)
-    .slice(0, 2);
+  // Safely extract the pre-calculated strengths from your R backend JSON payload
+  const topStrengths = player?.Significant_Strengths || [];
 
   return (
     <div 
@@ -113,7 +128,7 @@ const PlayerCard = ({ player, rank, filteredHistory, initialView = 'season', thr
             <h3 className="text-lg font-bold text-white line-clamp-1 leading-snug">
               {player['player.givenName']} {player['player.surname']}
             </h3>
-            <p className="text-xs text-zinc-400 font-medium">{position}</p>
+            <p className="text-xs text-zinc-400 font-medium">{positionDisplay}</p>
             <p className="text-xs text-zinc-500">{player.Age} yrs · {player.heightInCm}cm · {player.weightInKg}kg</p>
             <div className="text-[10px] text-zinc-500 mt-1">
               {player.careerGames || 0} Games · {player.careerWins}W / {player.careerDraws || 0}D / {player.careerLosses || 0}L ({player.careerGames && player.careerGames > 0 ? ((player.careerWins / player.careerGames) * 100).toFixed(0) : 0}%)
@@ -159,13 +174,31 @@ const PlayerCard = ({ player, rank, filteredHistory, initialView = 'season', thr
         </div>
 
         <div className="flex justify-between items-end">
-          <div>
-            <div className="text-[10px] text-zinc-400 mb-0.5">Impact Rating</div>
-            <div className={`text-2xl font-black ${viewMode === 'latest' ? 'text-blue-400' : 'text-white'}`}>
-              {viewMode === 'season'
-                ? (player.Season_Avg_PIR != null ? player.Season_Avg_PIR.toFixed(1) : "0.0")
-                : (player.Latest_Round_PIR != null ? player.Latest_Round_PIR.toFixed(1) : "0.0")
-              }
+          <div className="flex items-end gap-4">
+            <div>
+              <div className="text-[10px] text-zinc-400 mb-0.5">Impact Rating</div>
+              <div className={`text-2xl font-black ${viewMode === 'latest' ? 'text-blue-400' : 'text-white'}`}>
+                {viewMode === 'season'
+                  ? (player.Season_Avg_PIR != null ? player.Season_Avg_PIR.toFixed(1) : "0.0")
+                  : (player.Latest_Round_PIR != null ? player.Latest_Round_PIR.toFixed(1) : "0.0")
+                }
+              </div>
+            </div>
+
+            {/* High / Low Season Ranges Panel */}
+            <div className="flex items-center gap-1.5 pb-0.5">
+              <div className="flex flex-col bg-zinc-900/50 px-2 py-0.5 rounded border border-zinc-800/40 text-[9px] font-medium leading-tight">
+                <span className="text-zinc-500 text-[8px] font-bold uppercase tracking-wider">High</span>
+                <span className="text-emerald-400 font-bold">
+                  {player.Max_PIR != null ? player.Max_PIR.toFixed(1) : "0.0"}
+                </span>
+              </div>
+              <div className="flex flex-col bg-zinc-900/50 px-2 py-0.5 rounded border border-zinc-800/40 text-[9px] font-medium leading-tight">
+                <span className="text-zinc-500 text-[8px] font-bold uppercase tracking-wider">Low</span>
+                <span className="text-red-400 font-bold">
+                  {player.Min_PIR != null ? player.Min_PIR.toFixed(1) : "0.0"}
+                </span>
+              </div>
             </div>
           </div>
           
@@ -198,14 +231,28 @@ const PlayerCard = ({ player, rank, filteredHistory, initialView = 'season', thr
         <>
           {/* Dynamic Key Strengths Highlight */}
           <div className="mb-4 bg-emerald-950/10 border border-emerald-500/10 rounded-lg p-2.5">
-            <div className="text-[9px] uppercase tracking-wider text-emerald-400 font-black mb-1">Significant Strengths</div>
+            <div className="flex items-baseline justify-between mb-1">
+              <div className="text-[9px] uppercase tracking-wider text-emerald-400 font-black">
+                Significant Strengths
+              </div>
+              <div className="text-[8px] tracking-wide text-zinc-500 uppercase font-medium">
+                vs league mean
+              </div>
+            </div>
+            
             <div className="space-y-1">
-              {topStrengths.map((str) => (
-                <div key={str.label} className="text-xs flex justify-between text-zinc-300">
-                  <span className="text-zinc-400">⚡ {str.label}</span>
-                  <span className="font-extrabold text-emerald-400">+{typeof str.seasonVal === 'number' ? str.seasonVal.toFixed(1) : "0.0"}</span>
-                </div>
-              ))}
+              {topStrengths.length > 0 ? (
+                topStrengths.map((str) => (
+                  <div key={str.category} className="text-xs flex justify-between text-zinc-300">
+                    <span className="text-zinc-400">⚡ {str.category}</span>
+                    <span className="font-extrabold text-emerald-400">
+                      +{typeof str.value === 'number' ? str.value.toFixed(1) : "0.0"}
+                    </span>
+                  </div>
+                ))
+              ) : (
+                <div className="text-xs text-zinc-500 italic">No metrics above league average</div>
+              )}
             </div>
           </div>
 
@@ -220,37 +267,8 @@ const PlayerCard = ({ player, rank, filteredHistory, initialView = 'season', thr
           )}
 
           {/* Interactive Sparkline / Round History Bar Chart */}
-          {roundHistory.length > 0 && (
-            <div className="mb-4 bg-zinc-950/40 border border-zinc-800/50 rounded-lg p-2.5">
-              <div className="text-[9px] uppercase tracking-wider text-zinc-500 font-bold mb-2 flex justify-between items-center">
-                <span>PIR Round Breakdown</span>
-                <span className="text-[8px] text-zinc-600">Rounds {roundHistory[0].round}–{roundHistory[roundHistory.length - 1].round}</span>
-              </div>
-              <div className="relative flex items-end h-16 pt-2 px-1 w-full gap-1">
-                {roundHistory.map((h: any, i: number) => {
-                  const barHeight = (Math.min(220, h.pir || 0) / 220) * 100;
-                  let barColor = 'bg-zinc-600';
-                  if (h.pir >= 200) barColor = 'bg-amber-400';
-                  else if (h.pir >= 150) barColor = 'bg-emerald-500';
-                  else if (h.pir >= 100) barColor = 'bg-blue-500';
-                  
-                  const displayPir = h.running_avg_pir != null ? h.running_avg_pir : (h.pir || 0);
+          <RoundHistoryChart roundHistory={roundHistory} />
 
-                  return (
-                    <div key={i} className="group flex-1 flex flex-col justify-end items-center relative h-full">
-                      <div 
-                        className={`w-full rounded-t-sm transition-all duration-300 ${barColor}`}
-                        style={{ height: `${barHeight}%` }}
-                      />
-                      <div className="absolute -top-6 hidden group-hover:block bg-zinc-800 text-[9px] font-bold text-white py-0.5 px-1.5 rounded border border-zinc-700 shadow-xl whitespace-nowrap z-50">
-                        R{h.round}: {displayPir.toFixed(0)}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
 
           {/* Stat Breakdown */}
           <div className="mt-2 pt-3 border-t border-zinc-800/60 space-y-2">
@@ -294,10 +312,12 @@ const PlayersPage = () => {
   const [isClient, setIsClient] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
-  const [positionFilter, setPositionFilter] = useState('All');
-  const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
+  
+  // Hierarchical Position Filters
+  const [lineFilter, setLineFilter] = useState<PositionLine>('All');
+  const [groupFilter, setGroupFilter] = useState<string>('All');
 
-  const positions = ['All', 'Back Pocket', 'Inside/Outside Mid', 'Centre Half Back', 'Centre Half Forward', 'Full Back', 'Full Forward', 'Forward Pocket', 'Half Back Flank', 'Half Forward Flank', 'Utility', 'Inside Mid', 'Ruckman', 'Wing'];
+  const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
 
   const toggleCard = (id: string) => {
     setExpandedCards(prev => {
@@ -320,34 +340,50 @@ const PlayersPage = () => {
     setIsClient(true);
   }, []);
 
-  if (!isClient) return null;
-  // A master array of players who actually qualify for 2026 data analytics
-  const eligibleSeasonPlayers = allPlayersData.filter((p: any) => (p.Games_Played_2026 || 0) >= 3);
-
-  // Filter and sort players matching processed backend keys
-  const filteredPlayers = eligibleSeasonPlayers
-    .filter((player: any) => {
-      // Existing search and position filters
-      const fullName = `${player['player.givenName']} ${player['player.surname']}`.toLowerCase();
-      const team = (player['team.name'] || '').toLowerCase();
-      const search = searchTerm.toLowerCase();
-      const playerPos = player.playerPosition || "Midfielder";
-      
-      const matchesSearch = fullName.includes(search) || team.includes(search);
-      const matchesPosition = positionFilter === 'All' || playerPos === positionFilter;
-      
-      return matchesSearch && matchesPosition;
-    })
-    .sort((a: any, b: any) => (b.Season_Avg_PIR || 0) - (a.Season_Avg_PIR || 0));
-
-  const thresholds = {
-    Avg_cat_disposal: calculateThresholds(eligibleSeasonPlayers, 'Avg_cat_disposal'),
-    Avg_cat_contest_clearance: calculateThresholds(eligibleSeasonPlayers, 'Avg_cat_contest_clearance'),
-    Avg_cat_damaging_impact: calculateThresholds(eligibleSeasonPlayers, 'Avg_cat_damaging_impact'),
-    Avg_cat_defensive_grit: calculateThresholds(eligibleSeasonPlayers, 'Avg_cat_defensive_grit'),
-    Avg_cat_ruck: calculateThresholds(eligibleSeasonPlayers, 'Avg_cat_ruck'),
-    Avg_PIR_Negative: calculateThresholds(eligibleSeasonPlayers, 'Avg_PIR_Negative', true),
+  // Safe handler to prevent out-of-bounds cross-filtering
+  const handleLineChange = (line: PositionLine) => {
+    setLineFilter(line);
+    setGroupFilter('All');
+    setCurrentPage(1);
   };
+
+  const eligibleSeasonPlayers = useMemo(() => {
+    return allPlayersData.filter((p: any) => (p.Games_Played_2026 || 0) >= 3);
+  }, []);
+
+  // Updated filter framework honoring playerLine and playerGroup
+  const filteredPlayers = useMemo(() => {
+    return eligibleSeasonPlayers
+      .filter((player: any) => {
+        const fullName = `${player['player.givenName']} ${player['player.surname']}`.toLowerCase();
+        const team = (player['team.name'] || '').toLowerCase();
+        const search = searchTerm.toLowerCase();
+        
+        const matchesSearch = fullName.includes(search) || team.includes(search);
+        
+        // 1. Check macro line assignment (Backs, Forwards, etc.)
+        const matchesLine = lineFilter === 'All' || player.playerLine === lineFilter;
+        
+        // 2. Check micro group assignment (Key Backs, General Forwards, etc.)
+        const matchesGroup = groupFilter === 'All' || player.playerGroup === groupFilter;
+        
+        return matchesSearch && matchesLine && matchesGroup;
+      })
+      .sort((a: any, b: any) => (b.Season_Avg_PIR || 0) - (a.Season_Avg_PIR || 0));
+  }, [eligibleSeasonPlayers, searchTerm, lineFilter, groupFilter]);
+
+  const thresholds = useMemo(() => {
+    return {
+      Avg_cat_disposal: calculateThresholds(eligibleSeasonPlayers, 'Avg_cat_disposal'),
+      Avg_cat_contest_clearance: calculateThresholds(eligibleSeasonPlayers, 'Avg_cat_contest_clearance'),
+      Avg_cat_damaging_impact: calculateThresholds(eligibleSeasonPlayers, 'Avg_cat_damaging_impact'),
+      Avg_cat_defensive_grit: calculateThresholds(eligibleSeasonPlayers, 'Avg_cat_defensive_grit'),
+      Avg_cat_ruck: calculateThresholds(eligibleSeasonPlayers, 'Avg_cat_ruck'),
+      Avg_PIR_Negative: calculateThresholds(eligibleSeasonPlayers, 'Avg_PIR_Negative', true),
+    };
+  }, [eligibleSeasonPlayers]);
+
+  if (!isClient) return null;
 
   const totalItems = filteredPlayers.length;
   const totalPages = Math.max(1, Math.ceil(totalItems / ITEMS_PER_PAGE));
@@ -355,28 +391,50 @@ const PlayersPage = () => {
   const startIndex = (activePage - 1) * ITEMS_PER_PAGE;
   const paginatedPlayers = filteredPlayers.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
+  // Derive dynamic sub-options group based on selected macro line
+  const availableSubGroups = POSITION_STRUCTURE[lineFilter];
+
   return (
     <div className="min-h-screen bg-zinc-950 p-8 font-sans text-zinc-100">
-      <header className="mb-12 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+      <header className="mb-8 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold mb-2 text-white">Player Impact Rating (PIR) - Season 2026</h1>
           <p className="text-zinc-400">Complete statistical rating of all active AFL players.</p>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
           <button onClick={expandAll} className="text-xs font-bold text-zinc-400 hover:text-white">Expand All</button>
           <button onClick={collapseAll} className="text-xs font-bold text-zinc-400 hover:text-white">Collapse All</button>
+          
+          {/* Main Line Macro Select Filter */}
           <select
-            value={positionFilter}
-            onChange={(e) => {
-              setPositionFilter(e.target.value);
-              setCurrentPage(1);
-            }}
-            className="px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-zinc-200"
+            value={lineFilter}
+            onChange={(e) => handleLineChange(e.target.value as PositionLine)}
+            className="px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-zinc-200 font-medium"
           >
-            {positions.map(pos => (
-              <option key={pos} value={pos}>{pos}</option>
+            {(Object.keys(POSITION_STRUCTURE) as PositionLine[]).map(line => (
+              <option key={line} value={line}>
+                {line === 'All' ? 'All Positions' : line}
+              </option>
             ))}
           </select>
+
+          {/* Conditional Sub-Group Filter Dropdown */}
+          {availableSubGroups.length > 0 && (
+            <select
+              value={groupFilter}
+              onChange={(e) => {
+                setGroupFilter(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-zinc-200 animate-fadeIn"
+            >
+              <option value="All">All {lineFilter}</option>
+              {availableSubGroups.map(group => (
+                <option key={group} value={group}>{group}</option>
+              ))}
+            </select>
+          )}
+
           <input
             type="text"
             placeholder="Search players or teams..."
@@ -420,7 +478,7 @@ const PlayersPage = () => {
         </div>
       ) : (
         <div className="text-center py-12 text-zinc-500 bg-zinc-900/50 rounded-xl border border-zinc-800">
-          No players found matching your search.
+          No players found matching your selected filters.
         </div>
       )}
 

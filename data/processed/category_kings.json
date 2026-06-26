@@ -1,0 +1,162 @@
+{
+  "Avg_cat_disposal": [
+    {
+      "name": "Wanganeen-Milera",
+      "team": "St Kilda Saints",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1015507.png?im=Scale,width=0.6,height=0.6",
+      "score": 78.3689
+    },
+    {
+      "name": "Blakey",
+      "team": "Sydney Swans",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1006028.png?im=Scale,width=0.6,height=0.6",
+      "score": 78.1469
+    },
+    {
+      "name": "Ash",
+      "team": "GWS Giants",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1009253.png?im=Scale,width=0.6,height=0.6",
+      "score": 77.9917
+    },
+    {
+      "name": "Dale",
+      "team": "Western Bulldogs",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/996708.png?im=Scale,width=0.6,height=0.6",
+      "score": 76.8895
+    },
+    {
+      "name": "Roberts",
+      "team": "Essendon Bombers",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1023515.png?im=Scale,width=0.6,height=0.6",
+      "score": 72.9479
+    }
+  ],
+  "Avg_cat_contest_clearance": [
+    {
+      "name": "Ladhams",
+      "team": "Sydney Swans",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/997142.png?im=Scale,width=0.6,height=0.6",
+      "score": 150.5
+    },
+    {
+      "name": "Oliver",
+      "team": "GWS Giants",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/996701.png?im=Scale,width=0.6,height=0.6",
+      "score": 139.2813
+    },
+    {
+      "name": "Cripps",
+      "team": "Carlton Blues",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/990704.png?im=Scale,width=0.6,height=0.6",
+      "score": 132.3828
+    },
+    {
+      "name": "Heeney",
+      "team": "Sydney Swans",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/298539.png?im=Scale,width=0.6,height=0.6",
+      "score": 128.1182
+    },
+    {
+      "name": "Neale",
+      "team": "Brisbane Lions",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/293535.png?im=Scale,width=0.6,height=0.6",
+      "score": 126.8822
+    }
+  ],
+  "Avg_cat_damaging_impact": [
+    {
+      "name": "Gunston",
+      "team": "Hawthorn Hawks",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/291351.png?im=Scale,width=0.6,height=0.6",
+      "score": 93.9264
+    },
+    {
+      "name": "Morris",
+      "team": "Brisbane Lions",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1028019.png?im=Scale,width=0.6,height=0.6",
+      "score": 79.1126
+    },
+    {
+      "name": "Watson",
+      "team": "Hawthorn Hawks",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1023473.png?im=Scale,width=0.6,height=0.6",
+      "score": 76.0431
+    },
+    {
+      "name": "Heeney",
+      "team": "Sydney Swans",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/298539.png?im=Scale,width=0.6,height=0.6",
+      "score": 73.1405
+    },
+    {
+      "name": "Cameron",
+      "team": "Geelong Cats",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/293845.png?im=Scale,width=0.6,height=0.6",
+      "score": 72.583
+    }
+  ],
+  "Avg_cat_defensive_grit": [
+    {
+      "name": "Collins",
+      "team": "Gold Coast Suns",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/295446.png?im=Scale,width=0.6,height=0.6",
+      "score": 148.7857
+    },
+    {
+      "name": "McCartin",
+      "team": "Sydney Swans",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1008198.png?im=Scale,width=0.6,height=0.6",
+      "score": 144.8863
+    },
+    {
+      "name": "Andrews",
+      "team": "Brisbane Lions",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/996059.png?im=Scale,width=0.6,height=0.6",
+      "score": 143.0455
+    },
+    {
+      "name": "Borlase",
+      "team": "Adelaide Crows",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1009029.png?im=Scale,width=0.6,height=0.6",
+      "score": 137.3889
+    },
+    {
+      "name": "Ginbey",
+      "team": "West Coast Eagles",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1023025.png?im=Scale,width=0.6,height=0.6",
+      "score": 137.3151
+    }
+  ],
+  "Avg_cat_ruck": [
+    {
+      "name": "Grundy",
+      "team": "Sydney Swans",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/293957.png?im=Scale,width=0.6,height=0.6",
+      "score": 48.5036
+    },
+    {
+      "name": "Gawn",
+      "team": "Melbourne Demons",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/290528.png?im=Scale,width=0.6,height=0.6",
+      "score": 42.7257
+    },
+    {
+      "name": "Sweet",
+      "team": "Port Adelaide Power",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/992330.png?im=Scale,width=0.6,height=0.6",
+      "score": 40.8855
+    },
+    {
+      "name": "Briggs",
+      "team": "GWS Giants",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1008436.png?im=Scale,width=0.6,height=0.6",
+      "score": 40.1422
+    },
+    {
+      "name": "Witts",
+      "team": "Gold Coast Suns",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/291975.png?im=Scale,width=0.6,height=0.6",
+      "score": 38.339
+    }
+  ]
+}

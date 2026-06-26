@@ -15,7 +15,7 @@ normalize_team_name <- function(team) {
     team == "Collingwood"                             ~ "Collingwood Magpies",
     team == "Essendon"                                ~ "Essendon Bombers",
     team == "Fremantle"                               ~ "Fremantle Dockers",
-    team %in% c("Geelong", "Geelong Cats")           ~ "Geelong Cats",
+    team %in% c("Geelong", "Geelong Cats")            ~ "Geelong Cats",
     team %in% c("Gold Coast", "Gold Coast SUNS")      ~ "Gold Coast Suns",
     team %in% c("GWS", "Greater Western Sydney", "GWS GIANTS") ~ "GWS Giants",
     team == "Hawthorn"                                ~ "Hawthorn Hawks",
@@ -31,19 +31,37 @@ normalize_team_name <- function(team) {
   )
 }
 
-# Vectorized position lookup dictionary
-pos_map = c(
-  'BPL' = 'Back Pocket',  'BPR' = 'Back Pocket',
-  'C'   = 'Inside/Outside Mid',
-  'CHB' = 'Centre Half Back', 'CHF' = 'Centre Half Forward',
-  'FB'  = 'Full Back',        'FF'  = 'Full Forward',
-  'FPL' = 'Forward Pocket',   'FPR' = 'Forward Pocket',
-  'HBFL'= 'Half Back Flank',  'HBFR'= 'Half Back Flank',
-  'HFFL'= 'Half Forward Flank','HFFR'= 'Half Forward Flank',
-  'INT' = 'Utility',
-  'R'   = 'Inside Mid',       'RR'  = 'Inside Mid',
-  'RK'  = 'Ruckman',
-  'WL'  = 'Wing',              'WR'  = 'Wing'
+# ==============================================================================
+# NEW STRUCTURAL POSITION REF TABLE (Supports Line & Group Filters)
+# ==============================================================================
+pos_reference <- tribble(
+  ~pos_code, ~position_name,       ~position_group,    ~position_line,
+  # --- Backs ---
+  "FB",      "Full Back",          "Key Backs",        "Backs",
+  "CHB",     "Centre Half Back",   "Key Backs",        "Backs",
+  "BPL",     "Back Pocket",        "General Backs",    "Backs",
+  "BPR",     "Back Pocket",        "General Backs",    "Backs",
+  "HBFL",    "Half Back Flank",    "General Backs",    "Backs",
+  "HBFR",    "Half Back Flank",    "General Backs",    "Backs",
+  
+  # --- Midfield & Ruck ---
+  "C",       "Inside/Outside Mid", "Midfield",         "Midfield",
+  "R",       "Inside Mid",         "Midfield",         "Midfield",
+  "RR",      "Inside Mid",         "Midfield",         "Midfield",
+  "WL",      "Wing",               "Midfield",         "Midfield",
+  "WR",      "Wing",               "Midfield",         "Midfield",
+  "RK",      "Ruckman",            "Ruck",             "Ruck",
+  
+  # --- Forwards ---
+  "CHF",     "Centre Half Forward","Key Forwards",     "Forwards",
+  "FF",      "Full Forward",       "Key Forwards",     "Forwards",
+  "FPL",     "Forward Pocket",     "General Forwards", "Forwards",
+  "FPR",     "Forward Pocket",     "General Forwards", "Forwards",
+  "HFFL",    "Half Forward Flank", "General Forwards", "Forwards",
+  "HFFR",    "Half Forward Flank", "General Forwards", "Forwards",
+  
+  # --- Bench / Specials ---
+  "INT",     "Utility",            "Interchange",      "Interchange"
 )
 
 # Transform and Calculate PIR
@@ -51,15 +69,19 @@ processed_rounds <- raw_stats %>%
   mutate(
     team.name = normalize_team_name(team.name),
     
-    # Vectorized Position Mapping
-    mapped_position = case_when(
-      is.na(player.player.position) | player.player.position %in% c('', 'EMERG') ~ 'Emergency',
-      player.player.position %in% names(pos_map) ~ pos_map[player.player.position],
-      TRUE ~ 'Midfielder'
-    ),
+    # Safe fallback cleaning for positional join
+    join_pos = if_else(is.na(player.player.position) | player.player.position %in% c('', 'EMERG'), NA_character_, player.player.position)
+  ) %>%
+  # Merge new multi-level position hierarchy
+  left_join(pos_reference, by = c("join_pos" = "pos_code")) %>%
+  mutate(
+    # Handle missing/emergency/irregular fallback options cleanly 
+    position_name  = coalesce(position_name, "Emergency"),
+    position_group = coalesce(position_group, "Interchange"),
+    position_line  = coalesce(position_line, "Interchange"),
     
     # ==============================================================================
-    # PIR RATING CALCULATION (Touch-Relative Efficiency Model)
+    # PIR RATING CALCULATION (Optimized Rebalanced Model)
     # ==============================================================================
     disposal_raw = (kicks * 2.0) + (handballs * 1.0),
     disposal_score = disposal_raw * (disposalEfficiency / 100),
@@ -67,30 +89,39 @@ processed_rounds <- raw_stats %>%
     cat_disposal = disposal_score + (metresGained * 0.05) + (bounces * 1.5) + 
       (extendedStats.kickins * 0.5) + (extendedStats.kickinsPlayon * 1.0),
     
+    # TWEAK: Trimmed Contested Marks slightly (8 -> 6) and Stoppage Clearances (4.5 -> 4.0)
+    # This gently cools off the dual midfielder/ruck types without hurting pure inside mids.
     cat_contest_clearance = (contestedPossessions * 4.0) + (uncontestedPossessions * 0.5) + 
-      (clearances.centreClearances * 6.0) + (clearances.stoppageClearances * 4.5) + 
-      (contestedMarks * 8.0) + (marks * 1.0) + (marksInside50 * 4.0) + 
+      (clearances.centreClearances * 6.0) + (clearances.stoppageClearances * 4.0) + 
+      (contestedMarks * 6.0) + (marks * 1.0) + (marksInside50 * 4.0) + 
       (extendedStats.marksOnLead * 2.5) + (extendedStats.groundBallGets * 2.0) + 
       (extendedStats.f50GroundBallGets * 4.0),
     
     cat_damaging_impact = (goals * 15.0) + (behinds * 2.0) + (goalAssists * 8.0) + 
       (scoreInvolvements * 3.0) + (extendedStats.scoreLaunches * 6.0),
     
+    # GLOBAL DEFENSIVE ADJUSTMENTS: Maintained the great buffs for backmen
     cat_defensive_grit = (tackles * 3.0) + (tacklesInside50 * 5.0) + 
       (extendedStats.defHalfPressureActs * 1.0) + (extendedStats.pressureActs * 0.5) + 
-      (onePercenters * 2.0) + (extendedStats.spoils * 3.0) + 
-      (intercepts * 5.0) + (extendedStats.interceptMarks * 4.0),
+      (onePercenters * 2.0) + 
+      (extendedStats.spoils * 6.0) +          
+      (intercepts * 7.0) +                    
+      (extendedStats.interceptMarks * 8.0),   
     
-    cat_ruck = ((hitouts * 0.2) * (extendedStats.hitoutToAdvantageRate / 100)) + 
-      (extendedStats.hitoutsToAdvantage * 5.0),
+    # TWEAK: Shaved Hitouts to Advantage (5.0 -> 4.0) to stop pure volume duplication
+    cat_ruck = ((hitouts * 0.1) * (extendedStats.hitoutToAdvantageRate / 100)) + 
+      (extendedStats.hitoutsToAdvantage * 4.0),
     
     PIR_Positive = (cat_disposal + cat_contest_clearance + cat_damaging_impact + cat_defensive_grit + cat_ruck),
     
-    total_touches = pmax((kicks + handballs), 1.0),
+    # TWEAK: Added Hitouts to Advantage into total_actions.
+    # If a ruck drops a clanger or gives away a free, it should be judged against total volume including ruck contests.
+    total_actions = pmax((kicks + handballs + onePercenters + extendedStats.spoils + intercepts + extendedStats.hitoutsToAdvantage), 1.0),
+    
     raw_mistake_points = (clangers * 5.0) + (turnovers * 3.0) + 
       (freesAgainst * 4.0) + (extendedStats.contestDefLosses * 4.0),
     
-    mistake_rate = raw_mistake_points / total_touches,
+    mistake_rate = raw_mistake_points / total_actions,
     k = 1.0,
     PIR_Negative = raw_mistake_points * (mistake_rate / (mistake_rate + k)),
     
@@ -100,11 +131,12 @@ processed_rounds <- raw_stats %>%
     # Match-level Final PIR
     PIR = (PIR_Positive * TOG_Modifier) - PIR_Negative,
     
-    # Normalize breakdowns so they scale visually with final PIR on the frontend
+    # Normalize breakdowns
     norm_disposal = cat_disposal * TOG_Modifier,
     norm_contest = cat_contest_clearance * TOG_Modifier,
     norm_damage = cat_damaging_impact * TOG_Modifier,
     norm_grit = cat_defensive_grit * TOG_Modifier,
+    # TWEAK: Scale norm_ruck to reflect the adjustment
     norm_ruck = cat_ruck * TOG_Modifier
   ) %>% 
   filter(!is.na(jumperNumber) & jumperNumber != '')
@@ -164,8 +196,11 @@ current_year <- as.integer(format(Sys.Date(), '%Y'))
 players_season <- processed_rounds %>%
   group_by(player.playerId, player.givenName, player.surname, team.name) %>%
   summarise(
-    # Get the most common mapped position for the player
-    playerPosition = names(sort(table(mapped_position), decreasing = TRUE))[1],
+    # Fetch mode/most common classifications across matching entries
+    playerPosition = names(sort(table(position_name), decreasing = TRUE))[1],
+    playerGroup    = names(sort(table(position_group), decreasing = TRUE))[1],
+    playerLine     = names(sort(table(position_line), decreasing = TRUE))[1],
+    
     photoURL = first(player.photoURL),
     playerJumperNumber = first(jumperNumber),
     dateOfBirth = first(dateOfBirth),
@@ -177,8 +212,13 @@ players_season <- processed_rounds %>%
     careerDraws = first(careerDraws),
     careerLosses = first(careerLosses),
     
+    # PIR Core Metrics
     Season_Avg_PIR = mean(PIR, na.rm = TRUE),
     Latest_Round_PIR = sum(ifelse(round.roundNumber == latest_round, PIR, 0), na.rm = TRUE),
+    
+    # High/Low PIR season scores
+    Max_PIR          = max(PIR, na.rm = TRUE),
+    Min_PIR          = min(PIR, na.rm = TRUE),
     
     # True balanced component averages
     Avg_cat_disposal = mean(norm_disposal, na.rm = TRUE),
@@ -190,8 +230,56 @@ players_season <- processed_rounds %>%
     .groups = 'drop'
   )
 
-# Merge season-level with their true history array
+# ==============================================================================
+# Dynamic Category Baseline & Top 2 "Above Average" Strengths Selector
+# ==============================================================================
+league_category_means <- players_season %>%
+  summarise(
+    mean_disposal = mean(Avg_cat_disposal, na.rm = TRUE),
+    mean_contest  = mean(Avg_cat_contest_clearance, na.rm = TRUE),
+    mean_damage   = mean(Avg_cat_damaging_impact, na.rm = TRUE),
+    mean_grit     = mean(Avg_cat_defensive_grit, na.rm = TRUE),
+    mean_ruck     = mean(Avg_cat_ruck, na.rm = TRUE)
+  )
+
+player_relative_strengths <- players_season %>%
+  select(player.playerId, Avg_cat_disposal, Avg_cat_contest_clearance, Avg_cat_damaging_impact, Avg_cat_defensive_grit, Avg_cat_ruck) %>%
+  pivot_longer(
+    cols = starts_with("Avg_cat_"),
+    names_to = "category",
+    values_to = "player_score"
+  ) %>%
+  mutate(
+    league_mean = case_when(
+      category == "Avg_cat_disposal"          ~ league_category_means$mean_disposal,
+      category == "Avg_cat_contest_clearance" ~ league_category_means$mean_contest,
+      category == "Avg_cat_damaging_impact"   ~ league_category_means$mean_damage,
+      category == "Avg_cat_defensive_grit"    ~ league_category_means$mean_grit,
+      category == "Avg_cat_ruck"              ~ league_category_means$mean_ruck
+    ),
+    above_average = player_score - league_mean,
+    display_name = case_when(
+      category == "Avg_cat_disposal"          ~ "Disposal",
+      category == "Avg_cat_contest_clearance" ~ "Contest/Clearance",
+      category == "Avg_cat_damaging_impact"   ~ "Damaging Impact",
+      category == "Avg_cat_defensive_grit"    ~ "Defensive Grit",
+      category == "Avg_cat_ruck"              ~ "Ruck"
+    )
+  ) %>%
+  filter(above_average > 0) %>%
+  group_by(player.playerId) %>%
+  slice_max(order_by = above_average, n = 2, with_ties = FALSE) %>%
+  summarise(
+    Significant_Strengths = list(data.frame(
+      category = display_name,
+      value = round(above_average, 1)  # Changed from player_score to above_average
+    )),
+    .groups = 'drop'
+  )
+
+# Merge season-level with their true history array and new strengths logic
 final_processed_stats <- left_join(players_season, round_pir_series, by = 'player.playerId') %>%
+  left_join(player_relative_strengths, by = 'player.playerId') %>%
   mutate(
     # 1. Store the raw numeric change in rank positions
     Rank_Delta = map_dbl(PIR_History, ~ {
@@ -204,7 +292,6 @@ final_processed_stats <- left_join(players_season, round_pir_series, by = 'playe
       prev_rank   <- valid_history$rank[nrow(valid_history) - 1]
       
       # Any move counts: prev_rank minus latest_rank matches climbing behavior
-      # Example: Rank #40 down to #35 = 40 - 35 = +5 spots moved UP.
       return(prev_rank - latest_rank)
     }),
     
@@ -224,5 +311,58 @@ if (!dir.exists('data/processed')) {
 # Save results for backend/historical analytics
 saveRDS(final_processed_stats, paste0('data/processed/2026_round_', latest_round, '_pir.rds'))
 
-# Convert to JSON for React frontend
+# Export to JSON
 write_json(final_processed_stats, 'data/processed/players_pir.json', pretty = TRUE)
+
+# ==============================================================================
+# CATEGORY KINGS FEATURE
+# ==============================================================================
+# Filter by at least 3 games played (calculated in round_pir_series)
+eligible_players <- round_pir_series %>% 
+  filter(Games_Played_2026 >= 3) %>% 
+  pull(player.playerId)
+
+eligible_season_data <- players_season %>% filter(player.playerId %in% eligible_players)
+
+category_kings_data <- list(
+  Avg_cat_disposal = eligible_season_data %>% arrange(desc(Avg_cat_disposal)) %>% head(5) %>% select(name = player.surname, team = team.name, photoURL, score = Avg_cat_disposal),
+  Avg_cat_contest_clearance = eligible_season_data %>% arrange(desc(Avg_cat_contest_clearance)) %>% head(5) %>% select(name = player.surname, team = team.name, photoURL, score = Avg_cat_contest_clearance),
+  Avg_cat_damaging_impact = eligible_season_data %>% arrange(desc(Avg_cat_damaging_impact)) %>% head(5) %>% select(name = player.surname, team = team.name, photoURL, score = Avg_cat_damaging_impact),
+  Avg_cat_defensive_grit = eligible_season_data %>% arrange(desc(Avg_cat_defensive_grit)) %>% head(5) %>% select(name = player.surname, team = team.name, photoURL, score = Avg_cat_defensive_grit),
+  Avg_cat_ruck = eligible_season_data %>% arrange(desc(Avg_cat_ruck)) %>% head(5) %>% select(name = player.surname, team = team.name, photoURL, score = Avg_cat_ruck)
+)
+
+write_json(category_kings_data, 'data/processed/category_kings.json', pretty = TRUE)
+
+# ==============================================================================
+# TOP 50 GAMES OF THE SEASON FEATURE
+# ==============================================================================
+top_games_data <- processed_rounds %>%
+  mutate(
+    raw_opponent = ifelse(teamStatus == "home", away.team.name, home.team.name),
+    match.opponentName = sapply(raw_opponent, normalize_team_name)
+  ) %>%
+  arrange(desc(PIR)) %>%
+  slice(1:50) %>%
+  mutate(
+    game_title = paste0("Round ", round.roundNumber, " vs ", match.opponentName)
+  ) %>%
+  select(
+    playerId = player.playerId,
+    givenName = player.givenName,
+    surname = player.surname,
+    team = team.name,
+    jumperNumber,
+    photoURL = player.photoURL,
+    round = round.roundNumber,
+    opponent = match.opponentName,
+    PIR,
+    disposal = norm_disposal,
+    contest = norm_contest,
+    damage = norm_damage,
+    grit = norm_grit,
+    ruck = norm_ruck,
+    game_title
+  )
+
+write_json(top_games_data, "data/processed/top_games_pir.json", pretty = TRUE)
