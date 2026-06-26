@@ -315,21 +315,42 @@ saveRDS(final_processed_stats, paste0('data/processed/2026_round_', latest_round
 write_json(final_processed_stats, 'data/processed/players_pir.json', pretty = TRUE)
 
 # ==============================================================================
-# CATEGORY KINGS FEATURE
+# CATEGORY KINGS FEATURE (Fixed 3+ Games Filter)
 # ==============================================================================
-# Filter by at least 3 games played (calculated in round_pir_series)
-eligible_players <- round_pir_series %>% 
-  filter(Games_Played_2026 >= 3) %>% 
+
+# 1. Establish absolute ground-truth eligibility straight from match rows
+eligible_player_ids <- processed_rounds %>%
+  group_by(player.playerId) %>%
+  summarise(actual_games = n_distinct(round.roundNumber), .groups = 'drop') %>%
+  filter(actual_games >= 3) %>%
   pull(player.playerId)
 
-eligible_season_data <- players_season %>% filter(player.playerId %in% eligible_players)
+# 2. Filter your season averages using the verified ID vector
+eligible_season_data <- players_season %>% 
+  filter(player.playerId %in% eligible_player_ids)
 
+# 3. Export the Top 5 Arrays
 category_kings_data <- list(
-  Avg_cat_disposal = eligible_season_data %>% arrange(desc(Avg_cat_disposal)) %>% head(5) %>% select(name = player.surname, team = team.name, photoURL, score = Avg_cat_disposal),
-  Avg_cat_contest_clearance = eligible_season_data %>% arrange(desc(Avg_cat_contest_clearance)) %>% head(5) %>% select(name = player.surname, team = team.name, photoURL, score = Avg_cat_contest_clearance),
-  Avg_cat_damaging_impact = eligible_season_data %>% arrange(desc(Avg_cat_damaging_impact)) %>% head(5) %>% select(name = player.surname, team = team.name, photoURL, score = Avg_cat_damaging_impact),
-  Avg_cat_defensive_grit = eligible_season_data %>% arrange(desc(Avg_cat_defensive_grit)) %>% head(5) %>% select(name = player.surname, team = team.name, photoURL, score = Avg_cat_defensive_grit),
-  Avg_cat_ruck = eligible_season_data %>% arrange(desc(Avg_cat_ruck)) %>% head(5) %>% select(name = player.surname, team = team.name, photoURL, score = Avg_cat_ruck)
+  Avg_cat_disposal = eligible_season_data %>% 
+    arrange(desc(Avg_cat_disposal)) %>% head(5) %>% 
+    select(name = player.surname, team = team.name, photoURL, score = Avg_cat_disposal),
+  
+  Avg_cat_contest_clearance = eligible_season_data %>% 
+    arrange(desc(Avg_cat_contest_clearance)) %>% head(5) %>% 
+    select(name = player.surname, team = team.name, photoURL, score = Avg_cat_contest_clearance),
+  
+  Avg_cat_damaging_impact = eligible_season_data %>% 
+    arrange(desc(Avg_cat_damaging_impact)) %>% head(5) %>% 
+    select(name = player.surname, team = team.name, photoURL, score = Avg_cat_damaging_impact),
+  
+  Avg_cat_defensive_grit = eligible_season_data %>% 
+    arrange(desc(Avg_cat_defensive_grit)) %>% head(5) %>% 
+    select(name = player.surname, team = team.name, photoURL, score = Avg_cat_defensive_grit),
+  
+  Avg_cat_ruck = eligible_season_data %>% 
+    filter(playerGroup == "Ruck") %>% # Essential so mids don't hijack ruck stats!
+    arrange(desc(Avg_cat_ruck)) %>% head(5) %>% 
+    select(name = player.surname, team = team.name, photoURL, score = Avg_cat_ruck)
 )
 
 write_json(category_kings_data, 'data/processed/category_kings.json', pretty = TRUE)

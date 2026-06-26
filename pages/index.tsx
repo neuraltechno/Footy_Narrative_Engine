@@ -14,6 +14,7 @@ type InsightData = {
     "player.team"?: string; // Matches layout structure of game performances
   }[];
   top10Games: { "givenName": string; "surname": string; "PIR": number; "game_title": string }[];
+  topCategoryKings: { category: string; leader: { name: string; score: number } }[];
 };
 
 // Helper to determine status badge styling dynamically
@@ -182,11 +183,33 @@ export default function Home({ data }: { data: InsightData }) {
                 ))}
               </div>
             </div>
-          </section>
+            </section>
 
-        </main>
+            {/* Category Kings */}
+            <section className="bg-zinc-900/20 border border-zinc-900 rounded-2xl p-6">
+              <div className="flex justify-between items-center mb-6 pb-4 border-b border-zinc-900">
+                <div>
+                  <h2 className="text-lg font-bold text-white">Category Kings</h2>
+                  <p className="text-xs text-zinc-500">Top performers by specialized skill</p>
+                </div>
+                <Link href="/stats/category-kings" className="text-xs font-medium text-blue-400 hover:text-blue-300 transition">
+                  View All &rarr;
+                </Link>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                {data.topCategoryKings.map((item, i) => (
+                  <div key={i} className="bg-zinc-900/40 p-4 rounded-xl border border-zinc-800">
+                    <p className="text-[10px] uppercase text-zinc-500 font-bold tracking-wider">{item.category}</p>
+                    <p className="text-sm font-semibold text-white mt-1">{item.leader.name}</p>
+                    <p className="text-xs text-blue-400 font-mono mt-0.5">{item.leader.score.toFixed(1)}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+          </main>
+        </div>
       </div>
-    </div>
   );
 }
 
@@ -207,12 +230,20 @@ export const getStaticProps: GetStaticProps = async () => {
     .sort((a: any, b: any) => b.PIR - a.PIR)
     .slice(0, 10);
 
+  const categoryKingsFilePath = path.join(process.cwd(), "data", "processed", "category_kings.json");
+  const categoryKingsData = JSON.parse(fs.readFileSync(categoryKingsFilePath, "utf-8"));
+  const topCategoryKings = Object.entries(categoryKingsData).map(([key, value]: [string, any]) => ({
+    category: key.replace("Avg_cat_", "").replace(/_/g, " "),
+    leader: value[0]
+  }));
+
   return {
     props: { 
       data: { 
         ...data, 
         top10Players, 
-        top10Games 
+        top10Games,
+        topCategoryKings
       } 
     },
     revalidate: 60,

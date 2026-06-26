@@ -33,12 +33,6 @@
   ],
   "Avg_cat_contest_clearance": [
     {
-      "name": "Ladhams",
-      "team": "Sydney Swans",
-      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/997142.png?im=Scale,width=0.6,height=0.6",
-      "score": 150.5
-    },
-    {
       "name": "Oliver",
       "team": "GWS Giants",
       "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/996701.png?im=Scale,width=0.6,height=0.6",
@@ -61,6 +55,12 @@
       "team": "Brisbane Lions",
       "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/293535.png?im=Scale,width=0.6,height=0.6",
       "score": 126.8822
+    },
+    {
+      "name": "Xerri",
+      "team": "North Melbourne Kangaroos",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1004965.png?im=Scale,width=0.6,height=0.6",
+      "score": 124.2767
     }
   ],
   "Avg_cat_damaging_impact": [
