@@ -62,10 +62,14 @@ export default function Home({ data }: { data: InsightData }) {
             <Link href="/records/top-games" className="px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-sm font-medium transition text-zinc-300 hover:text-white">
               Top Games &rarr;
             </Link>
-            <Link href="/stats/category-kings" className="px-4 py-2 rounded-lg bg-blue-900/20 border border-blue-500/30 hover:border-blue-500/50 text-sm font-medium transition text-blue-300 hover:text-white">
+            <Link href="/stats/category-kings" className="px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-sm font-medium transition text-zinc-300 hover:text-white">
               Category Kings &rarr;
             </Link>
+            <Link href="/stats/breakout-watch" className="px-4 py-2 rounded-lg bg-emerald-900/20 border border-emerald-500/30 hover:border-emerald-500/50 text-sm font-medium transition text-emerald-300 hover:text-white">
+              Breakout Watch &rarr;
+            </Link>
           </nav>
+
         </header>
 
         {/* Dashboard Panels */}

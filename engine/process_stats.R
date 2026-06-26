@@ -311,8 +311,48 @@ if (!dir.exists('data/processed')) {
 # Save results for backend/historical analytics
 saveRDS(final_processed_stats, paste0('data/processed/2026_round_', latest_round, '_pir.rds'))
 
-# Export to JSON
-write_json(final_processed_stats, 'data/processed/players_pir.json', pretty = TRUE)
+# ==============================================================================
+# BREAKOUT WATCH FEATURE
+# ==============================================================================
+
+# 1. Calculate Recent Form (Last 3 rounds, min 2 games)
+recent_rounds_data <- processed_rounds %>%
+  filter(round.roundNumber > (latest_round - 3)) %>%
+  group_by(player.playerId) %>%
+  filter(n() >= 2) %>%
+  summarise(
+    Last_3_Rounds_Avg_PIR = mean(PIR, na.rm = TRUE),
+    .groups = 'drop'
+  )
+
+# 2. Compute Form Delta and Score Candidates
+breakout_data <- players_season %>%
+  inner_join(recent_rounds_data, by = "player.playerId") %>%
+  mutate(
+    Form_Delta = Last_3_Rounds_Avg_PIR - Season_Avg_PIR,
+    Breakout_Score = if_else(Age <= 23, (Form_Delta * 1.5) + (Season_Avg_PIR * 0.5), Form_Delta)
+  ) %>%
+  # 4. Calibrated Threshold Filtering
+  filter(Form_Delta > 35.0 & Season_Avg_PIR > 80.0) %>%
+  arrange(desc(Breakout_Score)) %>%
+  head(15) %>%
+  # 5. JSON Export
+  select(
+    playerId = player.playerId,
+    givenName = player.givenName,
+    surname = player.surname,
+    team = team.name,
+    photoURL = photoURL,
+    age = Age,
+    position = playerPosition,
+    season_avg = Season_Avg_PIR,
+    recent_avg = Last_3_Rounds_Avg_PIR,
+    delta = Form_Delta,
+    peak_game = Max_PIR
+  )
+
+write_json(breakout_data, 'data/processed/breakout_watch.json', pretty = TRUE)
+
 
 # ==============================================================================
 # CATEGORY KINGS FEATURE (Fixed 3+ Games Filter)
