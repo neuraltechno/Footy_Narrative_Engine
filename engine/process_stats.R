@@ -312,47 +312,81 @@ if (!dir.exists('data/processed')) {
 saveRDS(final_processed_stats, paste0('data/processed/2026_round_', latest_round, '_pir.rds'))
 
 # ==============================================================================
-# BREAKOUT WATCH FEATURE
+# ENHANCED BREAKOUT WATCH FEATURE (FULLY FIXED)
 # ==============================================================================
 
-# 1. Calculate Recent Form (Last 3 rounds, min 2 games)
-recent_rounds_data <- processed_rounds %>%
+# 1. Isolate and calculate recent form separately from processed_rounds
+recent_form <- processed_rounds %>%
   filter(round.roundNumber > (latest_round - 3)) %>%
   group_by(player.playerId) %>%
-  filter(n() >= 2) %>%
   summarise(
+    Recent_Games_Played   = n(),
     Last_3_Rounds_Avg_PIR = mean(PIR, na.rm = TRUE),
     .groups = 'drop'
-  )
+  ) %>%
+  # Keep players who have managed at least 2 games in the last 3 rounds
+  filter(Recent_Games_Played >= 2)
 
-# 2. Compute Form Delta and Score Candidates
+# 2. Count total games played by each player all season
+season_game_counts <- processed_rounds %>%
+  group_by(player.playerId) %>%
+  summarise(Total_Games_Played = n(), .groups = 'drop')
+
+# 3. Combine with season baselines and process breakout metrics
 breakout_data <- players_season %>%
-  inner_join(recent_rounds_data, by = "player.playerId") %>%
+  inner_join(recent_form, by = "player.playerId") %>%
+  inner_join(season_game_counts, by = "player.playerId") %>%
+  # SAFEGUARD: Exclude players whose total games equal their recent games 
+  # (i.e., short-term debutants with no true season baseline)
+  filter(Total_Games_Played > Recent_Games_Played) %>% 
   mutate(
     Form_Delta = Last_3_Rounds_Avg_PIR - Season_Avg_PIR,
-    Breakout_Score = if_else(Age <= 23, (Form_Delta * 1.5) + (Season_Avg_PIR * 0.5), Form_Delta)
-  ) %>%
-  # 4. Calibrated Threshold Filtering
-  filter(Form_Delta > 35.0 & Season_Avg_PIR > 80.0) %>%
-  arrange(desc(Breakout_Score)) %>%
-  head(15) %>%
-  # 5. JSON Export
-  select(
-    playerId = player.playerId,
-    givenName = player.givenName,
-    surname = player.surname,
-    team = team.name,
-    photoURL = photoURL,
-    age = Age,
-    position = playerPosition,
-    season_avg = Season_Avg_PIR,
-    recent_avg = Last_3_Rounds_Avg_PIR,
-    delta = Form_Delta,
-    peak_game = Max_PIR
+    
+    # Smooth continuous age penalty/bonus instead of a hard cliff at 23
+    Age_Weight = case_when(
+      Age <= 21 ~ 1.5,
+      Age <= 25 ~ 1.5 - ((Age - 21) * 0.125), # Scales down from 1.5 to 1.0
+      TRUE      ~ 1.0
+    ),
+    
+    # Balanced Breakout Score
+    Breakout_Score = (Form_Delta * Age_Weight) + (Season_Avg_PIR * 0.2)
   )
 
-write_json(breakout_data, 'data/processed/breakout_watch.json', pretty = TRUE)
+  # 4. Apply dynamic percentile thresholds based on calculated data
+  breakout_filtered <- breakout_data %>%
+  filter(
+    Form_Delta > quantile(Form_Delta[Form_Delta > 0], 0.85, na.rm = TRUE),
+    Season_Avg_PIR > quantile(Season_Avg_PIR, 0.40, na.rm = TRUE)
+  ) %>%
+  # Rank candidates
+  arrange(desc(Breakout_Score)) %>%
+  slice_head(n = 15) %>%
+  
+  # 5. Handle calculations and clean column selection safely
+  mutate(
+    season_avg_rounded = round(Season_Avg_PIR, 1),
+    recent_avg_rounded = round(Last_3_Rounds_Avg_PIR, 1),
+    delta_rounded      = round(Form_Delta, 1)
+  ) %>%
+  select(
+    playerId   = player.playerId,
+    givenName  = player.givenName,
+    surname    = player.surname,
+    team       = team.name,
+    photoURL   = photoURL,
+    age        = Age,
+    position   = playerPosition,
+    season_avg = season_avg_rounded,
+    recent_avg = recent_avg_rounded,
+    delta      = delta_rounded,
+    breakout_score = Breakout_Score,
+    peak_game  = Max_PIR
+  ) %>%
+  mutate(breakout_score = round(breakout_score, 1))
 
+# 6. Export to JSON
+write_json(breakout_filtered, 'data/processed/breakout_watch.json', pretty = TRUE)
 
 # ==============================================================================
 # CATEGORY KINGS FEATURE (Fixed 3+ Games Filter)

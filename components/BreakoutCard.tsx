@@ -12,6 +12,7 @@ interface BreakoutPlayer {
   recent_avg: number;
   delta: number;
   peak_game: number;
+  breakout_score: number;
 }
 
 export const BreakoutCard = ({ player }: { player: BreakoutPlayer }) => {
@@ -29,9 +30,12 @@ export const BreakoutCard = ({ player }: { player: BreakoutPlayer }) => {
       </div>
 
       {/* Delta Badge */}
-      <div className="mb-6">
+      <div className="flex gap-2 mb-6">
         <span className="inline-block bg-emerald-500/20 text-emerald-400 font-bold px-3 py-1 rounded-full text-lg border border-emerald-500/30">
-          +{player.delta.toFixed(1)} PIR SPIKE
+          +{player.delta.toFixed(1)} Delta
+        </span>
+        <span className="inline-block bg-blue-500/20 text-blue-400 font-bold px-3 py-1 rounded-full text-lg border border-blue-500/30">
+          {(player.breakout_score || 0).toFixed(1)} Score
         </span>
       </div>
 

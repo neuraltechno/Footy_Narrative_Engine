@@ -3,21 +3,31 @@ import fs from "fs";
 import path from "path";
 import Link from "next/link";
 
+type BreakoutPlayer = {
+  playerId: string;
+  givenName: string;
+  surname: string;
+  team: string;
+  age: number;
+  position: string;
+  delta: number;
+  breakout_score: number;
+};
+
 type InsightData = {
   round: number;
   teams: { name: string; status: string; contenderScore: number }[];
-  top_players: { name: string; pir_per_game: number }[];
+  topBreakoutPlayers: BreakoutPlayer[]; // Real data mapping into the placeholder section
   top10Players: { 
     "player.givenName": string; 
     "player.surname": string; 
     "Season_Avg_PIR": number;
-    "player.team"?: string; // Matches layout structure of game performances
+    "player.team"?: string;
   }[];
   top10Games: { "givenName": string; "surname": string; "PIR": number; "game_title": string }[];
   topCategoryKings: { category: string; leader: { name: string; score: number } }[];
 };
 
-// Helper to determine status badge styling dynamically
 const getStatusColor = (status: string) => {
   const s = status.toLowerCase();
   if (s.includes("contender") || s.includes("rising") || s.includes("up")) {
@@ -69,7 +79,6 @@ export default function Home({ data }: { data: InsightData }) {
               Breakout Watch &rarr;
             </Link>
           </nav>
-
         </header>
 
         {/* Dashboard Panels */}
@@ -102,18 +111,25 @@ export default function Home({ data }: { data: InsightData }) {
               </div>
             </div>
 
-            {/* Breakout Watch Panel */}
+            {/* Breakout Watch Panel (Updated with real backend data mapping) */}
             <div className="bg-zinc-900/40 backdrop-blur-sm border border-zinc-800/80 rounded-2xl p-6 sm:p-8">
               <div className="mb-6">
                 <h2 className="text-xl font-bold tracking-tight text-white">Breakout Watch (Top PIR)</h2>
                 <p className="text-xs text-zinc-500 mt-1">Players drastically outperforming historical expectations</p>
               </div>
               <div className="space-y-3">
-                {data.top_players.map((p, i) => (
-                  <div key={i} className="group flex justify-between items-center p-4 bg-zinc-900/60 border border-zinc-800/50 rounded-xl hover:border-zinc-700 transition duration-200">
-                    <span className="text-zinc-300 font-medium group-hover:text-blue-400 transition">{p.name}</span>
-                    <span className="text-xs font-mono font-bold text-blue-400 bg-blue-500/5 px-2.5 py-1 rounded-lg border border-blue-500/10">
-                      PIR {p.pir_per_game.toFixed(1)}
+                {data.topBreakoutPlayers.map((p, i) => (
+                  <div key={p.playerId || i} className="group flex justify-between items-center p-4 bg-zinc-900/60 border border-zinc-800/50 rounded-xl hover:border-zinc-700 transition duration-200">
+                    <div>
+                      <span className="text-zinc-300 font-medium group-hover:text-emerald-400 transition block">
+                        {p.givenName} {p.surname}
+                      </span>
+                      <span className="text-[10px] uppercase font-semibold text-zinc-500 block mt-0.5 tracking-wider">
+                        {p.team || "AFL Club"} • {p.position || "N/A"}
+                      </span>
+                    </div>
+                    <span className="text-xs font-mono font-bold text-emerald-400 bg-emerald-500/5 px-2.5 py-1 rounded-lg border border-emerald-500/10 shrink-0 ml-4">
+                      {p.breakout_score.toFixed(1)} Score
                     </span>
                   </div>
                 ))}
@@ -143,7 +159,6 @@ export default function Home({ data }: { data: InsightData }) {
                         <p className="text-zinc-300 text-sm group-hover:text-white transition truncate font-medium">
                           {p["player.givenName"]} {p["player.surname"]}
                         </p>
-                        {/* Club name matching structural placement of match metadata */}
                         <p className="text-[10px] text-zinc-500 truncate uppercase tracking-wider">
                           {p["player.team"] || "AFL Club"}
                         </p>
@@ -187,33 +202,33 @@ export default function Home({ data }: { data: InsightData }) {
                 ))}
               </div>
             </div>
-            </section>
+          </section>
 
-            {/* Category Kings */}
-            <section className="bg-zinc-900/20 border border-zinc-900 rounded-2xl p-6">
-              <div className="flex justify-between items-center mb-6 pb-4 border-b border-zinc-900">
-                <div>
-                  <h2 className="text-lg font-bold text-white">Category Kings</h2>
-                  <p className="text-xs text-zinc-500">Top performers by specialized skill</p>
+          {/* Category Kings */}
+          <section className="bg-zinc-900/20 border border-zinc-900 rounded-2xl p-6">
+            <div className="flex justify-between items-center mb-6 pb-4 border-b border-zinc-900">
+              <div>
+                <h2 className="text-lg font-bold text-white">Category Kings</h2>
+                <p className="text-xs text-zinc-500">Top performers by specialized skill</p>
+              </div>
+              <Link href="/stats/category-kings" className="text-xs font-medium text-blue-400 hover:text-blue-300 transition">
+                View All &rarr;
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+              {data.topCategoryKings.map((item, i) => (
+                <div key={i} className="bg-zinc-900/40 p-4 rounded-xl border border-zinc-800">
+                  <p className="text-[10px] uppercase text-zinc-500 font-bold tracking-wider">{item.category}</p>
+                  <p className="text-sm font-semibold text-white mt-1">{item.leader.name}</p>
+                  <p className="text-xs text-blue-400 font-mono mt-0.5">{item.leader.score.toFixed(1)}</p>
                 </div>
-                <Link href="/stats/category-kings" className="text-xs font-medium text-blue-400 hover:text-blue-300 transition">
-                  View All &rarr;
-                </Link>
-              </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-                {data.topCategoryKings.map((item, i) => (
-                  <div key={i} className="bg-zinc-900/40 p-4 rounded-xl border border-zinc-800">
-                    <p className="text-[10px] uppercase text-zinc-500 font-bold tracking-wider">{item.category}</p>
-                    <p className="text-sm font-semibold text-white mt-1">{item.leader.name}</p>
-                    <p className="text-xs text-blue-400 font-mono mt-0.5">{item.leader.score.toFixed(1)}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
+              ))}
+            </div>
+          </section>
 
-          </main>
-        </div>
+        </main>
       </div>
+    </div>
   );
 }
 
@@ -221,6 +236,13 @@ export const getStaticProps: GetStaticProps = async () => {
   const filePath = path.join(process.cwd(), "data", "latest_insights.json");
   const jsonData = fs.readFileSync(filePath, "utf-8");
   const data = JSON.parse(jsonData);
+
+  // Read the processed breakout tracking file and isolate the top 5 sorted by breakout_score
+  const breakoutFilePath = path.join(process.cwd(), "data", "processed", "breakout_watch.json");
+  const breakoutData = JSON.parse(fs.readFileSync(breakoutFilePath, "utf-8"));
+  const topBreakoutPlayers = breakoutData
+    .sort((a: any, b: any) => b.breakout_score - a.breakout_score)
+    .slice(0, 5);
 
   const playersFilePath = path.join(process.cwd(), "data", "processed", "players_pir.json");
   const playersData = JSON.parse(fs.readFileSync(playersFilePath, "utf-8"));
@@ -245,6 +267,7 @@ export const getStaticProps: GetStaticProps = async () => {
     props: { 
       data: { 
         ...data, 
+        topBreakoutPlayers, // Injected seamlessly alongside original arrays
         top10Players, 
         top10Games,
         topCategoryKings
