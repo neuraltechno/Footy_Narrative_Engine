@@ -1,0 +1,150 @@
+[
+  {
+    "team": "Sydney Swans",
+    "overall_rating": 186.0647,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "power_score": 204.6712,
+    "trend": "up"
+  },
+  {
+    "team": "Hawthorn Hawks",
+    "overall_rating": 177.5028,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "power_score": 195.2531,
+    "trend": "up"
+  },
+  {
+    "team": "Geelong Cats",
+    "overall_rating": 176.1227,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "power_score": 193.735,
+    "trend": "up"
+  },
+  {
+    "team": "Brisbane Lions",
+    "overall_rating": 175.35,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "power_score": 192.885,
+    "trend": "up"
+  },
+  {
+    "team": "Fremantle Dockers",
+    "overall_rating": 175.3382,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "power_score": 192.872,
+    "trend": "up"
+  },
+  {
+    "team": "Adelaide Crows",
+    "overall_rating": 175.2858,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "power_score": 192.8144,
+    "trend": "up"
+  },
+  {
+    "team": "GWS Giants",
+    "overall_rating": 175.2167,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "power_score": 192.7384,
+    "trend": "up"
+  },
+  {
+    "team": "St Kilda Saints",
+    "overall_rating": 171.8689,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "power_score": 189.0558,
+    "trend": "up"
+  },
+  {
+    "team": "Carlton Blues",
+    "overall_rating": 170.5403,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "power_score": 187.5943,
+    "trend": "up"
+  },
+  {
+    "team": "Melbourne Demons",
+    "overall_rating": 169.9723,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "power_score": 186.9696,
+    "trend": "up"
+  },
+  {
+    "team": "Collingwood Magpies",
+    "overall_rating": 169.6359,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "power_score": 186.5994,
+    "trend": "up"
+  },
+  {
+    "team": "Gold Coast Suns",
+    "overall_rating": 168.4855,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "power_score": 185.3341,
+    "trend": "up"
+  },
+  {
+    "team": "Western Bulldogs",
+    "overall_rating": 166.8482,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "power_score": 183.533,
+    "trend": "up"
+  },
+  {
+    "team": "Port Adelaide Power",
+    "overall_rating": 163.8155,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "power_score": 180.197,
+    "trend": "up"
+  },
+  {
+    "team": "North Melbourne Kangaroos",
+    "overall_rating": 162.2617,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "power_score": 178.4878,
+    "trend": "up"
+  },
+  {
+    "team": "West Coast Eagles",
+    "overall_rating": 154.575,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "power_score": 170.0325,
+    "trend": "up"
+  },
+  {
+    "team": "Essendon Bombers",
+    "overall_rating": 153.1563,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "power_score": 168.4719,
+    "trend": "up"
+  },
+  {
+    "team": "Richmond Tigers",
+    "overall_rating": 148.0029,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "power_score": 162.8032,
+    "trend": "up"
+  },
+  {
+    "attack_rating": 0,
+    "pressure_rating": 0
+  }
+]

@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { CategoryPodium } from '../../components/CategoryPodium';
-import data from '../../data/processed/category_kings.json';
+import data from '../../json/players/category_kings.json';
 
 export default function CategoryKings() {
   const [selectedTeam, setSelectedTeam] = useState<string>('All');

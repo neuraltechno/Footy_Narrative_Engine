@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import allPlayersData from '../data/processed/players_pir.json';
+import allPlayersData from '../json/players/players_pir.json';
 import Link from 'next/link';
 import RankingMomentum from '../components/RankingMomentum';
 import RoundHistoryChart from '../components/RoundHistoryChart';

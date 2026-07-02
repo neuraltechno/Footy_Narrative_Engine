@@ -69,7 +69,7 @@ export default function Home({ data }: { data: InsightData }) {
             <Link href="/players" className="px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-sm font-medium transition text-zinc-300 hover:text-white">
               Player Ratings &rarr;
             </Link>
-            <Link href="/records/top-games" className="px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-sm font-medium transition text-zinc-300 hover:text-white">
+            <Link href="/stats/top-games" className="px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-sm font-medium transition text-zinc-300 hover:text-white">
               Top Games &rarr;
             </Link>
             <Link href="/stats/category-kings" className="px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-sm font-medium transition text-zinc-300 hover:text-white">
@@ -143,7 +143,7 @@ export default function Home({ data }: { data: InsightData }) {
             <div className="bg-zinc-900/20 border border-zinc-900 rounded-2xl p-6">
               <div className="flex justify-between items-center mb-6 pb-4 border-b border-zinc-900">
                 <div>
-                  <h2 className="text-lg font-bold text-white">Top 10 Season Leaders</h2>
+                  <h2 className="text-lg font-bold text-white">Top 5 Season Leaders</h2>
                   <p className="text-xs text-zinc-500">Highest Season Average PIR</p>
                 </div>
                 <Link href="/players" className="text-xs font-medium text-blue-400 hover:text-blue-300 transition">
@@ -176,7 +176,7 @@ export default function Home({ data }: { data: InsightData }) {
             <div className="bg-zinc-900/20 border border-zinc-900 rounded-2xl p-6">
               <div className="flex justify-between items-center mb-6 pb-4 border-b border-zinc-900">
                 <div>
-                  <h2 className="text-lg font-bold text-white">Top 10 Match Performances</h2>
+                  <h2 className="text-lg font-bold text-white">Top 5 Match Performances - The GOD Tier</h2>
                   <p className="text-xs text-zinc-500">Highest individual single-game scores</p>
                 </div>
                 <Link href="/records/top-games" className="text-xs font-medium text-blue-400 hover:text-blue-300 transition">
@@ -238,25 +238,25 @@ export const getStaticProps: GetStaticProps = async () => {
   const data = JSON.parse(jsonData);
 
   // Read the processed breakout tracking file and isolate the top 5 sorted by breakout_score
-  const breakoutFilePath = path.join(process.cwd(), "data", "processed", "breakout_watch.json");
+  const breakoutFilePath = path.join(process.cwd(), "json", "players", "breakout_watch.json");
   const breakoutData = JSON.parse(fs.readFileSync(breakoutFilePath, "utf-8"));
   const topBreakoutPlayers = breakoutData
     .sort((a: any, b: any) => b.breakout_score - a.breakout_score)
     .slice(0, 5);
 
-  const playersFilePath = path.join(process.cwd(), "data", "processed", "players_pir.json");
+  const playersFilePath = path.join(process.cwd(), "json", "players", "players_pir.json");
   const playersData = JSON.parse(fs.readFileSync(playersFilePath, "utf-8"));
   const top10Players = playersData
     .sort((a: any, b: any) => b.Season_Avg_PIR - a.Season_Avg_PIR)
-    .slice(0, 10);
+    .slice(0, 5);
 
-  const gamesFilePath = path.join(process.cwd(), "data", "processed", "top_games_pir.json");
+  const gamesFilePath = path.join(process.cwd(), "json", "players", "top_games_pir.json");
   const gamesData = JSON.parse(fs.readFileSync(gamesFilePath, "utf-8"));
   const top10Games = gamesData
     .sort((a: any, b: any) => b.PIR - a.PIR)
-    .slice(0, 10);
+    .slice(0, 5);
 
-  const categoryKingsFilePath = path.join(process.cwd(), "data", "processed", "category_kings.json");
+  const categoryKingsFilePath = path.join(process.cwd(), "json", "players", "category_kings.json");
   const categoryKingsData = JSON.parse(fs.readFileSync(categoryKingsFilePath, "utf-8"));
   const topCategoryKings = Object.entries(categoryKingsData).map(([key, value]: [string, any]) => ({
     category: key.replace("Avg_cat_", "").replace(/_/g, " "),

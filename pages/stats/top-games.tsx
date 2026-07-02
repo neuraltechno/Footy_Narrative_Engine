@@ -36,7 +36,7 @@ export default function TopGamesPage({ games }: { games: any[] }) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const filePath = path.join(process.cwd(), 'data', 'processed', 'top_games_pir.json');
+  const filePath = path.join(process.cwd(), 'json', 'players', 'top_games_pir.json');
   const games = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 
   return {

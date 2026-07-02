@@ -1,0 +1,188 @@
+[
+  {
+    "team": "Sydney Swans",
+    "overall_rating": 186.0647,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "actual_wins": 0,
+    "expected_wins": 186.0647,
+    "luck_index": -186.0647,
+    "justice_position": 1
+  },
+  {
+    "team": "Hawthorn Hawks",
+    "overall_rating": 177.5028,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "actual_wins": 0,
+    "expected_wins": 177.5028,
+    "luck_index": -177.5028,
+    "justice_position": 2
+  },
+  {
+    "team": "Geelong Cats",
+    "overall_rating": 176.1227,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "actual_wins": 0,
+    "expected_wins": 176.1227,
+    "luck_index": -176.1227,
+    "justice_position": 3
+  },
+  {
+    "team": "Brisbane Lions",
+    "overall_rating": 175.35,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "actual_wins": 0,
+    "expected_wins": 175.35,
+    "luck_index": -175.35,
+    "justice_position": 4
+  },
+  {
+    "team": "Fremantle Dockers",
+    "overall_rating": 175.3382,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "actual_wins": 0,
+    "expected_wins": 175.3382,
+    "luck_index": -175.3382,
+    "justice_position": 5
+  },
+  {
+    "team": "Adelaide Crows",
+    "overall_rating": 175.2858,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "actual_wins": 0,
+    "expected_wins": 175.2858,
+    "luck_index": -175.2858,
+    "justice_position": 6
+  },
+  {
+    "team": "GWS Giants",
+    "overall_rating": 175.2167,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "actual_wins": 0,
+    "expected_wins": 175.2167,
+    "luck_index": -175.2167,
+    "justice_position": 7
+  },
+  {
+    "team": "St Kilda Saints",
+    "overall_rating": 171.8689,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "actual_wins": 0,
+    "expected_wins": 171.8689,
+    "luck_index": -171.8689,
+    "justice_position": 8
+  },
+  {
+    "team": "Carlton Blues",
+    "overall_rating": 170.5403,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "actual_wins": 0,
+    "expected_wins": 170.5403,
+    "luck_index": -170.5403,
+    "justice_position": 9
+  },
+  {
+    "team": "Melbourne Demons",
+    "overall_rating": 169.9723,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "actual_wins": 0,
+    "expected_wins": 169.9723,
+    "luck_index": -169.9723,
+    "justice_position": 10
+  },
+  {
+    "team": "Collingwood Magpies",
+    "overall_rating": 169.6359,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "actual_wins": 0,
+    "expected_wins": 169.6359,
+    "luck_index": -169.6359,
+    "justice_position": 11
+  },
+  {
+    "team": "Gold Coast Suns",
+    "overall_rating": 168.4855,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "actual_wins": 0,
+    "expected_wins": 168.4855,
+    "luck_index": -168.4855,
+    "justice_position": 12
+  },
+  {
+    "team": "Western Bulldogs",
+    "overall_rating": 166.8482,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "actual_wins": 0,
+    "expected_wins": 166.8482,
+    "luck_index": -166.8482,
+    "justice_position": 13
+  },
+  {
+    "team": "Port Adelaide Power",
+    "overall_rating": 163.8155,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "actual_wins": 0,
+    "expected_wins": 163.8155,
+    "luck_index": -163.8155,
+    "justice_position": 14
+  },
+  {
+    "team": "North Melbourne Kangaroos",
+    "overall_rating": 162.2617,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "actual_wins": 0,
+    "expected_wins": 162.2617,
+    "luck_index": -162.2617,
+    "justice_position": 15
+  },
+  {
+    "team": "West Coast Eagles",
+    "overall_rating": 154.575,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "actual_wins": 0,
+    "expected_wins": 154.575,
+    "luck_index": -154.575,
+    "justice_position": 16
+  },
+  {
+    "team": "Essendon Bombers",
+    "overall_rating": 153.1563,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "actual_wins": 0,
+    "expected_wins": 153.1563,
+    "luck_index": -153.1563,
+    "justice_position": 17
+  },
+  {
+    "team": "Richmond Tigers",
+    "overall_rating": 148.0029,
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "actual_wins": 0,
+    "expected_wins": 148.0029,
+    "luck_index": -148.0029,
+    "justice_position": 18
+  },
+  {
+    "attack_rating": 0,
+    "pressure_rating": 0,
+    "actual_wins": 0,
+    "justice_position": 19
+  }
+]

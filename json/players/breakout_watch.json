@@ -10,7 +10,7 @@
     "season_avg": 204.7,
     "recent_avg": 297.2,
     "delta": 92.5,
-    "breakout_score": 168.1,
+    "breakout_score": 168.1016,
     "peak_game": 304.536
   },
   {
@@ -24,7 +24,7 @@
     "season_avg": 244.5,
     "recent_avg": 345.5,
     "delta": 101,
-    "breakout_score": 149.9,
+    "breakout_score": 149.8916,
     "peak_game": 363.0329
   },
   {
@@ -38,7 +38,7 @@
     "season_avg": 249.2,
     "recent_avg": 310,
     "delta": 60.8,
-    "breakout_score": 133.4,
+    "breakout_score": 133.3934,
     "peak_game": 375.3193
   },
   {
@@ -52,7 +52,7 @@
     "season_avg": 261.5,
     "recent_avg": 323.5,
     "delta": 62,
-    "breakout_score": 129.8,
+    "breakout_score": 129.809,
     "peak_game": 339.822
   },
   {
@@ -66,7 +66,7 @@
     "season_avg": 187.8,
     "recent_avg": 267.6,
     "delta": 79.9,
-    "breakout_score": 127.4,
+    "breakout_score": 127.4053,
     "peak_game": 274.1333
   },
   {
@@ -80,7 +80,7 @@
     "season_avg": 181,
     "recent_avg": 244.1,
     "delta": 63.1,
-    "breakout_score": 123,
+    "breakout_score": 123.0128,
     "peak_game": 287.509
   },
   {
@@ -94,7 +94,7 @@
     "season_avg": 191.9,
     "recent_avg": 274,
     "delta": 82.2,
-    "breakout_score": 120.6,
+    "breakout_score": 120.5674,
     "peak_game": 330.5315
   },
   {
@@ -108,7 +108,7 @@
     "season_avg": 246.7,
     "recent_avg": 303.7,
     "delta": 57,
-    "breakout_score": 120.6,
+    "breakout_score": 120.5594,
     "peak_game": 341.662
   },
   {
@@ -122,7 +122,7 @@
     "season_avg": 162.4,
     "recent_avg": 220.7,
     "delta": 58.3,
-    "breakout_score": 120,
+    "breakout_score": 119.9536,
     "peak_game": 239.3357
   },
   {
@@ -136,7 +136,7 @@
     "season_avg": 242,
     "recent_avg": 311.6,
     "delta": 69.5,
-    "breakout_score": 118,
+    "breakout_score": 117.9527,
     "peak_game": 393.3228
   },
   {
@@ -150,7 +150,7 @@
     "season_avg": 188.3,
     "recent_avg": 240.9,
     "delta": 52.6,
-    "breakout_score": 116.6,
+    "breakout_score": 116.5811,
     "peak_game": 264.9693
   },
   {
@@ -164,7 +164,7 @@
     "season_avg": 162.3,
     "recent_avg": 217.7,
     "delta": 55.5,
-    "breakout_score": 108.7,
+    "breakout_score": 108.7407,
     "peak_game": 239.5086
   },
   {
@@ -178,7 +178,7 @@
     "season_avg": 181.2,
     "recent_avg": 249.8,
     "delta": 68.6,
-    "breakout_score": 104.9,
+    "breakout_score": 104.8798,
     "peak_game": 277.4029
   },
   {
@@ -192,7 +192,7 @@
     "season_avg": 193.8,
     "recent_avg": 258.5,
     "delta": 64.7,
-    "breakout_score": 103.5,
+    "breakout_score": 103.4687,
     "peak_game": 314.4067
   },
   {
@@ -206,7 +206,7 @@
     "season_avg": 218.5,
     "recent_avg": 275.3,
     "delta": 56.8,
-    "breakout_score": 100.5,
+    "breakout_score": 100.5429,
     "peak_game": 291.2947
   }
 ]

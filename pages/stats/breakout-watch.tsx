@@ -1,4 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
+import { GetStaticProps } from "next";
+import fs from "fs";
+import path from "path";
 import { BreakoutCard } from '../../components/BreakoutCard';
 
 // Define explicit structure matching your R script's JSON output
@@ -19,37 +22,21 @@ interface BreakoutPlayer {
 
 type SortKey = 'breakout_score' | 'delta' | 'age';
 
-export default function BreakoutWatchPage() {
-  const [players, setPlayers] = useState<BreakoutPlayer[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+interface BreakoutWatchProps {
+  initialPlayers?: BreakoutPlayer[];
+}
+
+export default function BreakoutWatchPage({ initialPlayers = [] }: BreakoutWatchProps) {
+  // Safe initialization prevents 'undefined' reading errors in dev hydration
+  const [players] = useState<BreakoutPlayer[]>(initialPlayers || []);
   
   // Interactive UI Filters
   const [activePosition, setActivePosition] = useState<string>('ALL');
   const [sortBy, setSortBy] = useState<SortKey>('breakout_score');
 
-  useEffect(() => {
-    fetch('/breakout_watch.json')
-      .then(res => {
-        if (!res.ok) throw new Error('Unable to retrieve current breakout tracking data.');
-        return res.json();
-      })
-      .then(data => {
-        // Initial sorting by breakout score as the default priority
-        const sortedData = [...data].sort((a, b) => b.breakout_score - a.breakout_score);
-        setPlayers(sortedData);
-        setIsLoading(false);
-      })
-      .catch(err => {
-        console.error("Failed to load breakout data", err);
-        setError(err.message);
-        setIsLoading(false);
-      });
-  }, []);
-
   // Compute High-Level Market Insights
   const marketMetrics = useMemo(() => {
-    if (players.length === 0) return { avgScore: 0, topRiser: 'N/A', count: 0 };
+    if (!players || players.length === 0) return { avgScore: 0, topRiser: 'N/A', count: 0 };
     const avg = players.reduce((sum, p) => sum + p.breakout_score, 0) / players.length;
     const top = [...players].sort((a, b) => b.breakout_score - a.breakout_score)[0];
     return {
@@ -61,6 +48,8 @@ export default function BreakoutWatchPage() {
 
   // Process and Filter Data based on User Selections
   const filteredAndSortedPlayers = useMemo(() => {
+    if (!players || players.length === 0) return [];
+    
     let result = [...players];
     
     if (activePosition !== 'ALL') {
@@ -131,16 +120,8 @@ export default function BreakoutWatchPage() {
           </div>
         </header>
 
-        {/* Error State */}
-        {error && (
-          <div className="bg-red-950/20 border border-red-900/50 text-red-400 px-4 py-3 rounded-xl max-w-xl mb-8 flex items-center gap-3">
-            <span className="w-2 h-2 rounded-full bg-red-500" />
-            <p className="text-sm"><span className="font-bold">Data Feed Exception:</span> {error}</p>
-          </div>
-        )}
-
         {/* Control Center (Filters & Sorts) */}
-        {!isLoading && players.length > 0 && (
+        {players.length > 0 && (
           <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center mb-8 pb-4 border-b border-zinc-900">
             {/* Position Selector */}
             <div className="flex flex-wrap gap-1.5 bg-zinc-900/60 p-1 rounded-lg border border-zinc-800/40">
@@ -181,65 +162,52 @@ export default function BreakoutWatchPage() {
           </div>
         )}
 
-        {/* Loading / Skeleton State */}
-        {isLoading ? (
-          <div className="space-y-12">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {[...Array(3)].map((_, i) => (
-                <div key={i} className="bg-zinc-900/30 border border-zinc-800/80 rounded-2xl h-80 animate-pulse relative overflow-hidden" />
+        {/* Tier 1: The Heavy Hitters (Top 3 Spotlights) */}
+        {leaders.length > 0 && (
+          <section className="mb-12">
+            <div className="flex items-center gap-2 mb-6">
+              <h2 className="text-xs font-black tracking-widest text-amber-400 uppercase">Tier 1 // Peak Velocity</h2>
+              <div className="h-[1px] bg-gradient-to-r from-amber-500/30 to-transparent flex-1" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {leaders.map((player, idx) => (
+                <div 
+                  key={player.playerId} 
+                  className="relative rounded-2xl transition-transform duration-300 hover:-translate-y-1 group"
+                >
+                  {/* Premium gold glow underlay effect on top performers */}
+                  <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-amber-500/20 via-orange-500/5 to-transparent opacity-70 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute top-3 right-4 z-20 bg-black/60 text-amber-400 font-black text-xs px-2.5 py-1 rounded-md border border-amber-500/30 shadow-lg italic">
+                    RANK #{idx + 1}
+                  </div>
+                  <div className="relative bg-[#0d0d10] rounded-2xl overflow-hidden border border-zinc-800/80">
+                    <BreakoutCard player={player} />
+                  </div>
+                </div>
               ))}
             </div>
-          </div>
-        ) : (
-          <>
-            {/* Tier 1: The Heavy Hitters (Top 3 Spotlights) */}
-            {leaders.length > 0 && (
-              <section className="mb-12">
-                <div className="flex items-center gap-2 mb-6">
-                  <h2 className="text-xs font-black tracking-widest text-amber-400 uppercase">Tier 1 // Peak Velocity</h2>
-                  <div className="h-[1px] bg-gradient-to-r from-amber-500/30 to-transparent flex-1" />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {leaders.map((player, idx) => (
-                    <div 
-                      key={player.playerId} 
-                      className="relative rounded-2xl transition-transform duration-300 hover:-translate-y-1 group"
-                    >
-                      {/* Premium gold glow underlay effect on top performers */}
-                      <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-amber-500/20 via-orange-500/5 to-transparent opacity-70 group-hover:opacity-100 transition-opacity" />
-                      <div className="absolute top-3 right-4 z-20 bg-black/60 text-amber-400 font-black text-xs px-2.5 py-1 rounded-md border border-amber-500/30 shadow-lg italic">
-                        RANK #{idx + 1}
-                      </div>
-                      <div className="relative bg-[#0d0d10] rounded-2xl overflow-hidden border border-zinc-800/80">
-                        <BreakoutCard player={player} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
+          </section>
+        )}
 
-            {/* Tier 2: The Challengers */}
-            {challengers.length > 0 && (
-              <section>
-                <div className="flex items-center gap-2 mb-6">
-                  <h2 className="text-xs font-black tracking-widest text-zinc-400 uppercase">Tier 2 // Market Challengers</h2>
-                  <div className="h-[1px] bg-zinc-800 flex-1" />
+        {/* Tier 2: The Challengers */}
+        {challengers.length > 0 && (
+          <section>
+            <div className="flex items-center gap-2 mb-6">
+              <h2 className="text-xs font-black tracking-widest text-zinc-400 uppercase">Tier 2 // Market Challengers</h2>
+              <div className="h-[1px] bg-zinc-800 flex-1" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {challengers.map((player) => (
+                <div key={player.playerId} className="hover:-translate-y-0.5 transition-transform duration-200">
+                  <BreakoutCard player={player} />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {challengers.map((player) => (
-                    <div key={player.playerId} className="hover:-translate-y-0.5 transition-transform duration-200">
-                      <BreakoutCard player={player} />
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-          </>
+              ))}
+            </div>
+          </section>
         )}
 
         {/* Empty List Fallback */}
-        {!isLoading && filteredAndSortedPlayers.length === 0 && !error && (
+        {filteredAndSortedPlayers.length === 0 && (
           <div className="text-center py-24 bg-zinc-900/10 border border-dashed border-zinc-800/60 rounded-2xl backdrop-blur-sm max-w-2xl mx-auto">
             <svg className="w-8 h-8 mx-auto text-zinc-600 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -252,3 +220,32 @@ export default function BreakoutWatchPage() {
     </div>
   );
 }
+
+// Next.js Pages router static data resolver
+export const getStaticProps: GetStaticProps = async () => {
+  try {
+    const filePath = path.join(process.cwd(), "json", "players", "breakout_watch.json");
+    const jsonData = fs.readFileSync(filePath, "utf-8");
+    const initialPlayers = JSON.parse(jsonData);
+
+    // Default sorting configurations handled cleanly on the server environment
+    const sortedPlayers = Array.isArray(initialPlayers) 
+      ? initialPlayers.sort((a: any, b: any) => b.breakout_score - a.breakout_score)
+      : [];
+
+    return {
+      props: {
+        initialPlayers: sortedPlayers,
+      },
+      revalidate: 60,
+    };
+  } catch (error) {
+    console.error("Static build compilation failed for breakout tracking data pipeline:", error);
+    return {
+      props: {
+        initialPlayers: [],
+      },
+      revalidate: 10, // Try looking again soon if the file was missing/locked during writing
+    };
+  }
+};
