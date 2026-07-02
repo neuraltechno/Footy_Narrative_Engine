@@ -1,0 +1,27 @@
+[
+  {
+    "round": 16,
+    "home_team": "Port Adelaide Power",
+    "away_team": "Adelaide Crows",
+    "home_score": 97,
+    "away_score": 71,
+    "home_goals": 13,
+    "home_behinds": 19,
+    "away_goals": 11,
+    "away_behinds": 5,
+    "home_raw_xscore": 96.2,
+    "away_raw_xscore": 52.6,
+    "home_engine_room_pir": 1288.7,
+    "home_iron_curtain_pir": 822,
+    "home_the_arsenal_pir": 1173.2,
+    "home_system_velocity": 11.83,
+    "away_engine_room_pir": 1074.4,
+    "away_iron_curtain_pir": 820.4,
+    "away_the_arsenal_pir": 876.2,
+    "away_system_velocity": 9.6,
+    "expected_winner": "Port Adelaide Power",
+    "actual_winner": "Port Adelaide Power",
+    "is_robbery": false,
+    "luck_delta": 17.6
+  }
+]

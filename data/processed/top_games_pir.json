@@ -204,6 +204,23 @@
     "game_title": "Round 10 vs Brisbane Lions"
   },
   {
+    "playerId": "CD_I1012014",
+    "givenName": "Chad",
+    "surname": "Warner",
+    "team": "Sydney Swans",
+    "jumperNumber": 1,
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1012014.png?im=Scale,width=0.6,height=0.6",
+    "round": 16,
+    "opponent": "Brisbane Lions",
+    "PIR": 393.3228,
+    "disposal": 73.2037,
+    "contest": 128.1355,
+    "damage": 109.247,
+    "grit": 91.3795,
+    "ruck": 0,
+    "game_title": "Round 16 vs Brisbane Lions"
+  },
+  {
     "playerId": "CD_I1006130",
     "givenName": "Bailey",
     "surname": "Smith",
@@ -304,6 +321,23 @@
     "grit": 168.5,
     "ruck": 0,
     "game_title": "Round 12 vs Richmond Tigers"
+  },
+  {
+    "playerId": "CD_I1006121",
+    "givenName": "Zak",
+    "surname": "Butters",
+    "team": "Port Adelaide Power",
+    "jumperNumber": 9,
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1006121.png?im=Scale,width=0.6,height=0.6",
+    "round": 16,
+    "opponent": "Adelaide Crows",
+    "PIR": 375.5561,
+    "disposal": 67.068,
+    "contest": 198,
+    "damage": 47,
+    "grit": 83.5,
+    "ruck": 0,
+    "game_title": "Round 16 vs Adelaide Crows"
   },
   {
     "playerId": "CD_I1023518",
@@ -542,6 +576,23 @@
     "grit": 60.5,
     "ruck": 61.4993,
     "game_title": "Round 14 vs Essendon Bombers"
+  },
+  {
+    "playerId": "CD_I1023518",
+    "givenName": "Harry",
+    "surname": "Sheezel",
+    "team": "North Melbourne Kangaroos",
+    "jumperNumber": 3,
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1023518.png?im=Scale,width=0.6,height=0.6",
+    "round": 16,
+    "opponent": "Essendon Bombers",
+    "PIR": 357.7333,
+    "disposal": 72.55,
+    "contest": 133.5,
+    "damage": 67,
+    "grit": 87.5,
+    "ruck": 0,
+    "game_title": "Round 16 vs Essendon Bombers"
   },
   {
     "playerId": "CD_I296205",
@@ -797,56 +848,5 @@
     "grit": 214.5,
     "ruck": 0,
     "game_title": "Round 10 vs Brisbane Lions"
-  },
-  {
-    "playerId": "CD_I1009420",
-    "givenName": "Caleb",
-    "surname": "Serong",
-    "team": "Fremantle Dockers",
-    "jumperNumber": 3,
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1009420.png?im=Scale,width=0.6,height=0.6",
-    "round": 1,
-    "opponent": "Geelong Cats",
-    "PIR": 344.9385,
-    "disposal": 68,
-    "contest": 132.5,
-    "damage": 84,
-    "grit": 72.5,
-    "ruck": 0,
-    "game_title": "Round 1 vs Geelong Cats"
-  },
-  {
-    "playerId": "CD_I1009399",
-    "givenName": "Luke",
-    "surname": "Jackson",
-    "team": "Fremantle Dockers",
-    "jumperNumber": 9,
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1009399.png?im=Scale,width=0.6,height=0.6",
-    "round": 15,
-    "opponent": "Geelong Cats",
-    "PIR": 344.2321,
-    "disposal": 43.213,
-    "contest": 143,
-    "damage": 84,
-    "grit": 77.5,
-    "ruck": 28.7,
-    "game_title": "Round 15 vs Geelong Cats"
-  },
-  {
-    "playerId": "CD_I291975",
-    "givenName": "Jarrod",
-    "surname": "Witts",
-    "team": "Gold Coast Suns",
-    "jumperNumber": 28,
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/291975.png?im=Scale,width=0.6,height=0.6",
-    "round": 1,
-    "opponent": "West Coast Eagles",
-    "PIR": 343.7378,
-    "disposal": 25.0655,
-    "contest": 132.2195,
-    "damage": 82.701,
-    "grit": 67.8965,
-    "ruck": 58.608,
-    "game_title": "Round 1 vs West Coast Eagles"
   }
 ]
