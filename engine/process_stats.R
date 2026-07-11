@@ -42,6 +42,12 @@ main <- function() {
     # 3. Process Season Multi-Level Aggregations & Grid Completions
     season_agg <- calculate_season_aggregation(processed_stats)
 
+    # 💡 MOVED & UPDATED CATCHUP LOGIC HERE
+    # Use the true latest_round discovered by the aggregation engine
+    if (!is.null(season_agg$latest_round) && is.finite(season_agg$latest_round)) {
+        check_and_sync_missing_rounds(season_agg$latest_round, 2026, "data/processed/", raw_stats)
+    }
+
     # 4. MASTER FILE SAVES THE INTERNAL BINARY BACKUP ---
     if (!dir.exists('data/processed')) dir.create('data/processed', recursive = TRUE)
     rds_filename <- paste0('data/processed/2026_round_', season_agg$latest_round, '_pir.rds')
@@ -69,7 +75,8 @@ main <- function() {
         power_rankings = rankings,
         breakout_watch = advanced_metrics$breakout_watch,   # Key matched to 15_ and 99_
         category_kings = advanced_metrics$category_kings,
-        top_games      = advanced_metrics$top_games
+        top_games      = advanced_metrics$top_games,
+        top_esc_games  = advanced_metrics$top_esc_games
     )
     
     export_everything(metrics_list)

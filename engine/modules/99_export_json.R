@@ -57,6 +57,7 @@ export_everything <- function(metrics_list) {
     save_json_file(metrics_list$breakout_watch, "json/players/breakout_watch.json")
     save_json_file(metrics_list$category_kings, "json/players/category_kings.json")
     save_json_file(metrics_list$top_games, "json/players/top_games_pir.json")
+    save_json_file(metrics_list$top_esc_games, "json/players/top_esc_games_pir.json")
     save_json_file(metrics_list$player_metrics, "json/players/players_pir.json")
     
     message("INFO: Completed JSON Export")

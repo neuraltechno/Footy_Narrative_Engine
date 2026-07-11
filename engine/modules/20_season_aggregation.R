@@ -29,10 +29,14 @@ calculate_season_aggregation <- function(processed_rounds) {
   
   latest_round <- max(processed_rounds$round.roundNumber, na.rm = TRUE)
   
+  # Extract clean bounds for the sequence to prevent complete() from throwing warnings
+  min_rd <- min(processed_rounds$round.roundNumber, na.rm = TRUE)
+  max_rd <- max(processed_rounds$round.roundNumber, na.rm = TRUE)
+  
   # 1. Timeline Grid Completion & Dynamic Weekly Ranking
   round_pir_series <- processed_rounds %>%
     select(player.playerId, round.roundNumber, PIR) %>%
-    complete(player.playerId, round.roundNumber = seq(min(round.roundNumber), max(round.roundNumber))) %>%
+    complete(player.playerId, round.roundNumber = seq(min_rd, max_rd)) %>%
     arrange(player.playerId, round.roundNumber) %>%
     group_by(player.playerId) %>%
     mutate(
@@ -82,8 +86,10 @@ calculate_season_aggregation <- function(processed_rounds) {
       
       Season_Avg_PIR = mean(PIR, na.rm = TRUE),
       Latest_Round_PIR = sum(ifelse(round.roundNumber == latest_round, PIR, 0), na.rm = TRUE),
-      Max_PIR          = max(PIR, na.rm = TRUE),
-      Min_PIR          = min(PIR, na.rm = TRUE),
+      
+      # Safely handle Min and Max PIR when all rows are NA for a player
+      Max_PIR          = if (all(is.na(PIR))) NA_real_ else max(PIR, na.rm = TRUE),
+      Min_PIR          = if (all(is.na(PIR))) NA_real_ else min(PIR, na.rm = TRUE),
       
       Avg_cat_disposal = mean(norm_disposal, na.rm = TRUE),
       Avg_cat_contest_clearance = mean(norm_contest, na.rm = TRUE),

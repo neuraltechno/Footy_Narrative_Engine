@@ -5,7 +5,7 @@
 #   Player Advanced Metrics Engine
 #
 # Purpose:
-#   Calculate advanced features: Breakout Watch, Category Kings, Top Games
+#   Calculate advanced features: Breakout Watch, Category Kings, Top Games, ESC Leaderboard
 #
 # Inputs:
 #   players_season (Data frame), processed_rounds (Data frame), latest_round (Integer)
@@ -25,7 +25,7 @@ library(jsonlite)
 # Calculate Advanced Metrics
 #
 # Description:
-#   Generates breakout, category kings, and top games data.
+#   Generates breakout, category kings, top games, and ESC data.
 ##########################################################
 calculate_advanced_metrics <- function(players_season, processed_rounds, latest_round) {
     message("INFO: Starting Advanced Metrics...")
@@ -133,7 +133,7 @@ calculate_advanced_metrics <- function(players_season, processed_rounds, latest_
     )
 
     # ==========================================================================
-    # 3. Top Games
+    # 3. Top Games (Sorted by Traditional PIR)
     # ==========================================================================
     top_games <- processed_rounds %>%
         mutate(
@@ -163,11 +163,53 @@ calculate_advanced_metrics <- function(players_season, processed_rounds, latest_
             game_title
         )
 
+    # ==========================================================================
+    # 4. Expected Score Contribution (ESC) Leaderboard
+    # ==========================================================================
+    top_esc_games <- processed_rounds %>%
+        mutate(
+            raw_opponent       = ifelse(teamStatus == "home", away.team.name, home.team.name),
+            match.opponentName = sapply(raw_opponent, normalize_team_name),
+            
+            # Compute ESC row-by-row using action-based probability weighting
+            ESC = (coalesce(goals, 0) * 6.0) + 
+                  (coalesce(behinds, 0) * 1.0) + 
+                  (coalesce(goalAssists, 0) * 3.0) + 
+                  (coalesce(extendedStats.scoreLaunches, 0) * 2.0) + 
+                  (coalesce(scoreInvolvements, 0) * 0.5) + 
+                  (coalesce(inside50s, 0) * 0.8) + 
+                  (coalesce(clearances.totalClearances, 0) * 0.6) + 
+                  (coalesce(intercepts, 0) * 0.7) + 
+                  (coalesce(extendedStats.pressureActs, 0) * 0.1) + 
+                  (coalesce(metresGained, 0) * 0.002) - 
+                  (coalesce(turnovers, 0) * 1.2)
+        ) %>%
+        # Arrange to showcase the pure offensive impact masterclasses
+        arrange(desc(ESC)) %>%
+        slice(1:50) %>%
+        mutate(
+            game_title = paste0("Round ", round.roundNumber, " vs ", match.opponentName),
+            ESC        = round(ESC, 1) # Format decimals for seamless API payload consumption
+        ) %>%
+        select(
+            playerId    = player.playerId, 
+            givenName   = player.givenName, 
+            surname     = player.surname, 
+            team        = team.name, 
+            jumperNumber, 
+            photoURL    = player.photoURL, 
+            round       = round.roundNumber, 
+            opponent    = match.opponentName, 
+            ESC,
+            game_title
+        )
+
     message("INFO: Completed Advanced Metrics")
     
     return(list(
         breakout_watch = breakout_watch, 
         category_kings = category_kings, 
-        top_games      = top_games
+        top_games      = top_games,       # Traditional masterclasses (PIR)
+        top_esc_games  = top_esc_games    # Pure chain creation & scoring value (ESC)
     ))
 }
