@@ -28,16 +28,18 @@ normalize_team_name <- function(team) {
   )
 }
 
+source("engine/modules/00_config.R")
+
 # 1. Fetch data
-stats <- fitzRoy::fetch_player_stats(season = 2026, source = "AFL")
-player_details_afl <- fitzRoy::fetch_player_details(season = 2026, source = "AFL")
+stats <- fitzRoy::fetch_player_stats(season = CURRENT_SEASON, source = "AFL")
+player_details_afl <- fitzRoy::fetch_player_details(season = CURRENT_SEASON, source = "AFL")
 
 # Fetch full career history from afltables
-player_details_afltables_all <- fitzRoy::fetch_player_details(season = 2026, source = "afltables")
+player_details_afltables_all <- fitzRoy::fetch_player_details(season = CURRENT_SEASON, source = "afltables")
 
 # Fetch Team and Match related stats)
-team_stats_raw <- fitzRoy::fetch_team_stats(season = 2026)
-results_raw <- fitzRoy::fetch_results(season = 2026)
+team_stats_raw <- fitzRoy::fetch_team_stats(season = CURRENT_SEASON)
+results_raw <- fitzRoy::fetch_results(season = CURRENT_SEASON)
 
 
 # 2. Process Team-related Datasets
@@ -67,12 +69,12 @@ player_career_stats <- player_details_afltables_all %>%
     .groups = 'drop'
   )
 
-# Keep the original joined details for 2026 for other metadata
-# Filter to 2026 to ensure unique mapping per player-team combination
-player_details_afltables_2026 <- player_details_afltables_all %>%
+# Keep the original joined details for current season for other metadata
+# Filter to current season to ensure unique mapping per player-team combination
+player_details_afltables_current <- player_details_afltables_all %>%
   separate(Player, into = c("givenName", "surname"), sep = " ", extra = "merge") %>%
   mutate(Team = normalize_team_name(Team)) %>%
-  filter(str_detect(Seasons, "2026"))
+  filter(str_detect(Seasons, as.character(CURRENT_SEASON)))
 
 
 # 4. Join: Combine stats with player details
@@ -83,9 +85,9 @@ stats_with_details <- stats %>%
 
 
 # 5. Join 2: Combine with AFLTables
-# Join 2026 details for metadata, then join aggregated career stats
+# Join current season details for metadata, then join aggregated career stats
 final_player_data <- stats_with_details %>%
-  left_join(player_details_afltables_2026, 
+  left_join(player_details_afltables_current, 
             by = c("player.player.player.givenName" = "givenName",
                    "player.player.player.surname" = "surname",
                    "team.name" = "Team")) %>%
@@ -95,10 +97,10 @@ final_player_data <- stats_with_details %>%
 
 
 # 6. Save data
-if (!dir.exists("data/raw")) {
-  dir.create("data/raw", recursive = TRUE)
+if (!dir.exists(DATA_RAW_DIR)) {
+  dir.create(DATA_RAW_DIR, recursive = TRUE)
 }
 
-saveRDS(final_player_data, "data/raw/afl_combined_data_2026.rds")
-saveRDS(team_stats, "data/raw/afl_team_stats_2026.rds")
-saveRDS(results, "data/raw/afl_results_2026.rds")
+saveRDS(final_player_data, file.path(DATA_RAW_DIR, paste0("afl_combined_data_", CURRENT_SEASON, ".rds")))
+saveRDS(team_stats, file.path(DATA_RAW_DIR, paste0("afl_team_stats_", CURRENT_SEASON, ".rds")))
+saveRDS(results, file.path(DATA_RAW_DIR, paste0("afl_results_", CURRENT_SEASON, ".rds")))

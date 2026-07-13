@@ -1,6 +1,7 @@
 import { GetStaticProps } from "next";
 import fs from "fs";
 import path from "path";
+import config from '../config.json';
 import Link from "next/link";
 
 type BreakoutPlayer = {
@@ -233,30 +234,31 @@ export default function Home({ data }: { data: InsightData }) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
+  const currentSeason = config.CURRENT_SEASON;
   const filePath = path.join(process.cwd(), "data", "latest_insights.json");
   const jsonData = fs.readFileSync(filePath, "utf-8");
   const data = JSON.parse(jsonData);
 
   // Read the processed breakout tracking file and isolate the top 5 sorted by breakout_score
-  const breakoutFilePath = path.join(process.cwd(), "json", "players", "breakout_watch.json");
+  const breakoutFilePath = path.join(process.cwd(), "json", currentSeason, "players", "breakout_watch.json");
   const breakoutData = JSON.parse(fs.readFileSync(breakoutFilePath, "utf-8"));
   const topBreakoutPlayers = breakoutData
     .sort((a: any, b: any) => b.breakout_score - a.breakout_score)
     .slice(0, 5);
 
-  const playersFilePath = path.join(process.cwd(), "json", "players", "players_pir.json");
+  const playersFilePath = path.join(process.cwd(), "json", currentSeason, "players", "players_pir.json");
   const playersData = JSON.parse(fs.readFileSync(playersFilePath, "utf-8"));
   const top10Players = playersData
     .sort((a: any, b: any) => b.Season_Avg_PIR - a.Season_Avg_PIR)
     .slice(0, 5);
 
-  const gamesFilePath = path.join(process.cwd(), "json", "players", "top_games_pir.json");
+  const gamesFilePath = path.join(process.cwd(), "json", currentSeason, "players", "top_games_pir.json");
   const gamesData = JSON.parse(fs.readFileSync(gamesFilePath, "utf-8"));
   const top10Games = gamesData
     .sort((a: any, b: any) => b.PIR - a.PIR)
     .slice(0, 5);
 
-  const categoryKingsFilePath = path.join(process.cwd(), "json", "players", "category_kings.json");
+  const categoryKingsFilePath = path.join(process.cwd(), "json", currentSeason, "players", "category_kings.json");
   const categoryKingsData = JSON.parse(fs.readFileSync(categoryKingsFilePath, "utf-8"));
   const topCategoryKings = Object.entries(categoryKingsData).map(([key, value]: [string, any]) => ({
     category: key.replace("Avg_cat_", "").replace(/_/g, " "),

@@ -224,7 +224,10 @@ export default function BreakoutWatchPage({ initialPlayers = [] }: BreakoutWatch
 // Next.js Pages router static data resolver
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    const filePath = path.join(process.cwd(), "json", "players", "breakout_watch.json");
+    const configPath = path.join(process.cwd(), 'config.json');
+    const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+    const currentSeason = config.CURRENT_SEASON;
+    const filePath = path.join(process.cwd(), "json", currentSeason, "players", "breakout_watch.json");
     const jsonData = fs.readFileSync(filePath, "utf-8");
     const initialPlayers = JSON.parse(jsonData);
 

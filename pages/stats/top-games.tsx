@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import fs from 'fs';
 import path from 'path';
+import config from '../../config.json';
 import { GetStaticProps } from 'next';
 import { TopGameCard } from '../../components/TopGameCard';
 
@@ -36,7 +37,8 @@ export default function TopGamesPage({ games }: { games: any[] }) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const filePath = path.join(process.cwd(), 'json', 'players', 'top_games_pir.json');
+  const currentSeason = config.CURRENT_SEASON;
+  const filePath = path.join(process.cwd(), 'json', currentSeason, 'players', 'top_games_pir.json');
   const games = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 
   return {

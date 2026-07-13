@@ -1,17 +1,17 @@
 [
   {
-    "playerId": "CD_I1028560",
-    "givenName": "Levi",
-    "surname": "Ashcroft",
-    "team": "Brisbane Lions",
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1028560.png?im=Scale,width=0.6,height=0.6",
-    "age": 20,
-    "position": "Utility",
-    "season_avg": 168.4,
-    "recent_avg": 257.7,
-    "delta": 89.3,
-    "breakout_score": 167.6876,
-    "peak_game": 301.6503
+    "playerId": "CD_I1017720",
+    "givenName": "Jacob",
+    "surname": "van Rooyen",
+    "team": "Melbourne Demons",
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1017720.png?im=Scale,width=0.6,height=0.6",
+    "age": 23,
+    "position": "Full Forward",
+    "season_avg": 167.4,
+    "recent_avg": 323.2,
+    "delta": 155.8,
+    "breakout_score": 228.2037,
+    "peak_game": 350.0901
   },
   {
     "playerId": "CD_I1023517",
@@ -21,11 +21,11 @@
     "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1023517.png?im=Scale,width=0.6,height=0.6",
     "age": 22,
     "position": "Inside/Outside Mid",
-    "season_avg": 209.5,
-    "recent_avg": 292.8,
-    "delta": 83.3,
-    "breakout_score": 156.4932,
-    "peak_game": 304.536
+    "season_avg": 219.1,
+    "recent_avg": 319.5,
+    "delta": 100.4,
+    "breakout_score": 181.8339,
+    "peak_game": 372.754
   },
   {
     "playerId": "CD_I1025034",
@@ -42,60 +42,32 @@
     "peak_game": 275.9304
   },
   {
-    "playerId": "CD_I1033084",
-    "givenName": "Harry",
-    "surname": "Dean",
-    "team": "Carlton Blues",
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1033084.png?im=Scale,width=0.6,height=0.6",
-    "age": 19,
-    "position": "Centre Half Back",
-    "season_avg": 162.4,
-    "recent_avg": 239.3,
-    "delta": 77,
-    "breakout_score": 147.9128,
-    "peak_game": 239.3357
+    "playerId": "CD_I998390",
+    "givenName": "Changkuoth",
+    "surname": "Jiath",
+    "team": "Melbourne Demons",
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/998390.png?im=Scale,width=0.6,height=0.6",
+    "age": 27,
+    "position": "Back Pocket",
+    "season_avg": 172.5,
+    "recent_avg": 279.1,
+    "delta": 106.6,
+    "breakout_score": 141.0706,
+    "peak_game": 379.5122
   },
   {
-    "playerId": "CD_I1014026",
-    "givenName": "Kai",
-    "surname": "Lohmann",
+    "playerId": "CD_I1028560",
+    "givenName": "Levi",
+    "surname": "Ashcroft",
     "team": "Brisbane Lions",
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1014026.png?im=Scale,width=0.6,height=0.6",
-    "age": 23,
-    "position": "Forward Pocket",
-    "season_avg": 164.8,
-    "recent_avg": 251,
-    "delta": 86.1,
-    "breakout_score": 140.6206,
-    "peak_game": 258.9355
-  },
-  {
-    "playerId": "CD_I1028515",
-    "givenName": "Jagga",
-    "surname": "Smith",
-    "team": "Carlton Blues",
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1028515.png?im=Scale,width=0.6,height=0.6",
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1028560.png?im=Scale,width=0.6,height=0.6",
     "age": 20,
-    "position": "Inside Mid",
-    "season_avg": 193.9,
-    "recent_avg": 259.3,
-    "delta": 65.4,
-    "breakout_score": 136.9536,
-    "peak_game": 277.8751
-  },
-  {
-    "playerId": "CD_I1015810",
-    "givenName": "Sam",
-    "surname": "Durham",
-    "team": "Essendon Bombers",
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1015810.png?im=Scale,width=0.6,height=0.6",
-    "age": 25,
-    "position": "Half Forward Flank",
-    "season_avg": 199,
-    "recent_avg": 292.5,
-    "delta": 93.5,
-    "breakout_score": 133.2899,
-    "peak_game": 314.4067
+    "position": "Utility",
+    "season_avg": 168.9,
+    "recent_avg": 230.7,
+    "delta": 61.9,
+    "breakout_score": 126.5539,
+    "peak_game": 301.6503
   },
   {
     "playerId": "CD_I1015507",
@@ -154,20 +126,6 @@
     "peak_game": 299.4552
   },
   {
-    "playerId": "CD_I994077",
-    "givenName": "Mabior",
-    "surname": "Chol",
-    "team": "Hawthorn Hawks",
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/994077.png?im=Scale,width=0.6,height=0.6",
-    "age": 29,
-    "position": "Centre Half Forward",
-    "season_avg": 171,
-    "recent_avg": 247.4,
-    "delta": 76.4,
-    "breakout_score": 110.6133,
-    "peak_game": 333.2386
-  },
-  {
     "playerId": "CD_I295344",
     "givenName": "Toby",
     "surname": "Greene",
@@ -180,6 +138,20 @@
     "delta": 65.9,
     "breakout_score": 108.5875,
     "peak_game": 376.3061
+  },
+  {
+    "playerId": "CD_I1014026",
+    "givenName": "Kai",
+    "surname": "Lohmann",
+    "team": "Brisbane Lions",
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1014026.png?im=Scale,width=0.6,height=0.6",
+    "age": 23,
+    "position": "Utility",
+    "season_avg": 165.1,
+    "recent_avg": 224,
+    "delta": 58.9,
+    "breakout_score": 106.6184,
+    "peak_game": 258.9355
   },
   {
     "playerId": "CD_I295584",
@@ -208,5 +180,33 @@
     "delta": 68.6,
     "breakout_score": 106.1339,
     "peak_game": 336.7897
+  },
+  {
+    "playerId": "CD_I1000980",
+    "givenName": "Lloyd",
+    "surname": "Meek",
+    "team": "Hawthorn Hawks",
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1000980.png?im=Scale,width=0.6,height=0.6",
+    "age": 28,
+    "position": "Utility",
+    "season_avg": 203.2,
+    "recent_avg": 266.5,
+    "delta": 63.3,
+    "breakout_score": 103.9094,
+    "peak_game": 371.4823
+  },
+  {
+    "playerId": "CD_I996708",
+    "givenName": "Bailey",
+    "surname": "Dale",
+    "team": "Western Bulldogs",
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/996708.png?im=Scale,width=0.6,height=0.6",
+    "age": 30,
+    "position": "Half Back Flank",
+    "season_avg": 225.5,
+    "recent_avg": 284,
+    "delta": 58.6,
+    "breakout_score": 103.6652,
+    "peak_game": 358.1621
   }
 ]

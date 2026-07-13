@@ -10,7 +10,7 @@
       "name": "Dale",
       "team": "Western Bulldogs",
       "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/996708.png?im=Scale,width=0.6,height=0.6",
-      "score": 78.4444
+      "score": 79.4266
     },
     {
       "name": "Blakey",
@@ -28,7 +28,7 @@
       "name": "Roberts",
       "team": "Essendon Bombers",
       "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1023515.png?im=Scale,width=0.6,height=0.6",
-      "score": 72.9479
+      "score": 72.8816
     }
   ],
   "Avg_cat_contest_clearance": [
@@ -42,13 +42,13 @@
       "name": "Cripps",
       "team": "Carlton Blues",
       "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/990704.png?im=Scale,width=0.6,height=0.6",
-      "score": 135.0225
+      "score": 135.3644
     },
     {
       "name": "Neale",
       "team": "Brisbane Lions",
       "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/293535.png?im=Scale,width=0.6,height=0.6",
-      "score": 125.4095
+      "score": 127.0324
     },
     {
       "name": "Heeney",
@@ -57,10 +57,10 @@
       "score": 124.1681
     },
     {
-      "name": "Petracca",
-      "team": "Gold Coast Suns",
-      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/298210.png?im=Scale,width=0.6,height=0.6",
-      "score": 123.8291
+      "name": "Xerri",
+      "team": "North Melbourne Kangaroos",
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1004965.png?im=Scale,width=0.6,height=0.6",
+      "score": 120.3223
     }
   ],
   "Avg_cat_damaging_impact": [
@@ -68,13 +68,13 @@
       "name": "Gunston",
       "team": "Hawthorn Hawks",
       "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/291351.png?im=Scale,width=0.6,height=0.6",
-      "score": 87.2338
+      "score": 86.0307
     },
     {
       "name": "Morris",
       "team": "Brisbane Lions",
       "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1028019.png?im=Scale,width=0.6,height=0.6",
-      "score": 79.9082
+      "score": 78.7889
     },
     {
       "name": "Watson",
@@ -100,13 +100,13 @@
       "name": "Collins",
       "team": "Gold Coast Suns",
       "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/295446.png?im=Scale,width=0.6,height=0.6",
-      "score": 143.8125
+      "score": 146.6765
     },
     {
       "name": "Andrews",
       "team": "Brisbane Lions",
       "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/996059.png?im=Scale,width=0.6,height=0.6",
-      "score": 142
+      "score": 141.3571
     },
     {
       "name": "McCartin",
@@ -138,7 +138,7 @@
       "name": "Gawn",
       "team": "Melbourne Demons",
       "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/290528.png?im=Scale,width=0.6,height=0.6",
-      "score": 43.643
+      "score": 43.5044
     },
     {
       "name": "Sweet",

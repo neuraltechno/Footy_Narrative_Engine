@@ -216,6 +216,18 @@
     "game_title": "Round 1 vs Essendon Bombers"
   },
   {
+    "playerId": "CD_I1023517",
+    "givenName": "Will",
+    "surname": "Ashcroft",
+    "team": "Brisbane Lions",
+    "jumperNumber": 8,
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1023517.png?im=Scale,width=0.6,height=0.6",
+    "round": 18,
+    "opponent": "Essendon Bombers",
+    "ESC": 48.6,
+    "game_title": "Round 18 vs Essendon Bombers"
+  },
+  {
     "playerId": "CD_I1012014",
     "givenName": "Chad",
     "surname": "Warner",
@@ -274,6 +286,30 @@
     "opponent": "Melbourne Demons",
     "ESC": 47.3,
     "game_title": "Round 8 vs Melbourne Demons"
+  },
+  {
+    "playerId": "CD_I1017720",
+    "givenName": "Jacob",
+    "surname": "van Rooyen",
+    "team": "Melbourne Demons",
+    "jumperNumber": 2,
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1017720.png?im=Scale,width=0.6,height=0.6",
+    "round": 18,
+    "opponent": "Richmond Tigers",
+    "ESC": 47.1,
+    "game_title": "Round 18 vs Richmond Tigers"
+  },
+  {
+    "playerId": "CD_I280506",
+    "givenName": "Taylor",
+    "surname": "Walker",
+    "team": "Adelaide Crows",
+    "jumperNumber": 13,
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/280506.png?im=Scale,width=0.6,height=0.6",
+    "round": 18,
+    "opponent": "Gold Coast Suns",
+    "ESC": 46.9,
+    "game_title": "Round 18 vs Gold Coast Suns"
   },
   {
     "playerId": "CD_I994077",
@@ -562,41 +598,5 @@
     "opponent": "Fremantle Dockers",
     "ESC": 42.7,
     "game_title": "Round 9 vs Fremantle Dockers"
-  },
-  {
-    "playerId": "CD_I291351",
-    "givenName": "Jack",
-    "surname": "Gunston",
-    "team": "Hawthorn Hawks",
-    "jumperNumber": 19,
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/291351.png?im=Scale,width=0.6,height=0.6",
-    "round": 7,
-    "opponent": "Gold Coast Suns",
-    "ESC": 42.7,
-    "game_title": "Round 7 vs Gold Coast Suns"
-  },
-  {
-    "playerId": "CD_I993878",
-    "givenName": "Shaun",
-    "surname": "Mannagh",
-    "team": "Geelong Cats",
-    "jumperNumber": 7,
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/993878.png?im=Scale,width=0.6,height=0.6",
-    "round": 8,
-    "opponent": "Nth Melbourne Kangaroos",
-    "ESC": 42.6,
-    "game_title": "Round 8 vs Nth Melbourne Kangaroos"
-  },
-  {
-    "playerId": "CD_I1009399",
-    "givenName": "Luke",
-    "surname": "Jackson",
-    "team": "Fremantle Dockers",
-    "jumperNumber": 9,
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1009399.png?im=Scale,width=0.6,height=0.6",
-    "round": 13,
-    "opponent": "Nth Melbourne Kangaroos",
-    "ESC": 42.6,
-    "game_title": "Round 13 vs Nth Melbourne Kangaroos"
   }
 ]

@@ -34,7 +34,7 @@ main <- function() {
     print("Starting AFL Narrative Engine Pipeline...")
     
     # 1. Load raw data
-    raw_stats <- readRDS('data/raw/afl_combined_data_2026.rds')
+    raw_stats <- readRDS(file.path(DATA_RAW_DIR, paste0("afl_combined_data_", CURRENT_SEASON, ".rds")))
     
     # 2. Process Row-Level Statistics
     processed_stats <- calculate_player_metrics(raw_stats)
@@ -45,12 +45,12 @@ main <- function() {
     # 💡 MOVED & UPDATED CATCHUP LOGIC HERE
     # Use the true latest_round discovered by the aggregation engine
     if (!is.null(season_agg$latest_round) && is.finite(season_agg$latest_round)) {
-        check_and_sync_missing_rounds(season_agg$latest_round, 2026, "data/processed/", raw_stats)
+        check_and_sync_missing_rounds(season_agg$latest_round, CURRENT_SEASON, DATA_PROCESSED_DIR, raw_stats)
     }
 
     # 4. MASTER FILE SAVES THE INTERNAL BINARY BACKUP ---
-    if (!dir.exists('data/processed')) dir.create('data/processed', recursive = TRUE)
-    rds_filename <- paste0('data/processed/2026_round_', season_agg$latest_round, '_pir.rds')
+    if (!dir.exists(DATA_PROCESSED_DIR)) dir.create(DATA_PROCESSED_DIR, recursive = TRUE)
+    rds_filename <- file.path(DATA_PROCESSED_DIR, paste0(CURRENT_SEASON, "_round_", season_agg$latest_round, "_pir.rds"))
     saveRDS(season_agg$final_processed_stats, rds_filename)
     message(paste("INFO: Saved seasonal RDS backup to", rds_filename))
     

@@ -35,7 +35,7 @@ save_json_file <- function(data, file_path) {
     write(json_data, file = file_path)
 }
 
-check_and_sync_missing_rounds <- function(current_round, season_year = 2026, data_dir = "data/processed/", raw_stats) {
+check_and_sync_missing_rounds <- function(current_round, season_year = 2026, data_dir = file.path("data/processed", season_year), raw_stats) {
   
   # 1. Dynamically pull all unique rounds played so far (safely handles Round 0 if it exists)
   completed_rounds <- raw_stats %>% 

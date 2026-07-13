@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import allPlayersData from '../json/players/players_pir.json';
 import Link from 'next/link';
+import fs from 'fs';
+import path from 'path';
 import RankingMomentum from '../components/RankingMomentum';
 import RoundHistoryChart from '../components/RoundHistoryChart';
 
@@ -53,7 +54,7 @@ const getStatTier = (statKey: string, val: number, thresholds: any) => {
   return { label: 'Local Footy', color: 'text-zinc-600' };
 };
 
-const PlayerCard = ({ player, rank, filteredHistory, initialView = 'season', thresholds, isExpanded, onToggle }: { player: any; rank: number; filteredHistory: any[]; initialView?: 'season' | 'latest', thresholds: any, isExpanded: boolean, onToggle: () => void }) => {
+const PlayerCard = ({ player, rank, filteredHistory, initialView = 'season', thresholds, isExpanded, onToggle, allPlayersData }: { player: any; rank: number; filteredHistory: any[]; initialView?: 'season' | 'latest', thresholds: any, isExpanded: boolean, onToggle: () => void, allPlayersData: any[] }) => {
   const [viewMode, setViewMode] = useState<'season' | 'latest'>(initialView);
 
   const gamesPlayed = player.Games_Played_2026 || 0;
@@ -308,7 +309,7 @@ const PlayerCard = ({ player, rank, filteredHistory, initialView = 'season', thr
   );
 };
 
-const PlayersPage = () => {
+const PlayersPage = ({ allPlayersData }: { allPlayersData: any[] }) => {
   const [isClient, setIsClient] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
@@ -472,6 +473,7 @@ const PlayersPage = () => {
                 thresholds={thresholds}
                 isExpanded={expandedCards.has(playerId)}
                 onToggle={() => toggleCard(playerId)}
+                allPlayersData={allPlayersData}
               />
             );
           })}
@@ -515,5 +517,20 @@ const PlayersPage = () => {
     </div>
   );
 };
+
+export async function getServerSideProps() {
+  const configPath = path.join(process.cwd(), 'config.json');
+  const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  const current_Season = config.CURRENT_SEASON;
+
+  const playersPath = path.join(process.cwd(), 'json', current_Season, 'players', 'players_pir.json');
+  const playersData = JSON.parse(fs.readFileSync(playersPath, 'utf8'));
+
+  return {
+    props: {
+      allPlayersData: playersData,
+    },
+  };
+}
 
 export default PlayersPage;

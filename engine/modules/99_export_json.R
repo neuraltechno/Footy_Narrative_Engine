@@ -40,25 +40,32 @@
 #
 ##########################################################
 export_everything <- function(metrics_list) {
-    message("INFO: Starting JSON Export...")
+    message('INFO: Starting JSON Export...')
     
-    # Ensure directories exist
-    if (!dir.exists("json/league")) dir.create("json/league", recursive = TRUE)
-    if (!dir.exists("json/teams")) dir.create("json/teams", recursive = TRUE)
-    if (!dir.exists("json/players")) dir.create("json/players", recursive = TRUE)
-    if (!dir.exists("json/matches")) dir.create("json/matches", recursive = TRUE)
-    if (!dir.exists("data/processed")) dir.create("data/processed", recursive = TRUE) # Ensure this exists
+    # Create season-specific directories for JSON outputs to prevent collisions
+    json_dir <- file.path('json', CURRENT_SEASON)
+    
+    dirs <- c(
+      file.path(json_dir, 'league'),
+      file.path(json_dir, 'teams'),
+      file.path(json_dir, 'players'),
+      file.path(json_dir, 'matches')
+    )
+    
+    for (d in dirs) {
+      if (!dir.exists(d)) dir.create(d, recursive = TRUE)
+    }
     
     # Export specific files
-    save_json_file(metrics_list$justice_ladder, "json/league/justice_ladder.json")
-    save_json_file(metrics_list$power_rankings, "json/league/power_rankings.json")
+    save_json_file(metrics_list$justice_ladder, file.path(json_dir, 'league/justice_ladder.json'))
+    save_json_file(metrics_list$power_rankings, file.path(json_dir, 'league/power_rankings.json'))
     
     # Export advanced metrics
-    save_json_file(metrics_list$breakout_watch, "json/players/breakout_watch.json")
-    save_json_file(metrics_list$category_kings, "json/players/category_kings.json")
-    save_json_file(metrics_list$top_games, "json/players/top_games_pir.json")
-    save_json_file(metrics_list$top_esc_games, "json/players/top_esc_games_pir.json")
-    save_json_file(metrics_list$player_metrics, "json/players/players_pir.json")
+    save_json_file(metrics_list$breakout_watch, file.path(json_dir, 'players/breakout_watch.json'))
+    save_json_file(metrics_list$category_kings, file.path(json_dir, 'players/category_kings.json'))
+    save_json_file(metrics_list$top_games, file.path(json_dir, 'players/top_games_pir.json'))
+    save_json_file(metrics_list$top_esc_games, file.path(json_dir, 'players/top_esc_games_pir.json'))
+    save_json_file(metrics_list$player_metrics, file.path(json_dir, 'players/players_pir.json'))
     
-    message("INFO: Completed JSON Export")
+    message('INFO: Completed JSON Export')
 }

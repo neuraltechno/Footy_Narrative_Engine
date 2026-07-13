@@ -1,8 +1,22 @@
 import React, { useState, useMemo } from 'react';
+import fs from 'fs';
+import path from 'path';
 import { CategoryPodium } from '../../components/CategoryPodium';
-import data from '../../json/players/category_kings.json';
 
-export default function CategoryKings() {
+export async function getServerSideProps() {
+  const configPath = path.join(process.cwd(), 'config.json');
+  const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  const currentSeason = config.CURRENT_SEASON;
+
+  const dataPath = path.join(process.cwd(), 'json', currentSeason, 'players', 'category_kings.json');
+  const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+
+  return {
+    props: { data, currentSeason },
+  };
+}
+
+export default function CategoryKings({ data, season }: { data: any, season: string }) {
   const [selectedTeam, setSelectedTeam] = useState<string>('All');
 
   const teams = useMemo(() => {
@@ -32,7 +46,7 @@ export default function CategoryKings() {
   return (
     <main className="min-h-screen bg-zinc-950 p-8 text-zinc-50">
       <header className="mb-12">
-        <h1 className="text-4xl font-extrabold mb-2">The 2026 Category Kings</h1>
+        <h1 className="text-4xl font-extrabold mb-2">The {season} Category Kings</h1>
         <p className="text-zinc-400 mb-6">Tracking the elite performers across every vital statistic.</p>
         
         <select 
