@@ -56,9 +56,16 @@ export_everything <- function(metrics_list) {
       if (!dir.exists(d)) dir.create(d, recursive = TRUE)
     }
     
-    # Export specific files
+    # Export structural league and team performance files
     save_json_file(metrics_list$justice_ladder, file.path(json_dir, 'league/justice_ladder.json'))
     save_json_file(metrics_list$power_rankings, file.path(json_dir, 'league/power_rankings.json'))
+    
+    # Export advanced match engine files
+    save_json_file(metrics_list$match_centers, file.path(json_dir, 'matches/team_match_centers.json'))
+    save_json_file(metrics_list$robbery_of_the_round, file.path(json_dir, 'league/robbery_of_the_round.json'))
+    
+    # Combined luck/unluckiest games list (replaced luckiest_wins and unluckiest_losses)
+    save_json_file(metrics_list$luck_unlucky, file.path(json_dir, 'league/luck_unlucky.json'))
     
     # Export advanced metrics
     save_json_file(metrics_list$breakout_watch, file.path(json_dir, 'players/breakout_watch.json'))

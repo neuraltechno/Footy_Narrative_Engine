@@ -79,6 +79,9 @@ export default function Home({ data }: { data: InsightData }) {
             <Link href="/stats/breakout-watch" className="px-4 py-2 rounded-lg bg-emerald-900/20 border border-emerald-500/30 hover:border-emerald-500/50 text-sm font-medium transition text-emerald-300 hover:text-white">
               Breakout Watch &rarr;
             </Link>
+            <Link href="/stats/justice-ladder" className="px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-sm font-medium transition text-zinc-300 hover:text-white">
+              Justice Ladder &rarr;
+            </Link>
           </nav>
         </header>
 

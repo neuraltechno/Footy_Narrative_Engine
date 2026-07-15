@@ -1,0 +1,27 @@
+[
+  {
+    "round": 18,
+    "home_team": "Brisbane Lions",
+    "away_team": "Essendon Bombers",
+    "home_score": 149,
+    "away_score": 59,
+    "home_goals": 22,
+    "home_behinds": 17,
+    "away_goals": 8,
+    "away_behinds": 11,
+    "home_raw_xscore": 123.4,
+    "away_raw_xscore": 57.4,
+    "home_engine_room_pir": 1824.4,
+    "home_iron_curtain_pir": 1236.6,
+    "home_the_arsenal_pir": 964,
+    "home_system_velocity": 13.06,
+    "away_engine_room_pir": 919.7,
+    "away_iron_curtain_pir": 875,
+    "away_the_arsenal_pir": 1138.7,
+    "away_system_velocity": 9.02,
+    "expected_winner": "Brisbane Lions",
+    "actual_winner": "Brisbane Lions",
+    "is_robbery": false,
+    "luck_delta": 24
+  }
+]

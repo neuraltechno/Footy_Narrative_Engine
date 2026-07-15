@@ -11,11 +11,11 @@
 #
 # Inputs:
 #
-# Processed Team/Match Data
+# Match Evaluations Data, Justice Ladder Outputs, Latest Round
 #
 # Outputs:
 #
-# AI-ready narrative summary data frame
+# Structured list of Narrative data points and targeted game summaries
 #
 # Dependencies:
 #
@@ -30,40 +30,33 @@ library(dplyr)
 #
 # Description:
 #
-# Prepares data points for AI prompt generation.
-#
-# Inputs:
-#
-# summary_data
-#
-# Returns:
-#
-# Narrative Summary Data Frame
+# Isolates game robberies and prepares data blocks for AI context windows.
 #
 ##########################################################
-generate_narrative_summaries <- function(summary_data) {
+generate_narrative_summaries <- function(match_evaluations, justice_ladder, latest_round) {
     message("INFO: Starting Narrative Engine...")
     
-    # --- SAFE FALLBACK ENGINE ---
-    # Dynamically handle missing columns used in the text output string
-    if (!"team" %in% names(summary_data)) {
-        summary_data$team <- "Unknown Team"
-    }
-    if (!"overall_rating" %in% names(summary_data)) {
-        summary_data$overall_rating <- 0
-    }
-    if (!"trend" %in% names(summary_data)) {
-        summary_data$trend <- "stable"
-    }
+    # 1. Pull out the round's single highest luck delta game
+    robbery_of_the_round_match <- match_evaluations |>
+        filter(round == latest_round) |>
+        arrange(desc(luck_delta)) |>
+        slice_head(n = 1)
     
-    # Calculation logic using native pipe
-    narratives <- summary_data |>
+    # 2. Construct AI-ready background profiles per team
+    narratives <- justice_ladder |>
         mutate(
-            confidence = 90,
-            summary = paste(team, "had a", trend, "trend with an overall rating of", round(overall_rating, 1))
+            confidence = if_else(Luck_Status == "Balanced", 85, 95),
+            summary = paste0(
+                team, " is currently sitting at #", Justice_Rank, 
+                " on the performance-based Justice Ladder. System status is evaluated as ", 
+                Luck_Status, " with an expected points percentage of ", Expected_Percent, "%."
+            )
         )
 
     message("INFO: Completed Narrative Engine")
     
-    return(narratives)
+    return(list(
+        team_narratives = narratives,
+        robbery_match   = robbery_of_the_round_match
+    ))
 }
