@@ -1,240 +1,453 @@
 import { GetStaticProps } from "next";
 import fs from "fs";
 import path from "path";
-import config from '../config.json';
 import Link from "next/link";
+import React, { useState } from "react";
+import config from "../config.json";
+
+// ─────────────────────────────────────────────────────────────────────────
+// Types
+// ─────────────────────────────────────────────────────────────────────────
+
+type TeamInsight = { name: string; status: string; contenderScore: number };
 
 type BreakoutPlayer = {
   playerId: string;
   givenName: string;
   surname: string;
   team: string;
+  photoURL?: string;
   age: number;
   position: string;
   delta: number;
   breakout_score: number;
 };
 
+type TopPlayer = {
+  "player.givenName": string;
+  "player.surname": string;
+  Season_Avg_PIR: number;
+  "player.team"?: string;
+};
+
+type TopGame = { givenName: string; surname: string; PIR: number; game_title: string };
+
+type CategoryKing = { category: string; leader: { name: string; score: number } };
+
+type JusticeTeam = {
+  team: string;
+  Justice_Rank: number;
+  Actual_Rank: number;
+  Luck_Rating: number;
+  Luck_Status: string;
+  Justice_Rank_Movement: number;
+};
+
 type InsightData = {
   round: number;
-  teams: { name: string; status: string; contenderScore: number }[];
-  topBreakoutPlayers: BreakoutPlayer[]; // Real data mapping into the placeholder section
-  top10Players: { 
-    "player.givenName": string; 
-    "player.surname": string; 
-    "Season_Avg_PIR": number;
-    "player.team"?: string;
-  }[];
-  top10Games: { "givenName": string; "surname": string; "PIR": number; "game_title": string }[];
-  topCategoryKings: { category: string; leader: { name: string; score: number } }[];
+  teams: TeamInsight[];
+  topBreakoutPlayers: BreakoutPlayer[];
+  top10Players: TopPlayer[];
+  top10Games: TopGame[];
+  topCategoryKings: CategoryKing[];
+  headline?: string;
+  dek?: string;
 };
 
-const getStatusColor = (status: string) => {
-  const s = status.toLowerCase();
-  if (s.includes("contender") || s.includes("rising") || s.includes("up")) {
-    return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
-  }
-  if (s.includes("falling") || s.includes("struggling") || s.includes("down")) {
-    return "bg-rose-500/10 text-rose-400 border-rose-500/20";
-  }
-  return "bg-amber-500/10 text-amber-400 border-amber-500/20";
+type JusticeSpotlight = {
+  luckiest: JusticeTeam | null;
+  cursed: JusticeTeam | null;
+  biggestMover: JusticeTeam | null;
 };
 
-export default function Home({ data }: { data: InsightData }) {
+// ─────────────────────────────────────────────────────────────────────────
+// Small presentational helpers
+// ─────────────────────────────────────────────────────────────────────────
+
+function NavTab({ href, label, emphasis = false }: { href: string; label: string; emphasis?: boolean }) {
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans selection:bg-blue-500/30 selection:text-blue-200 relative overflow-hidden">
-      {/* Subtle background tech grid lines */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1f293708_1px,transparent_1px),linear-gradient(to_bottom,#1f293708_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
+    <Link
+      href={href}
+      className={`rounded-sm border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.1em] transition-colors ${
+        emphasis
+          ? "border-[var(--brass)] text-[var(--brass)] hover:bg-[var(--brass)]/10"
+          : "border-[var(--hairline)] text-[var(--slate)] hover:border-[var(--slate)] hover:text-[var(--parchment)]"
+      }`}
+    >
+      {label}
+    </Link>
+  );
+}
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        
-        {/* Header Console */}
-        <header className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6 border-b border-zinc-800 pb-8">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-semibold text-blue-400 uppercase tracking-wider mb-3">
-              ⚡ Stat-Engine Active
-            </div>
-            <h1 className="text-4xl sm:text-5xl font-black tracking-tight bg-gradient-to-r from-white via-zinc-200 to-zinc-500 bg-clip-text text-transparent">
-              AFL Footy Narrative Engine
-            </h1>
-            <p className="text-zinc-400 mt-2 text-lg">
-              Advanced performance indexes & analytic narratives for <span className="text-white font-semibold">Round {data.round}</span>
-            </p>
-          </div>
-          
-          {/* Quick Navigation Controls */}
-          <nav className="flex flex-wrap gap-2">
-            <Link href="/teams" className="px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-sm font-medium transition text-zinc-300 hover:text-white">
-              Team Insights &rarr;
-            </Link>
-            <Link href="/players" className="px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-sm font-medium transition text-zinc-300 hover:text-white">
-              Player Ratings &rarr;
-            </Link>
-            <Link href="/stats/top-games" className="px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-sm font-medium transition text-zinc-300 hover:text-white">
-              Top Games &rarr;
-            </Link>
-            <Link href="/stats/category-kings" className="px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-sm font-medium transition text-zinc-300 hover:text-white">
-              Category Kings &rarr;
-            </Link>
-            <Link href="/stats/breakout-watch" className="px-4 py-2 rounded-lg bg-emerald-900/20 border border-emerald-500/30 hover:border-emerald-500/50 text-sm font-medium transition text-emerald-300 hover:text-white">
-              Breakout Watch &rarr;
-            </Link>
-            <Link href="/stats/justice-ladder" className="px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-sm font-medium transition text-zinc-300 hover:text-white">
-              Justice Ladder &rarr;
-            </Link>
-          </nav>
-        </header>
-
-        {/* Dashboard Panels */}
-        <main className="space-y-16">
-          
-          {/* Row 1: Dynamic Narrative Indexes */}
-          <section className="grid lg:grid-cols-2 gap-8">
-            {/* Trending Teams Panel */}
-            <div className="bg-zinc-900/40 backdrop-blur-sm border border-zinc-800/80 rounded-2xl p-6 sm:p-8">
-              <div className="mb-6">
-                <h2 className="text-xl font-bold tracking-tight text-white">Trending Teams</h2>
-                <p className="text-xs text-zinc-500 mt-1">Calculated power rankings and flag readiness</p>
-              </div>
-              <div className="space-y-3">
-                {data.teams.map((t, i) => (
-                  <div key={i} className="group flex justify-between items-center p-4 bg-zinc-900/60 border border-zinc-800/50 rounded-xl hover:border-zinc-700 transition duration-200">
-                    <div className="flex items-center gap-3">
-                      <span className="text-zinc-300 font-semibold tracking-wide group-hover:text-blue-400 transition">{t.name}</span>
-                      <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded border ${getStatusColor(t.status)}`}>
-                        {t.status}
-                      </span>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-sm font-mono font-bold bg-zinc-950 px-3 py-1.5 rounded-lg border border-zinc-800 text-zinc-200 group-hover:text-white group-hover:bg-zinc-900 transition">
-                        {t.contenderScore}<span className="text-zinc-600 text-xs font-normal">/100</span>
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Breakout Watch Panel (Updated with real backend data mapping) */}
-            <div className="bg-zinc-900/40 backdrop-blur-sm border border-zinc-800/80 rounded-2xl p-6 sm:p-8">
-              <div className="mb-6">
-                <h2 className="text-xl font-bold tracking-tight text-white">Breakout Watch (Top PIR)</h2>
-                <p className="text-xs text-zinc-500 mt-1">Players drastically outperforming historical expectations</p>
-              </div>
-              <div className="space-y-3">
-                {data.topBreakoutPlayers.map((p, i) => (
-                  <div key={p.playerId || i} className="group flex justify-between items-center p-4 bg-zinc-900/60 border border-zinc-800/50 rounded-xl hover:border-zinc-700 transition duration-200">
-                    <div>
-                      <span className="text-zinc-300 font-medium group-hover:text-emerald-400 transition block">
-                        {p.givenName} {p.surname}
-                      </span>
-                      <span className="text-[10px] uppercase font-semibold text-zinc-500 block mt-0.5 tracking-wider">
-                        {p.team || "AFL Club"} • {p.position || "N/A"}
-                      </span>
-                    </div>
-                    <span className="text-xs font-mono font-bold text-emerald-400 bg-emerald-500/5 px-2.5 py-1 rounded-lg border border-emerald-500/10 shrink-0 ml-4">
-                      {p.breakout_score.toFixed(1)} Score
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* Row 2: Symmetric Leaderboards */}
-          <section className="grid lg:grid-cols-2 gap-8">
-            {/* Top 10 Season Leaders Leaderboard */}
-            <div className="bg-zinc-900/20 border border-zinc-900 rounded-2xl p-6">
-              <div className="flex justify-between items-center mb-6 pb-4 border-b border-zinc-900">
-                <div>
-                  <h2 className="text-lg font-bold text-white">Top 5 Season Leaders</h2>
-                  <p className="text-xs text-zinc-500">Highest Season Average PIR</p>
-                </div>
-                <Link href="/players" className="text-xs font-medium text-blue-400 hover:text-blue-300 transition">
-                  View All &rarr;
-                </Link>
-              </div>
-              <div className="divide-y divide-zinc-900/60">
-                {data.top10Players.map((p, i) => (
-                  <div key={i} className="flex justify-between items-center py-3 group">
-                    <div className="flex items-center gap-3 min-w-0">
-                      <span className="font-mono text-xs text-zinc-600 w-4 font-bold">{i + 1}</span>
-                      <div className="min-w-0">
-                        <p className="text-zinc-300 text-sm group-hover:text-white transition truncate font-medium">
-                          {p["player.givenName"]} {p["player.surname"]}
-                        </p>
-                        <p className="text-[10px] text-zinc-500 truncate uppercase tracking-wider">
-                          {p["player.team"] || "AFL Club"}
-                        </p>
-                      </div>
-                    </div>
-                    <span className="font-mono text-xs font-semibold text-zinc-400 bg-zinc-900/80 px-2 py-1 rounded border border-zinc-800/50 shrink-0 ml-4">
-                      {p["Season_Avg_PIR"].toFixed(1)} <span className="text-[10px] text-zinc-600">AVG</span>
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Top 10 Single Match Performances */}
-            <div className="bg-zinc-900/20 border border-zinc-900 rounded-2xl p-6">
-              <div className="flex justify-between items-center mb-6 pb-4 border-b border-zinc-900">
-                <div>
-                  <h2 className="text-lg font-bold text-white">Top 5 Match Performances - The GOD Tier</h2>
-                  <p className="text-xs text-zinc-500">Highest individual single-game scores</p>
-                </div>
-                <Link href="/records/top-games" className="text-xs font-medium text-blue-400 hover:text-blue-300 transition">
-                  View All &rarr;
-                </Link>
-              </div>
-              <div className="divide-y divide-zinc-900/60">
-                {data.top10Games.map((g, i) => (
-                  <div key={i} className="flex justify-between items-center py-3 group">
-                    <div className="flex items-center gap-3 min-w-0">
-                      <span className="font-mono text-xs text-zinc-600 w-4 font-bold">{i + 1}</span>
-                      <div className="min-w-0">
-                        <p className="text-zinc-300 text-sm group-hover:text-white transition truncate font-medium">
-                          {g.givenName} {g.surname}
-                        </p>
-                        <p className="text-[10px] text-zinc-500 truncate">{g.game_title}</p>
-                      </div>
-                    </div>
-                    <span className="font-mono text-xs font-bold text-emerald-400 bg-emerald-500/5 px-2 py-1 rounded border border-emerald-500/10 ml-4 shrink-0">
-                      {g.PIR.toFixed(1)}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* Category Kings */}
-          <section className="bg-zinc-900/20 border border-zinc-900 rounded-2xl p-6">
-            <div className="flex justify-between items-center mb-6 pb-4 border-b border-zinc-900">
-              <div>
-                <h2 className="text-lg font-bold text-white">Category Kings</h2>
-                <p className="text-xs text-zinc-500">Top performers by specialized skill</p>
-              </div>
-              <Link href="/stats/category-kings" className="text-xs font-medium text-blue-400 hover:text-blue-300 transition">
-                View All &rarr;
-              </Link>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-              {data.topCategoryKings.map((item, i) => (
-                <div key={i} className="bg-zinc-900/40 p-4 rounded-xl border border-zinc-800">
-                  <p className="text-[10px] uppercase text-zinc-500 font-bold tracking-wider">{item.category}</p>
-                  <p className="text-sm font-semibold text-white mt-1">{item.leader.name}</p>
-                  <p className="text-xs text-blue-400 font-mono mt-0.5">{item.leader.score.toFixed(1)}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-        </main>
+function PlayerPhoto({ src, alt }: { src?: string; alt: string }) {
+  const [failed, setFailed] = useState(false);
+  if (failed || !src) {
+    return (
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sm border border-[var(--hairline)] bg-[var(--ink)] font-mono text-[9px] text-[var(--slate)]">
+        N/A
       </div>
+    );
+  }
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      onError={() => setFailed(true)}
+      className="h-12 w-12 shrink-0 rounded-sm border border-[var(--hairline)] bg-[var(--ink)] object-cover"
+    />
+  );
+}
+
+function MovementArrow({ value }: { value: number }) {
+  if (value === 0) return <span className="font-mono text-xs text-[var(--slate)]">—</span>;
+  const up = value > 0;
+  return (
+    <span className={`inline-flex items-center gap-0.5 font-mono text-xs ${up ? "text-[var(--fern-light)]" : "text-[var(--oxblood-light)]"}`}>
+      <svg width="8" height="8" viewBox="0 0 10 10" className={up ? "" : "rotate-180"}>
+        <path d="M5 0 L10 8 L0 8 Z" fill="currentColor" />
+      </svg>
+      {Math.abs(value)}
+    </span>
+  );
+}
+
+function TeaserTile({
+  href,
+  eyebrow,
+  hook,
+  stat,
+  statLabel,
+  photoSrc,
+  photoAlt,
+  glyph,
+}: {
+  href: string;
+  eyebrow: string;
+  hook: string;
+  stat?: string;
+  statLabel?: string;
+  photoSrc?: string;
+  photoAlt?: string;
+  glyph?: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="group flex h-full flex-col justify-between rounded-sm border border-[var(--hairline)] bg-[var(--panel)] p-4 transition-colors hover:bg-[var(--panel-hover)] hover:border-[var(--brass)]/60"
+    >
+      <div>
+        <div className="mb-3 flex items-center justify-between">
+          <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--brass)]">{eyebrow}</span>
+          {photoSrc !== undefined ? (
+            <PlayerPhoto src={photoSrc} alt={photoAlt || eyebrow} />
+          ) : (
+            <span className="text-xl leading-none opacity-80">{glyph}</span>
+          )}
+        </div>
+        <p className="font-display text-sm leading-snug text-[var(--parchment)]">{hook}</p>
+      </div>
+      <div className="mt-4 flex items-center justify-between">
+        {stat ? (
+          <span className="font-mono text-sm font-bold text-[var(--fern-light)]">
+            {stat} <span className="text-[10px] font-normal uppercase tracking-wide text-[var(--slate)]">{statLabel}</span>
+          </span>
+        ) : (
+          <span />
+        )}
+        <span className="font-mono text-[10px] uppercase tracking-wide text-[var(--slate)] transition-colors group-hover:text-[var(--brass)]">
+          Read &rarr;
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+function SpotlightCard({
+  eyebrow,
+  team,
+  tone,
+  children,
+}: {
+  eyebrow: string;
+  team: string;
+  tone: "brass" | "oxblood" | "fern";
+  children: React.ReactNode;
+}) {
+  const border = {
+    brass: "border-[var(--brass)]",
+    oxblood: "border-[var(--oxblood-light)]",
+    fern: "border-[var(--fern-light)]",
+  }[tone];
+  return (
+    <div className={`rounded-sm border-l-2 bg-[var(--panel)] px-4 py-3 ${border}`}>
+      <div className="font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--slate)]">{eyebrow}</div>
+      <div className="font-display mt-1 text-lg font-medium text-[var(--parchment)]">{team}</div>
+      <div className="mt-1 font-mono text-xs text-[var(--slate)]">{children}</div>
     </div>
   );
 }
+
+// ─────────────────────────────────────────────────────────────────────────
+// Narrative fallback
+// ─────────────────────────────────────────────────────────────────────────
+
+function buildFallbackNarrative(
+  data: InsightData,
+  justice: JusticeSpotlight
+): { headline: string; dek: string } {
+  const topContender = data.teams.length
+    ? data.teams.reduce((a, b) => (b.contenderScore > a.contenderScore ? b : a))
+    : null;
+  const topBreakout = data.topBreakoutPlayers[0];
+
+  const luckLine =
+    justice.luckiest && justice.cursed
+      ? `${justice.luckiest.team} is riding the run of the season while ${justice.cursed.team} can't catch a break`
+      : topContender
+      ? `${topContender.name} heads the power rankings at ${topContender.contenderScore}/100`
+      : "The ladder is taking shape";
+
+  const headline = `Round ${data.round}: ${luckLine}`;
+
+  const dekParts: string[] = [];
+  if (topBreakout) {
+    dekParts.push(`${topBreakout.givenName} ${topBreakout.surname} is this week's fastest riser`);
+  }
+  if (data.top10Games[0]) {
+    dekParts.push(`${data.top10Games[0].givenName} ${data.top10Games[0].surname} posted the standout individual game`);
+  }
+  const dek = dekParts.length
+    ? dekParts.join(", and ") + "."
+    : "Every result, ranked, weighed and cross-examined.";
+
+  return { headline, dek };
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Page Component
+// ─────────────────────────────────────────────────────────────────────────
+
+export default function Home({ data, justice }: { data: InsightData; justice: JusticeSpotlight }) {
+  const { headline, dek } = data.headline
+    ? { headline: data.headline, dek: data.dek || "" }
+    : buildFallbackNarrative(data, justice);
+
+  const topContender = data.teams.length
+    ? data.teams.reduce((a, b) => (b.contenderScore > a.contenderScore ? b : a))
+    : null;
+  const topBreakout = data.topBreakoutPlayers[0];
+  const topGame = data.top10Games[0];
+  const topSeasonLeader = data.top10Players[0];
+  const topCategoryKing = data.topCategoryKings[0];
+
+  return (
+    <>
+      <style jsx global>{`
+        :root {
+          --ink: #10151a;
+          --panel: #161d22;
+          --panel-hover: #1b2329;
+          --parchment: #ede6d6;
+          --brass: #c9a227;
+          --brass-bright: #e0be4a;
+          --fern-light: #8fbd7c;
+          --oxblood: #a8433a;
+          --oxblood-light: #d97862;
+          --slate: #8c97a0;
+          --hairline: #262e33;
+        }
+        .font-display {
+          font-family: "Fraunces", Georgia, serif;
+        }
+        .font-mono {
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+        }
+        .font-body {
+          font-family: "Inter", system-ui, sans-serif;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          * {
+            transition-duration: 0.01ms !important;
+          }
+        }
+      `}</style>
+
+      <main className="font-body min-h-screen bg-[var(--ink)] px-6 py-10 text-[var(--parchment)] sm:px-10 lg:px-16">
+        <div className="mx-auto max-w-6xl">
+          {/* ── Utility bar ──────────────────────────────────────── */}
+          <div className="mb-10 flex flex-col gap-4 border-b border-[var(--hairline)] pb-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-3 font-mono text-[11px] tracking-[0.25em] text-[var(--brass)]">
+              <span className="inline-block h-px w-8 bg-[var(--brass)]" />
+              FOOTY NARRATIVE ENGINE
+            </div>
+            <nav className="flex flex-wrap gap-2">
+              <NavTab href="/teams" label="Team Insights" />
+              <NavTab href="/players" label="Player Ratings" />
+              <NavTab href="/stats/top-games" label="Top Games" />
+              <NavTab href="/stats/category-kings" label="Category Kings" />
+              <NavTab href="/stats/breakout-watch" label="Breakout Watch" />
+              <NavTab href="/stats/justice-ladder" label="Justice Ladder" emphasis />
+            </nav>
+          </div>
+
+          {/* ── Hero storyline ───────────────────────────────────── */}
+          <header className="mb-14">
+            <div className="mb-3 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--slate)]">
+              Round {data.round} Storyline
+            </div>
+            <h1 className="font-display max-w-3xl text-4xl font-semibold leading-[1.1] tracking-tight text-[var(--parchment)] sm:text-5xl">
+              {headline}
+            </h1>
+            {dek && <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[var(--slate)]">{dek}</p>}
+
+            <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-[var(--hairline)] pt-6 font-mono text-xs">
+              {topContender && (
+                <span className="text-[var(--slate)]">
+                  Top contender <span className="text-[var(--parchment)]">{topContender.name}</span>{" "}
+                  <span className="text-[var(--brass)]">{topContender.contenderScore}/100</span>
+                </span>
+              )}
+              {topSeasonLeader && (
+                <span className="text-[var(--slate)]">
+                  Season leader{" "}
+                  <span className="text-[var(--parchment)]">
+                    {topSeasonLeader["player.givenName"]} {topSeasonLeader["player.surname"]}
+                  </span>{" "}
+                  <span className="text-[var(--brass)]">{topSeasonLeader["Season_Avg_PIR"].toFixed(1)} avg</span>
+                </span>
+              )}
+              {topGame && (
+                <span className="text-[var(--slate)]">
+                  Best single game{" "}
+                  <span className="text-[var(--parchment)]">
+                    {topGame.givenName} {topGame.surname}
+                  </span>{" "}
+                  <span className="text-[var(--brass)]">{topGame.PIR.toFixed(1)} PIR</span>
+                </span>
+              )}
+            </div>
+          </header>
+
+          {/* ── Teaser tiles ─────────────────────────────────────── */}
+          <section className="mb-14">
+            <div className="mb-6 flex items-center justify-between border-b border-[var(--hairline)] pb-4">
+              <div>
+                <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--brass)]">This Week's Files</div>
+                <h2 className="font-display mt-1 text-xl font-semibold text-[var(--parchment)]">Dig Deeper</h2>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+              {topContender && (
+                <TeaserTile
+                  href="/teams"
+                  eyebrow="Team Insights"
+                  hook={`${topContender.name} sits top of the power rankings, rated ${topContender.status.toLowerCase()}.`}
+                  stat={`${topContender.contenderScore}/100`}
+                  statLabel="contender score"
+                  glyph="📊"
+                />
+              )}
+              {topSeasonLeader && (
+                <TeaserTile
+                  href="/players"
+                  eyebrow="Player Ratings"
+                  hook={`${topSeasonLeader["player.givenName"]} ${topSeasonLeader["player.surname"]} leads the competition on season average.`}
+                  stat={topSeasonLeader["Season_Avg_PIR"].toFixed(1)}
+                  statLabel="PIR / game"
+                  glyph="🏆"
+                />
+              )}
+              {topGame && (
+                <TeaserTile
+                  href="/stats/top-games"
+                  eyebrow="Top Games"
+                  hook={`${topGame.givenName} ${topGame.surname} produced the biggest individual game of the season so far.`}
+                  stat={topGame.PIR.toFixed(1)}
+                  statLabel="PIR"
+                  glyph="🔥"
+                />
+              )}
+              {topCategoryKing && (
+                <TeaserTile
+                  href="/stats/category-kings"
+                  eyebrow="Category Kings"
+                  hook={`${topCategoryKing.leader.name} tops the ${topCategoryKing.category} charts.`}
+                  stat={topCategoryKing.leader.score.toFixed(1)}
+                  statLabel={topCategoryKing.category}
+                  glyph="👑"
+                />
+              )}
+              {topBreakout && (
+                <TeaserTile
+                  href="/stats/breakout-watch"
+                  eyebrow="Breakout Watch"
+                  hook={`${topBreakout.givenName} ${topBreakout.surname} (${topBreakout.team || "AFL Club"}) is this week's fastest riser.`}
+                  stat={`+${topBreakout.breakout_score.toFixed(1)}`}
+                  statLabel="breakout score"
+                  photoSrc={topBreakout.photoURL}
+                  photoAlt={`${topBreakout.givenName} ${topBreakout.surname}`}
+                />
+              )}
+            </div>
+          </section>
+
+          {/* ── Spotlight: Justice Ladder ────────────────────────── */}
+          <section>
+            <div className="mb-6 flex items-center justify-between border-b border-[var(--hairline)] pb-4">
+              <div>
+                <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--brass)]">This Week's Verdict</div>
+                <h2 className="font-display mt-1 text-xl font-semibold text-[var(--parchment)]">The Justice Ladder</h2>
+                <p className="mt-1 max-w-xl text-xs text-[var(--slate)]">
+                  Who's over-performing their underlying numbers, who's due a reckoning — and who moved the most.
+                </p>
+              </div>
+              <Link
+                href="/stats/justice-ladder"
+                className="shrink-0 font-mono text-[11px] uppercase tracking-wide text-[var(--slate)] transition-colors hover:text-[var(--brass)]"
+              >
+                Read The Full Ladder &rarr;
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+              {justice.luckiest && (
+                <SpotlightCard eyebrow="Luckiest" team={justice.luckiest.team} tone="brass">
+                  <span className="text-[var(--brass)]">+{justice.luckiest.Luck_Rating.toFixed(1)}</span> luck rating ·
+                  ladder rank {justice.luckiest.Actual_Rank}
+                </SpotlightCard>
+              )}
+              {justice.cursed && (
+                <SpotlightCard eyebrow="Cursed" team={justice.cursed.team} tone="oxblood">
+                  <span className="text-[var(--oxblood-light)]">{justice.cursed.Luck_Rating.toFixed(1)}</span> luck rating ·
+                  ladder rank {justice.cursed.Actual_Rank}
+                </SpotlightCard>
+              )}
+              {justice.biggestMover && (
+                <SpotlightCard eyebrow="Biggest Mover" team={justice.biggestMover.team} tone="fern">
+                  <span className="inline-flex items-center gap-1">
+                    <MovementArrow value={justice.biggestMover.Justice_Rank_Movement} /> in Justice Rank this round
+                  </span>
+                </SpotlightCard>
+              )}
+            </div>
+          </section>
+
+          {/* ── Footer note ──────────────────────────────────────── */}
+          <div className="mt-14 flex flex-wrap gap-x-6 gap-y-2 border-t border-[var(--hairline)] pt-6 font-mono text-[10px] uppercase tracking-wide text-[var(--slate)]">
+            <span>Compiled overnight from the Round {data.round} dataset</span>
+            <span>All figures reflect Player Impact Rating (PIR) unless noted</span>
+          </div>
+        </div>
+      </main>
+    </>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Data fetching
+// ─────────────────────────────────────────────────────────────────────────
 
 export const getStaticProps: GetStaticProps = async () => {
   const currentSeason = config.CURRENT_SEASON;
@@ -242,7 +455,6 @@ export const getStaticProps: GetStaticProps = async () => {
   const jsonData = fs.readFileSync(filePath, "utf-8");
   const data = JSON.parse(jsonData);
 
-  // Read the processed breakout tracking file and isolate the top 5 sorted by breakout_score
   const breakoutFilePath = path.join(process.cwd(), "json", currentSeason, "players", "breakout_watch.json");
   const breakoutData = JSON.parse(fs.readFileSync(breakoutFilePath, "utf-8"));
   const topBreakoutPlayers = breakoutData
@@ -257,26 +469,60 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const gamesFilePath = path.join(process.cwd(), "json", currentSeason, "players", "top_games_pir.json");
   const gamesData = JSON.parse(fs.readFileSync(gamesFilePath, "utf-8"));
-  const top10Games = gamesData
-    .sort((a: any, b: any) => b.PIR - a.PIR)
-    .slice(0, 5);
+  const top10Games = gamesData.sort((a: any, b: any) => b.PIR - a.PIR).slice(0, 5);
 
   const categoryKingsFilePath = path.join(process.cwd(), "json", currentSeason, "players", "category_kings.json");
   const categoryKingsData = JSON.parse(fs.readFileSync(categoryKingsFilePath, "utf-8"));
-  const topCategoryKings = Object.entries(categoryKingsData).map(([key, value]: [string, any]) => ({
-    category: key.replace("Avg_cat_", "").replace(/_/g, " "),
-    leader: value[0]
-  }));
+  
+  // Defensive check: If the JSON has a "categories" wrapper, parse that. Else fall back to key mapping.
+  const categoriesSource = categoryKingsData.categories || categoryKingsData;
+
+  const topCategoryKings = Object.entries(categoriesSource)
+    .map(([key, value]: [string, any]) => {
+      // Safely drill down to locate the leading player
+      const leaders = value?.leaders || value;
+      const topLeader = Array.isArray(leaders) ? leaders[0] : null;
+
+      if (!topLeader) return null;
+
+      return {
+        category: value?.label || key.replace("Avg_cat_", "").replace(/_/g, " "),
+        leader: {
+          name: `${topLeader.givenName} ${topLeader.surname}`,
+          score: topLeader.score,
+        },
+      };
+    })
+    .filter(Boolean) as CategoryKing[]; // Filters out any null values
+
+  // Justice Ladder spotlight — same source file as /stats/justice-ladder.
+  let justice: JusticeSpotlight = { luckiest: null, cursed: null, biggestMover: null };
+  try {
+    const justiceFilePath = path.join(process.cwd(), "json", currentSeason, "league", "justice_ladder.json");
+    const justiceData: JusticeTeam[] = JSON.parse(fs.readFileSync(justiceFilePath, "utf-8"));
+    if (justiceData.length) {
+      justice = {
+        luckiest: justiceData.reduce((a, b) => (b.Luck_Rating > a.Luck_Rating ? b : a)),
+        cursed: justiceData.reduce((a, b) => (b.Luck_Rating < a.Luck_Rating ? b : a)),
+        biggestMover: justiceData.reduce((a, b) =>
+          Math.abs(b.Justice_Rank_Movement) > Math.abs(a.Justice_Rank_Movement) ? b : a
+        ),
+      };
+    }
+  } catch (err) {
+    console.error("Justice Ladder spotlight unavailable for homepage:", err);
+  }
 
   return {
-    props: { 
-      data: { 
-        ...data, 
-        topBreakoutPlayers, // Injected seamlessly alongside original arrays
-        top10Players, 
+    props: {
+      data: {
+        ...data,
+        topBreakoutPlayers,
+        top10Players,
         top10Games,
-        topCategoryKings
-      } 
+        topCategoryKings,
+      },
+      justice,
     },
     revalidate: 60,
   };

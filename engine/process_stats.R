@@ -55,6 +55,7 @@ main <- function() {
     message(paste("INFO: Saved seasonal RDS backup to", rds_filename))
     
     # 5. Calculate Advanced Metrics passing the expected parameters
+    # Note: This step automatically triggers the internal catchup historical loop!
     advanced_metrics <- calculate_advanced_metrics(
         players_season   = season_agg$players_season, 
         processed_rounds = season_agg$clean_processed_rounds, 
@@ -76,7 +77,7 @@ main <- function() {
     current_round <- season_agg$latest_round
     
     # Resolve the year-based snapshot path dynamically
-    season_snapshot_dir <- file.path("data/justice_ladder_snapshots", CURRENT_SEASON)
+    season_snapshot_dir = file.path("data/justice_ladder_snapshots", CURRENT_SEASON)
     
     # 💡 CATCHUP: Chronologically backfill any missing prior snapshots (handles Round 0 automatically)
     catchup_justice_snapshots(match_evals, current_round, season_snapshot_dir)
