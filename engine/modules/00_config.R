@@ -7,7 +7,12 @@ library(dplyr)
 
 # Load central configuration
 config <- fromJSON('config.json')
-CURRENT_SEASON <- config$CURRENT_SEASON
+# config.json stores this as a quoted string (e.g. "2026"); coerced to
+# integer here, once, so every downstream usage - including fitzRoy's
+# fetch_player_stats()/fetch_player_details()/fetch_team_stats()/
+# fetch_results() calls in update_data.R, which require a numeric season -
+# gets a consistent type without needing to coerce at each call site.
+CURRENT_SEASON <- as.integer(config$CURRENT_SEASON)
 
 # Directory Paths
 DATA_RAW_DIR <- file.path('data/raw', CURRENT_SEASON)
@@ -145,3 +150,79 @@ CATEGORY_KINGS_DEFS <- tribble(
   'defensive_grit',     'Avg_cat_defensive_grit',    'Grit Kings',       'Average defensive-grit-category score per game',        NA_character_,
   'ruck',               'Avg_cat_ruck',              'Ruck Kings',       'Average ruck-category score per game',                  'Ruck'
 )
+
+# ==========================================================================
+# PIR Algorithm Weights
+# ==========================================================================
+# Every point-per-stat coefficient used by calculate_player_metrics() in
+# 10_player_metrics.R, centralised here so the algorithm can be reviewed and
+# retuned without touching calculation logic. Pure unit conversions (e.g.
+# dividing a percentage stat by 100) are left as literals in the calculation
+# file - only genuinely tunable weights live here.
+
+# -- Disposal --
+PIR_W_KICK                   <- 2.0    # Points per kick
+PIR_W_HANDBALL                <- 1.0    # Points per handball
+PIR_W_METRES_GAINED           <- 0.05   # Points per metre gained
+PIR_W_BOUNCE                  <- 1.5    # Points per bounce
+PIR_W_KICKIN                  <- 0.5    # Points per kick-in
+PIR_W_KICKIN_PLAYON           <- 1.0    # Points per kick-in played on
+
+# -- Contest / Clearance --
+PIR_W_CONTESTED_POSSESSION    <- 4.0    # Points per contested possession
+PIR_W_UNCONTESTED_POSSESSION  <- 0.5    # Points per uncontested possession
+PIR_W_CENTRE_CLEARANCE        <- 6.0    # Points per centre clearance
+PIR_W_STOPPAGE_CLEARANCE      <- 4.0    # Points per stoppage clearance
+PIR_W_CONTESTED_MARK          <- 6.0    # Points per contested mark
+PIR_W_MARK                    <- 1.0    # Points per mark
+PIR_W_MARK_INSIDE_50          <- 4.0    # Points per mark inside 50
+PIR_W_MARK_ON_LEAD            <- 2.5    # Points per mark on lead
+PIR_W_GROUND_BALL_GET         <- 2.0    # Points per ground ball get
+PIR_W_F50_GROUND_BALL_GET     <- 4.0    # Points per forward-50 ground ball get
+
+# -- Damaging Impact --
+PIR_W_GOAL                    <- 15.0   # Points per goal
+PIR_W_BEHIND                  <- 2.0    # Points per behind
+PIR_W_GOAL_ASSIST             <- 8.0    # Points per goal assist
+PIR_W_SCORE_INVOLVEMENT       <- 3.0    # Points per score involvement
+PIR_W_SCORE_LAUNCH            <- 6.0    # Points per score launch
+
+# -- Defensive Grit --
+PIR_W_TACKLE                  <- 3.0    # Points per tackle
+PIR_W_TACKLE_INSIDE_50        <- 5.0    # Points per tackle inside 50
+PIR_W_DEF_HALF_PRESSURE_ACT   <- 1.0    # Points per defensive-half pressure act
+PIR_W_PRESSURE_ACT            <- 0.5    # Points per pressure act
+PIR_W_ONE_PERCENTER           <- 2.0    # Points per one-percenter
+PIR_W_SPOIL                   <- 6.0    # Points per spoil
+PIR_W_INTERCEPT                <- 7.0    # Points per intercept
+PIR_W_INTERCEPT_MARK          <- 8.0    # Points per intercept mark
+
+# -- Ruck --
+# hitoutsToAdvantage carries the bulk of the ruck credit; the small raw
+# hitouts term contributes a little more on top (see 10_player_metrics.R for
+# the exact formula shape). PIR_W_HITOUT_TO_ADVANTAGE trimmed 4.0 -> 2.0 in
+# Round 18 to reduce how much this ruck-exclusive category on its own
+# separates rucks from other high-contest positions - contest_clearance and
+# defensive_grit are untouched by this change, so it only pulls back the
+# part of the ruck advantage that isn't shared with any other position.
+PIR_W_HITOUT_RAW               <- 0.1    # Points per raw hitout (further scaled by hitout-to-advantage rate)
+PIR_W_HITOUT_TO_ADVANTAGE     <- 2.0    # Points per hitout to advantage
+
+# -- Mistakes --
+# Feeds raw_mistake_points, which is then dampened by usage before being
+# subtracted as PIR_Negative - see 10_player_metrics.R. turnovers is
+# deliberately NOT weighted separately here: Champion Data's clangers stat
+# already includes turnovers as a subset, so a separate turnovers term would
+# double-count the same errors.
+PIR_W_CLANGER                 <- 5.0    # Points per clanger
+PIR_W_FREE_AGAINST            <- 4.0    # Points per free kick conceded
+PIR_W_CONTEST_DEF_LOSS        <- 4.0    # Points per lost defensive one-on-one contest
+
+# -- Time-on-Ground Modifier --
+# Below PIR_TOG_FULL_GAME_THRESHOLD, PIR_Positive is scaled UP slightly to
+# give partial credit for a partial game rather than penalising it. This is
+# a gentle nudge, not a full per-minute rate normalisation - see
+# 10_player_metrics.R for the exact shape and known limitations.
+PIR_TOG_FULL_GAME_THRESHOLD   <- 80.0   # TOG% at/above which no modifier is applied
+PIR_TOG_FLOOR                  <- 15.0   # Minimum TOG% used in the modifier calc, preventing a near-zero-minute cameo from producing an extreme boost
+PIR_TOG_BOOST_SLOPE           <- 0.7    # Maximum modifier boost (as a fraction) applied at PIR_TOG_FLOOR

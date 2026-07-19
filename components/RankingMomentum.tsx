@@ -1,7 +1,7 @@
 import React from 'react';
 
 const RankingMomentum = ({ rankHistory, currentRank, momentum, totalEligiblePlayers }: { rankHistory: any[], currentRank: number, momentum: string, totalEligiblePlayers: number }) => {
-  
+
   // 1. Define distinct player cutoffs
   const cutoffs = {
     unicorn: Math.max(1, Math.ceil(totalEligiblePlayers * 0.01)),
@@ -11,32 +11,28 @@ const RankingMomentum = ({ rankHistory, currentRank, momentum, totalEligiblePlay
     local: totalEligiblePlayers
   };
 
-  // 2. Hand-crafted UI heights (0 to 100) ensuring every section is perfectly readable
-  // This completely stops the text squishing seen in image_fb1643.png
+  // 2. Tier bands, each scaled to occupy an equal visual slice regardless of
+  // how many players actually sit inside it
   const tiers = [
-    { label: 'Unicorn', color: 'fill-purple-950/40', yMin: 0,   yMax: 20,  rankMin: 1,                  rankMax: cutoffs.unicorn },
-    { label: 'Elite',   color: 'fill-amber-950/40',  yMin: 20,  yMax: 40,  rankMin: cutoffs.unicorn + 1, rankMax: cutoffs.elite },
-    { label: 'AFL Std', color: 'fill-blue-950/40',   yMin: 40,  yMax: 60,  rankMin: cutoffs.elite + 1,   rankMax: cutoffs.aflStd },
-    { label: 'State',   color: 'fill-emerald-950/40',yMin: 60,  yMax: 80,  rankMin: cutoffs.aflStd + 1,  rankMax: cutoffs.state },
-    { label: 'Local',   color: 'fill-zinc-800/40',   yMin: 80,  yMax: 100, rankMin: cutoffs.state + 1,   rankMax: cutoffs.local },
+    { label: 'Unicorn', fill: 'var(--brass-bright)', opacity: 0.16, yMin: 0,  yMax: 20,  rankMin: 1,                  rankMax: cutoffs.unicorn },
+    { label: 'Elite',   fill: 'var(--brass)',         opacity: 0.14, yMin: 20, yMax: 40,  rankMin: cutoffs.unicorn + 1, rankMax: cutoffs.elite },
+    { label: 'AFL Std', fill: 'var(--fern-light)',    opacity: 0.10, yMin: 40, yMax: 60,  rankMin: cutoffs.elite + 1,   rankMax: cutoffs.aflStd },
+    { label: 'State',   fill: 'var(--slate)',         opacity: 0.10, yMin: 60, yMax: 80,  rankMin: cutoffs.aflStd + 1,  rankMax: cutoffs.state },
+    { label: 'Local',   fill: 'var(--hairline)',      opacity: 0.6,  yMin: 80, yMax: 100, rankMin: cutoffs.state + 1,   rankMax: cutoffs.local },
   ];
 
-  // 3. Mapping function: Scales a rank linearly *within* its specific tier box
+  // 3. Mapping function: scales a rank linearly *within* its specific tier box
   const getCustomScaledY = (rank: number) => {
     if (!rank || rank <= 0 || rank > totalEligiblePlayers) return 100;
-
-    // Find which tier the rank belongs to
     const tier = tiers.find(t => rank >= t.rankMin && rank <= t.rankMax) || tiers[tiers.length - 1];
-    
-    // Percent position within that specific rank bracket
     const range = tier.rankMax - tier.rankMin;
     const positionInRange = range === 0 ? 0 : (rank - tier.rankMin) / range;
-    
-    // Map that position into the visual UI pixel space (yMin to yMax)
     return tier.yMin + positionInRange * (tier.yMax - tier.yMin);
   };
 
-  // 4. Map and filter points to discard unranked/dummy data rounds (like 9999)
+  // 4. Map and filter points, carrying through whether the player actually
+  // played that round (rank can still move on rounds they missed, since a
+  // missed round's average carries forward flat while others move around it)
   const formattedPoints = rankHistory.map((h, i) => {
     const isUnranked = !h.rank || h.rank <= 0 || h.rank === 9999 || h.rank > totalEligiblePlayers;
     return {
@@ -44,85 +40,94 @@ const RankingMomentum = ({ rankHistory, currentRank, momentum, totalEligiblePlay
       y: getCustomScaledY(h.rank),
       rank: h.rank,
       round: h.round,
+      played: h.played !== false,
       isUnranked
     };
   });
 
-  // Build the SVG path string seamlessly skipping any unranked initial rounds
   const validPoints = formattedPoints.filter(p => !p.isUnranked);
   const polylinePointsStr = validPoints.map(p => `${p.x},${p.y}`).join(" ");
+  const hasInactiveMovement = validPoints.some(p => !p.played);
+
+  const momentumColor = momentum === 'up' ? 'text-[var(--fern-light)]' : momentum === 'down' ? 'text-[var(--oxblood-light)]' : 'text-[var(--slate)]';
 
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
-      <div className="flex justify-between items-start mb-4">
+    <div className="rounded-sm border border-[var(--hairline)] bg-[var(--ink)]/60 p-4">
+      <div className="mb-4 flex items-start justify-between">
         <div>
-          <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Current Rank</div>
-          <div className="text-2xl font-black text-white">
-            {currentRank && currentRank <= totalEligiblePlayers ? `${currentRank}${currentRank === 1 ? 'st' : currentRank === 2 ? 'nd' : currentRank === 3 ? 'rd' : 'th'}` : 'N/A'}
+          <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-[var(--slate)]">Current Standing</div>
+          <div className="font-display text-2xl font-semibold text-[var(--parchment)]">
+            {currentRank && currentRank <= totalEligiblePlayers ? `${currentRank}${currentRank === 1 ? 'st' : currentRank === 2 ? 'nd' : currentRank === 3 ? 'rd' : 'th'}` : 'Unranked'}
           </div>
-          <div className={`text-xs font-bold ${momentum === 'up' ? 'text-emerald-400' : momentum === 'down' ? 'text-red-400' : 'text-zinc-500'}`}>
-            {momentum === 'up' ? '▲ Improving' : momentum === 'down' ? '▼ Slipping' : '— Stable'}
+          <div className={`font-mono text-xs font-bold ${momentumColor}`}>
+            {momentum === 'up' ? '▲ Climbing' : momentum === 'down' ? '▼ Slipping' : '— Holding'}
           </div>
         </div>
       </div>
-      
-      <div className="h-32 w-full relative group">
-        <svg viewBox="0 0 400 100" preserveAspectRatio="none" className="w-full h-full overflow-visible">
+
+      <div className="group relative h-32 w-full">
+        <svg viewBox="0 0 400 100" preserveAspectRatio="none" className="h-full w-full overflow-visible">
           {/* Background Tier Bands */}
           {tiers.map((t, i) => (
             <g key={i}>
-              <rect x="0" y={t.yMin} width="400" height={t.yMax - t.yMin} className={t.color} />
-              <text 
-                x="2" 
-                y={t.yMax - 4} // Neatly anchors text right near the bottom boundary of each spaced out box
-                className="text-[6px] fill-zinc-500 font-bold uppercase tracking-tighter" 
-                style={{ fontSize: '6px' }}
+              <rect x="0" y={t.yMin} width="400" height={t.yMax - t.yMin} fill={t.fill} fillOpacity={t.opacity} />
+              <text
+                x="2"
+                y={t.yMax - 4}
+                className="fill-[var(--slate)] font-bold uppercase tracking-tighter"
+                style={{ fontSize: '6px', fontFamily: 'JetBrains Mono, monospace' }}
               >
                 {t.label}
               </text>
             </g>
           ))}
-          
-          {/* Trend Polyline - Only connects real, active ranks */}
+
+          {/* Trend Polyline */}
           {validPoints.length > 0 && (
-            <polyline
-              fill="none"
-              stroke="#22d3ee"
-              strokeWidth="3"
-              strokeLinejoin="round"
-              points={polylinePointsStr}
-            />
+            <polyline fill="none" stroke="var(--brass)" strokeWidth="3" strokeLinejoin="round" points={polylinePointsStr} />
           )}
-          
-          {/* Interactive Data Dots - Hidden for unranked matches */}
+
+          {/* Data points - hollow ring on rounds the player didn't feature */}
           {formattedPoints.map((p, i) => {
-            if (p.isUnranked) return null; // Simply don't render placeholder rounds
+            if (p.isUnranked) return null;
             return (
               <g key={i} className="group/dot cursor-pointer">
-                <circle cx={p.x} cy={p.y} r="6" className="fill-transparent" />
-                <circle cx={p.x} cy={p.y} r="3" className="fill-cyan-400" />
+                <circle cx={p.x} cy={p.y} r="6" fill="transparent" />
+                {p.played ? (
+                  <circle cx={p.x} cy={p.y} r="3" fill="var(--brass-bright)" />
+                ) : (
+                  <circle cx={p.x} cy={p.y} r="3" fill="var(--ink)" stroke="var(--slate)" strokeWidth="1.5" />
+                )}
                 <rect
-                  x={p.x - 20}
-                  y={p.y - 30}
-                  width="40"
-                  height="20"
-                  rx="4"
-                  className="opacity-0 group-hover/dot:opacity-100 fill-zinc-800 stroke-zinc-600 transition-opacity"
+                  x={p.x - 26}
+                  y={p.y - 32}
+                  width="52"
+                  height="22"
+                  rx="2"
+                  className="opacity-0 group-hover/dot:opacity-100 transition-opacity"
+                  fill="var(--panel)"
+                  stroke="var(--hairline)"
                 />
                 <text
                   x={p.x}
-                  y={p.y - 17}
+                  y={p.y - 22}
                   textAnchor="middle"
-                  className="opacity-0 group-hover/dot:opacity-100 fill-white text-[8px] font-bold pointer-events-none"
-                  style={{ fontSize: '8px' }}
+                  className="opacity-0 group-hover/dot:opacity-100 pointer-events-none font-bold"
+                  style={{ fontSize: '8px', fill: 'var(--parchment)', fontFamily: 'JetBrains Mono, monospace' }}
                 >
-                  R{p.round}: #{p.rank}
+                  R{p.round}: #{p.rank}{!p.played ? ' *' : ''}
                 </text>
               </g>
             );
           })}
         </svg>
       </div>
+
+      {hasInactiveMovement && (
+        <div className="mt-1 font-mono text-[8px] text-[var(--slate)]">
+          <span className="text-[var(--parchment)]">○</span> hollow point = rank moved while not on the park that round
+        </div>
+      )}
     </div>
   );
 };

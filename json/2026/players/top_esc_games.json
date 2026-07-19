@@ -228,6 +228,18 @@
     "game_title": "Round 18 vs Essendon Bombers"
   },
   {
+    "playerId": "CD_I1004938",
+    "givenName": "Gryan",
+    "surname": "Miers",
+    "team": "Geelong Cats",
+    "jumperNumber": 32,
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1004938.png?im=Scale,width=0.6,height=0.6",
+    "round": 19,
+    "opponent": "St Kilda Saints",
+    "ESC": 48,
+    "game_title": "Round 19 vs St Kilda Saints"
+  },
+  {
     "playerId": "CD_I1012014",
     "givenName": "Chad",
     "surname": "Warner",
@@ -375,7 +387,7 @@
     "playerId": "CD_I1001017",
     "givenName": "Nick",
     "surname": "Larkey",
-    "team": "North Melbourne Kangaroos",
+    "team": "Nth Melbourne Kangaroos",
     "jumperNumber": 20,
     "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1001017.png?im=Scale,width=0.6,height=0.6",
     "round": 2,
@@ -540,6 +552,18 @@
     "game_title": "Round 7 vs Essendon Bombers"
   },
   {
+    "playerId": "CD_I992468",
+    "givenName": "Rowan",
+    "surname": "Marshall",
+    "team": "St Kilda Saints",
+    "jumperNumber": 19,
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/992468.png?im=Scale,width=0.6,height=0.6",
+    "round": 19,
+    "opponent": "Geelong Cats",
+    "ESC": 43.4,
+    "game_title": "Round 19 vs Geelong Cats"
+  },
+  {
     "playerId": "CD_I1023261",
     "givenName": "Nick",
     "surname": "Daicos",
@@ -574,29 +598,5 @@
     "opponent": "Essendon Bombers",
     "ESC": 43.1,
     "game_title": "Round 8 vs Essendon Bombers"
-  },
-  {
-    "playerId": "CD_I1020895",
-    "givenName": "Jai",
-    "surname": "Newcombe",
-    "team": "Hawthorn Hawks",
-    "jumperNumber": 3,
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1020895.png?im=Scale,width=0.6,height=0.6",
-    "round": 15,
-    "opponent": "Gold Coast Suns",
-    "ESC": 42.8,
-    "game_title": "Round 15 vs Gold Coast Suns"
-  },
-  {
-    "playerId": "CD_I291351",
-    "givenName": "Jack",
-    "surname": "Gunston",
-    "team": "Hawthorn Hawks",
-    "jumperNumber": 19,
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/291351.png?im=Scale,width=0.6,height=0.6",
-    "round": 9,
-    "opponent": "Fremantle Dockers",
-    "ESC": 42.7,
-    "game_title": "Round 9 vs Fremantle Dockers"
   }
 ]

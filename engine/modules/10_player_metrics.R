@@ -41,49 +41,6 @@ library(dplyr)
 # Processed Player Data (Data frame)
 #
 ##########################################################
-##########################################################
-# Module
-#
-# Name:
-#
-# Player Metrics Engine
-#
-# Purpose:
-#
-# Calculate all player metrics (PIR, Expected Score Contribution, etc.)
-#
-# Inputs:
-#
-# Raw stats
-#
-# Outputs:
-#
-# Processed player metrics data frame
-#
-# Dependencies:
-#
-# 00_config.R, 01_helpers.R
-#
-##########################################################
-
-library(dplyr)
-
-##########################################################
-# Calculate Player Metrics
-#
-# Description:
-#
-# Calculates PIR, Expected Score Contribution, and ratings.
-#
-# Inputs:
-#
-# raw_stats (Data frame)
-#
-# Returns:
-#
-# Processed Player Data (Data frame)
-#
-##########################################################
 calculate_player_metrics <- function(raw_stats) {
     message("INFO: Starting Player Metrics...")
 
@@ -98,28 +55,47 @@ calculate_player_metrics <- function(raw_stats) {
             position_group = coalesce(position_group, "Interchange"),
             position_line  = coalesce(position_line, "Interchange"),
             
-            disposal_raw = (kicks * 2.0) + (handballs * 1.0),
-            disposal_score = disposal_raw * (disposalEfficiency / 100),
+            # Prefer Champion Data's own quality-adjusted effective counts over
+            # reconstructing an approximation from the blended overall
+            # disposalEfficiency%. effectiveKicks is provided directly;
+            # effective handballs are backed out as effectiveDisposals minus
+            # effectiveKicks. Falls back to the old blended-efficiency
+            # approximation for any row missing the extended fields (e.g.
+            # historical data gaps) so this never produces an NA.
+            effective_kicks = extendedStats.effectiveKicks,
+            effective_handballs = pmax(extendedStats.effectiveDisposals - extendedStats.effectiveKicks, 0.0),
+            disposal_score_precise = (effective_kicks * PIR_W_KICK) + (effective_handballs * PIR_W_HANDBALL),
+            disposal_score_fallback = ((kicks * PIR_W_KICK) + (handballs * PIR_W_HANDBALL)) * (disposalEfficiency / 100),
+            disposal_score = if_else(
+                !is.na(extendedStats.effectiveDisposals) & !is.na(extendedStats.effectiveKicks),
+                disposal_score_precise,
+                disposal_score_fallback
+            ),
             
-            cat_disposal = disposal_score + (metresGained * 0.05) + (bounces * 1.5) + (extendedStats.kickins * 0.5) + (extendedStats.kickinsPlayon * 1.0),
-            cat_contest_clearance = (contestedPossessions * 4.0) + (uncontestedPossessions * 0.5) + (clearances.centreClearances * 6.0) + (clearances.stoppageClearances * 4.0) + (contestedMarks * 6.0) + (marks * 1.0) + (marksInside50 * 4.0) + (extendedStats.marksOnLead * 2.5) + (extendedStats.groundBallGets * 2.0) + (extendedStats.f50GroundBallGets * 4.0),
-            cat_damaging_impact = (goals * 15.0) + (behinds * 2.0) + (goalAssists * 8.0) + (scoreInvolvements * 3.0) + (extendedStats.scoreLaunches * 6.0),
-            cat_defensive_grit = (tackles * 3.0) + (tacklesInside50 * 5.0) + (extendedStats.defHalfPressureActs * 1.0) + (extendedStats.pressureActs * 0.5) + (onePercenters * 2.0) + (extendedStats.spoils * 6.0) + (intercepts * 7.0) + (extendedStats.interceptMarks * 8.0),
-            cat_ruck = ((hitouts * 0.1) * (extendedStats.hitoutToAdvantageRate / 100)) + (extendedStats.hitoutsToAdvantage * 4.0),
+            cat_disposal = disposal_score + (metresGained * PIR_W_METRES_GAINED) + (bounces * PIR_W_BOUNCE) + (extendedStats.kickins * PIR_W_KICKIN) + (extendedStats.kickinsPlayon * PIR_W_KICKIN_PLAYON),
+            cat_contest_clearance = (contestedPossessions * PIR_W_CONTESTED_POSSESSION) + (uncontestedPossessions * PIR_W_UNCONTESTED_POSSESSION) + (clearances.centreClearances * PIR_W_CENTRE_CLEARANCE) + (clearances.stoppageClearances * PIR_W_STOPPAGE_CLEARANCE) + (contestedMarks * PIR_W_CONTESTED_MARK) + (marks * PIR_W_MARK) + (marksInside50 * PIR_W_MARK_INSIDE_50) + (extendedStats.marksOnLead * PIR_W_MARK_ON_LEAD) + (extendedStats.groundBallGets * PIR_W_GROUND_BALL_GET) + (extendedStats.f50GroundBallGets * PIR_W_F50_GROUND_BALL_GET),
+            cat_damaging_impact = (goals * PIR_W_GOAL) + (behinds * PIR_W_BEHIND) + (goalAssists * PIR_W_GOAL_ASSIST) + (scoreInvolvements * PIR_W_SCORE_INVOLVEMENT) + (extendedStats.scoreLaunches * PIR_W_SCORE_LAUNCH),
+            cat_defensive_grit = (tackles * PIR_W_TACKLE) + (tacklesInside50 * PIR_W_TACKLE_INSIDE_50) + (extendedStats.defHalfPressureActs * PIR_W_DEF_HALF_PRESSURE_ACT) + (extendedStats.pressureActs * PIR_W_PRESSURE_ACT) + (onePercenters * PIR_W_ONE_PERCENTER) + (extendedStats.spoils * PIR_W_SPOIL) + (intercepts * PIR_W_INTERCEPT) + (extendedStats.interceptMarks * PIR_W_INTERCEPT_MARK),
+            cat_ruck = ((hitouts * PIR_W_HITOUT_RAW) * (extendedStats.hitoutToAdvantageRate / 100)) + (extendedStats.hitoutsToAdvantage * PIR_W_HITOUT_TO_ADVANTAGE),
             
             PIR_Positive = (cat_disposal + cat_contest_clearance + cat_damaging_impact + cat_defensive_grit + cat_ruck),
             
             total_actions = pmax((kicks + handballs + onePercenters + extendedStats.spoils + intercepts + extendedStats.hitoutsToAdvantage), 1.0),
-            raw_mistake_points = (clangers * 5.0) + (turnovers * 3.0) + (freesAgainst * 4.0) + (extendedStats.contestDefLosses * 4.0),
+            # turnovers dropped: Champion Data's clangers stat already includes
+            # turnovers as a subset (a clanger kick/handball is, by definition,
+            # a turnover), so including both double-counted the same errors -
+            # generally over-penalising high-disposal players whose clangers
+            # skew turnover-heavy relative to other error types (dropped
+            # marks, missed shots).
+            raw_mistake_points = (clangers * PIR_W_CLANGER) + (freesAgainst * PIR_W_FREE_AGAINST) + (extendedStats.contestDefLosses * PIR_W_CONTEST_DEF_LOSS),
             mistake_rate = raw_mistake_points / total_actions,
             PIR_Negative = raw_mistake_points * (mistake_rate / (mistake_rate + 1.0)),
             
-            TOG_Floor = pmax(timeOnGroundPercentage, 15.0),
-            TOG_Modifier = ifelse(timeOnGroundPercentage >= 80.0, 1.0, 1.0 + ((80.0 - TOG_Floor) / 100) * 0.7),
+            TOG_Floor = pmax(timeOnGroundPercentage, PIR_TOG_FLOOR),
+            TOG_Modifier = ifelse(timeOnGroundPercentage >= PIR_TOG_FULL_GAME_THRESHOLD, 1.0, 1.0 + ((PIR_TOG_FULL_GAME_THRESHOLD - TOG_Floor) / 100) * PIR_TOG_BOOST_SLOPE),
             
             PIR = (PIR_Positive * TOG_Modifier) - PIR_Negative,
             
-           
             norm_disposal = cat_disposal * TOG_Modifier,
             norm_contest  = cat_contest_clearance * TOG_Modifier,
             norm_damage   = cat_damaging_impact * TOG_Modifier,

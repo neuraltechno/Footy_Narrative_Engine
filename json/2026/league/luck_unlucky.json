@@ -37,10 +37,10 @@
   },
   {
     "round": 3,
-    "lucky_team": "North Melbourne Kangaroos",
+    "lucky_team": "Nth Melbourne Kangaroos",
     "unlucky_team": "Essendon Bombers",
     "home_team": "Essendon Bombers",
-    "away_team": "North Melbourne Kangaroos",
+    "away_team": "Nth Melbourne Kangaroos",
     "home_score": 69,
     "away_score": 81,
     "home_xscore": 71.4,
@@ -86,8 +86,8 @@
   {
     "round": 9,
     "lucky_team": "Sydney Swans",
-    "unlucky_team": "North Melbourne Kangaroos",
-    "home_team": "North Melbourne Kangaroos",
+    "unlucky_team": "Nth Melbourne Kangaroos",
+    "home_team": "Nth Melbourne Kangaroos",
     "away_team": "Sydney Swans",
     "home_score": 97,
     "away_score": 105,
@@ -182,13 +182,37 @@
   {
     "round": 18,
     "lucky_team": "Collingwood Magpies",
-    "unlucky_team": "North Melbourne Kangaroos",
+    "unlucky_team": "Nth Melbourne Kangaroos",
     "home_team": "Collingwood Magpies",
-    "away_team": "North Melbourne Kangaroos",
+    "away_team": "Nth Melbourne Kangaroos",
     "home_score": 89,
     "away_score": 85,
     "home_xscore": 75.4,
     "away_xscore": 77,
     "luck_variance": 2.0683
+  },
+  {
+    "round": 19,
+    "lucky_team": "Essendon Bombers",
+    "unlucky_team": "GWS Giants",
+    "home_team": "Essendon Bombers",
+    "away_team": "GWS Giants",
+    "home_score": 67,
+    "away_score": 64,
+    "home_xscore": 54.2,
+    "away_xscore": 70.4,
+    "luck_variance": 2.6709
+  },
+  {
+    "round": 19,
+    "lucky_team": "Western Bulldogs",
+    "unlucky_team": "Gold Coast Suns",
+    "home_team": "Gold Coast Suns",
+    "away_team": "Western Bulldogs",
+    "home_score": 68,
+    "away_score": 77,
+    "home_xscore": 68.8,
+    "away_xscore": 68.2,
+    "luck_variance": 2.0256
   }
 ]

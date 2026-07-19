@@ -40,6 +40,7 @@ calculate_season_aggregation <- function(processed_rounds) {
     arrange(player.playerId, round.roundNumber) %>%
     group_by(player.playerId) %>%
     mutate(
+      played_this_round = !is.na(PIR),
       games_played_so_far = cumsum(!is.na(PIR)),
       running_sum_pir = cumsum(coalesce(PIR, 0)),
       running_avg_pir = ifelse(games_played_so_far > 0, running_sum_pir / games_played_so_far, 0)
@@ -56,33 +57,57 @@ calculate_season_aggregation <- function(processed_rounds) {
     group_by(player.playerId) %>%
     summarise(
       Games_Played_2026 = sum(!is.na(PIR), na.rm = TRUE),
+      # How many rounds back was this player's last actual game, as of the
+      # latest round in the grid? 0 = played the latest round. Lets the
+      # narrative layer tell "moved on the back of his own performance"
+      # apart from "moved purely because others played and he didn't".
+      Rounds_Since_Last_Game = {
+        played_rounds <- round.roundNumber[played_this_round]
+        if (length(played_rounds) == 0) NA_integer_ else as.integer(latest_round - max(played_rounds))
+      },
       PIR_History = list(data.frame(
         round = round.roundNumber, 
         pir = replace_na(PIR, 0), 
         rank = rank,
-        running_avg_pir = replace_na(running_avg_pir, 0)
+        running_avg_pir = replace_na(running_avg_pir, 0),
+        played = played_this_round
       )),
       .groups = 'drop'
+    ) %>%
+    mutate(
+      Played_Latest_Round = coalesce(Rounds_Since_Last_Game == 0, FALSE)
     )
 
   # 2. Season-level Profiles
-  current_year <- as.integer(format(Sys.Date(), '%Y'))
+  # Use the season being processed, not the real-world clock, so ages stay
+  # correct if this pipeline is ever rerun/backfilled against a past season.
+  current_year <- as.integer(CURRENT_SEASON)
   players_season <- processed_rounds %>%
     group_by(player.playerId, player.givenName, player.surname, team.name) %>%
     summarise(
       playerPosition = names(sort(table(position_name), decreasing = TRUE))[1],
       playerGroup    = names(sort(table(position_group), decreasing = TRUE))[1],
       playerLine     = names(sort(table(position_line), decreasing = TRUE))[1],
-      photoURL = first(player.photoURL),
-      playerJumperNumber = first(jumperNumber),
-      dateOfBirth = first(dateOfBirth),
-      Age = current_year - as.integer(substr(first(dateOfBirth), 1, 4)),
-      heightInCm = first(HT),
-      weightInKg = first(WT),
-      careerGames = first(careerGames),
-      careerWins = first(careerWins),
-      careerDraws = first(careerDraws),
-      careerLosses = first(careerLosses),
+      # first() takes literally the first row in group order, NA or not - if
+      # the upstream bio-source join fails for even one round (the exact
+      # symptom currently being chased down for apostrophe-surname players),
+      # a player could show blank bio fields for the whole season even in
+      # rounds where the join did succeed. Falling back to the first non-NA
+      # value across all their rounds is strictly safer and costs nothing
+      # once the upstream join is fixed properly.
+      photoURL = first(na.omit(player.photoURL), default = NA_character_),
+      playerJumperNumber = first(na.omit(jumperNumber), default = NA_integer_),
+      dateOfBirth = first(na.omit(dateOfBirth), default = NA_character_),
+      Age = {
+        dob <- first(na.omit(dateOfBirth), default = NA_character_)
+        if (is.na(dob)) NA_integer_ else current_year - as.integer(substr(dob, 1, 4))
+      },
+      heightInCm = first(na.omit(HT), default = NA_character_),
+      weightInKg = first(na.omit(WT), default = NA_character_),
+      careerGames = first(na.omit(careerGames), default = NA_integer_),
+      careerWins = first(na.omit(careerWins), default = NA_integer_),
+      careerDraws = first(na.omit(careerDraws), default = NA_integer_),
+      careerLosses = first(na.omit(careerLosses), default = NA_integer_),
       
       Season_Avg_PIR = mean(PIR, na.rm = TRUE),
       Latest_Round_PIR = sum(ifelse(round.roundNumber == latest_round, PIR, 0), na.rm = TRUE),
@@ -101,25 +126,42 @@ calculate_season_aggregation <- function(processed_rounds) {
     )
 
   # 3. Dynamic Baselines & Strengths Selection
+  # Means are computed PER POSITION GROUP, not as one global blend. A global
+  # blend structurally favours Ruck/Key Backs in contest_clearance and
+  # defensive_grit (they sit well above the all-position average even at a
+  # merely solid game), which meant those two groups almost always cleared
+  # the bar while other groups (e.g. General Forwards) rarely did - repetitive
+  # strength tags for some positions, thin or empty profiles for others.
+  # Comparing each player to his own position group's average instead lets
+  # every position surface genuinely distinctive strengths (e.g. a small
+  # forward who tackles at an elite rate for his role), without touching the
+  # PIR score or Category Kings leaderboards at all.
   league_category_means <- players_season %>%
+    group_by(playerGroup) %>%
     summarise(
       mean_disposal = mean(Avg_cat_disposal, na.rm = TRUE),
       mean_contest  = mean(Avg_cat_contest_clearance, na.rm = TRUE),
       mean_damage   = mean(Avg_cat_damaging_impact, na.rm = TRUE),
       mean_grit     = mean(Avg_cat_defensive_grit, na.rm = TRUE),
-      mean_ruck     = mean(Avg_cat_ruck, na.rm = TRUE)
+      mean_ruck     = mean(Avg_cat_ruck, na.rm = TRUE),
+      .groups = 'drop'
     )
 
   player_relative_strengths <- players_season %>%
-    select(player.playerId, Avg_cat_disposal, Avg_cat_contest_clearance, Avg_cat_damaging_impact, Avg_cat_defensive_grit, Avg_cat_ruck) %>%
-    pivot_longer(cols = starts_with("Avg_cat_"), names_to = "category", values_to = "player_score") %>%
+    select(player.playerId, playerGroup, Avg_cat_disposal, Avg_cat_contest_clearance, Avg_cat_damaging_impact, Avg_cat_defensive_grit, Avg_cat_ruck) %>%
+    left_join(league_category_means, by = "playerGroup") %>%
+    pivot_longer(
+      cols = starts_with("Avg_cat_"),
+      names_to = "category",
+      values_to = "player_score"
+    ) %>%
     mutate(
       league_mean = case_when(
-        category == "Avg_cat_disposal"          ~ league_category_means$mean_disposal,
-        category == "Avg_cat_contest_clearance" ~ league_category_means$mean_contest,
-        category == "Avg_cat_damaging_impact"   ~ league_category_means$mean_damage,
-        category == "Avg_cat_defensive_grit"    ~ league_category_means$mean_grit,
-        category == "Avg_cat_ruck"              ~ league_category_means$mean_ruck
+        category == "Avg_cat_disposal"          ~ mean_disposal,
+        category == "Avg_cat_contest_clearance" ~ mean_contest,
+        category == "Avg_cat_damaging_impact"   ~ mean_damage,
+        category == "Avg_cat_defensive_grit"    ~ mean_grit,
+        category == "Avg_cat_ruck"              ~ mean_ruck
       ),
       above_average = player_score - league_mean,
       display_name = case_when(
