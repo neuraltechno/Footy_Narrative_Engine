@@ -39,12 +39,20 @@ export_everything <- function(metrics_list) {
     
     save_json_file(metrics_list$match_centers, file.path(json_dir, 'matches/team_match_centers.json'))
     save_json_file(metrics_list$robbery_of_the_round, file.path(json_dir, 'league/robbery_of_the_round.json'))
+
+    save_json_file(metrics_list$team_metrics_history, file.path(json_dir, 'teams/team_metrics_history.json'))
     
     save_json_file(metrics_list$luck_unlucky, file.path(json_dir, 'league/luck_unlucky.json'))
     
     save_json_file(metrics_list$breakout_watch, file.path(json_dir, 'players/breakout_watch.json'))
     save_json_file(metrics_list$category_kings, file.path(json_dir, 'players/category_kings.json'))
-    save_json_file(metrics_list$top_games, file.path(json_dir, 'players/top_games_pir.json'))
+    
+    # New Leaderboard Exports
+    save_json_file(metrics_list$top_games_season, file.path(json_dir, 'players/top_games_season_pir.json'))
+    save_json_file(metrics_list$top_games_round, file.path(json_dir, 'players/top_games_round_pir.json'))
+    save_json_file(metrics_list$top_three_round_stretches, file.path(json_dir, 'players/top_three_round_pir.json'))
+    save_json_file(metrics_list$team_of_the_round, file.path(json_dir, 'players/team_of_the_round.json'))
+    save_json_file(metrics_list$team_pir_ladder, file.path(json_dir, 'players/team_pir_ladder.json'))
     
     # Renamed output suffix from _pir.json to .json to reflect actual metric format (ESC value, not PIR value)
     save_json_file(metrics_list$top_esc_games, file.path(json_dir, 'players/top_esc_games.json'))

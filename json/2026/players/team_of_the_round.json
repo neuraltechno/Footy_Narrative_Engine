@@ -1,0 +1,65 @@
+[
+  {
+    "position_group": "General Backs",
+    "playerId": "CD_I1008198",
+    "givenName": "Tom",
+    "surname": "McCartin",
+    "team": "Sydney Swans",
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1008198.png?im=Scale,width=0.6,height=0.6",
+    "PIR": 378.0727
+  },
+  {
+    "position_group": "General Forwards",
+    "playerId": "CD_I1004938",
+    "givenName": "Gryan",
+    "surname": "Miers",
+    "team": "Geelong Cats",
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1004938.png?im=Scale,width=0.6,height=0.6",
+    "PIR": 302.8188
+  },
+  {
+    "position_group": "Interchange",
+    "playerId": "CD_I1006013",
+    "givenName": "James",
+    "surname": "Peatling",
+    "team": "Adelaide Crows",
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1006013.png?im=Scale,width=0.6,height=0.6",
+    "PIR": 298.7634
+  },
+  {
+    "position_group": "Key Backs",
+    "playerId": "CD_I996059",
+    "givenName": "Harris",
+    "surname": "Andrews",
+    "team": "Brisbane Lions",
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/996059.png?im=Scale,width=0.6,height=0.6",
+    "PIR": 342.3162
+  },
+  {
+    "position_group": "Key Forwards",
+    "playerId": "CD_I293884",
+    "givenName": "Jake",
+    "surname": "Stringer",
+    "team": "GWS Giants",
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/293884.png?im=Scale,width=0.6,height=0.6",
+    "PIR": 220.325
+  },
+  {
+    "position_group": "Midfield",
+    "playerId": "CD_I297373",
+    "givenName": "Marcus",
+    "surname": "Bontempelli",
+    "team": "Western Bulldogs",
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/297373.png?im=Scale,width=0.6,height=0.6",
+    "PIR": 340.819
+  },
+  {
+    "position_group": "Ruck",
+    "playerId": "CD_I992468",
+    "givenName": "Rowan",
+    "surname": "Marshall",
+    "team": "St Kilda Saints",
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/992468.png?im=Scale,width=0.6,height=0.6",
+    "PIR": 458.7477
+  }
+]

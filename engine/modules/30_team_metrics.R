@@ -33,47 +33,48 @@ library(tidyr)
 #
 # Calculates aggregate ratings per team and structural metrics.
 #
+# Notes (fixes applied):
+#
+# - normalize_team_name() now comes from 00_config.R only. It was
+#   previously redefined locally in this file (and duplicated again in
+#   40_match_metrics.R), so a club-name mapping change had to be made in
+#   multiple places to take effect everywhere.
+#
+# - Player-game rows are no longer filtered to pir > 0. That filter
+#   silently dropped every zero AND negative PIR performance before
+#   summing team totals, which understated genuinely poor games and
+#   inflated total_player_pir / overall_rating / system_velocity for teams
+#   carrying bad individual performances. Only rows with a missing (NA)
+#   PIR value are excluded now, since those aren't a real recorded game.
+#
+# - approx_round_disposals no longer divides by the pipeline's global
+#   latest_round. DI_for is a season-to-date cumulative disposal count, so
+#   dividing it by latest_round applied "today's" average retroactively to
+#   every historical round in team_metrics - meaning Round 3's
+#   system_velocity would change value every week for the rest of the
+#   season just because latest_round kept climbing. It's now divided by
+#   each row's OWN round number, so a round's derived metrics stay fixed
+#   once that round has been played. The fallback constant
+#   (TEAM_METRICS_DEFAULT_ROUND_DISPOSALS) is already a single-round
+#   estimate and is used as-is, not divided further.
 ##########################################################
 calculate_team_metrics <- function(player_season_data, team_stats, latest_round) {
     message("INFO: Starting Team Metrics...")
-    
-    # 1. Team Name Normalization
-    normalize_team_name <- function(team) {
-        case_when(
-            team %in% c("Adelaide", "Adelaide Crows") ~ "Adelaide Crows",
-            team %in% c("Brisbane", "Brisbane Lions") ~ "Brisbane Lions",
-            team %in% c("Carlton", "Carlton Blues")  ~ "Carlton Blues",
-            team == "Collingwood"                    ~ "Collingwood Magpies",
-            team == "Essendon"                       ~ "Essendon Bombers",
-            team == "Fremantle"                      ~ "Fremantle Dockers",
-            team %in% c("Geelong", "Geelong Cats")   ~ "Geelong Cats",
-            team %in% c("Gold Coast", "Gold Coast SUNS") ~ "Gold Coast Suns",
-            team %in% c("GWS", "Greater Western Sydney", "GWS GIANTS") ~ "GWS Giants",
-            team == "Hawthorn"                       ~ "Hawthorn Hawks",
-            team == "Melbourne"                      ~ "Melbourne Demons",
-            team %in% c("North Melbourne", "North")  ~ "North Melbourne Kangaroos",
-            team %in% c("Port Adelaide", "Port")     ~ "Port Adelaide Power",
-            team == "Richmond"                       ~ "Richmond Tigers",
-            team %in% c("St Kilda", "St Kilda Saints") ~ "St Kilda Saints",
-            team %in% c("Sydney", "Sydney Swans")     ~ "Sydney Swans",
-            team %in% c("West Coast", "West Coast Eagles") ~ "West Coast Eagles",
-            team %in% c("Western Bulldogs", "Western") ~ "Western Bulldogs",
-            TRUE                                     ~ team
-        )
-    }
 
-    # 2. Unnest individual player match-by-match PIR records
+    # 1. Unnest individual player match-by-match PIR records.
+    #    Zero and negative PIR games are intentionally kept - a bad game is
+    #    still a real team contribution and should count toward the total.
     player_game_rows <- player_season_data |>
         select(player.playerId, team = team.name, playerLine, PIR_History) |>
         unnest(PIR_History) |>
-        filter(pir > 0)
+        filter(!is.na(pir))
 
-    # 3. Pull season disposal metrics for velocity weightings
+    # 2. Pull season disposal metrics for velocity weightings
     team_disposal_baselines <- team_stats |>
         mutate(Team = sapply(Team, normalize_team_name)) |>
         select(team = Team, DI_for)
 
-    # 4. Core structural team line calculations
+    # 3. Core structural team line calculations
     team_metrics <- player_game_rows |>
         group_by(round, team) |>
         summarise(
@@ -86,10 +87,27 @@ calculate_team_metrics <- function(player_season_data, team_stats, latest_round)
         mutate(team = sapply(team, normalize_team_name)) |>
         left_join(team_disposal_baselines, by = "team") |>
         mutate(
-            approx_round_disposals = coalesce(DI_for, 350) / latest_round,
-            system_velocity        = round(total_player_pir / approx_round_disposals, 2),
-            overall_rating         = round(total_player_pir / 22, 1) # Mean player baseline match score
+            approx_round_disposals = if_else(
+                is.na(DI_for),
+                TEAM_METRICS_DEFAULT_ROUND_DISPOSALS,
+                DI_for / pmax(round, 1)
+            ),
+            system_velocity = round(total_player_pir / approx_round_disposals, 2),
+            overall_rating  = round(total_player_pir / 22, 1) # Mean player baseline match score
         )
+
+    missing_baseline_teams <- team_metrics |>
+        filter(is.na(DI_for)) |>
+        pull(team) |>
+        unique()
+
+    if (length(missing_baseline_teams) > 0) {
+        message(
+            "WARNING: No team_stats disposal baseline found for: ",
+            paste(missing_baseline_teams, collapse = ", "),
+            " - using default fallback of ", TEAM_METRICS_DEFAULT_ROUND_DISPOSALS, " disposals/round."
+        )
+    }
 
     message("INFO: Completed Team Metrics")
     return(team_metrics)

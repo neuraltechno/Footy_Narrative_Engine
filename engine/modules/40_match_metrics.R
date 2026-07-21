@@ -32,33 +32,23 @@ library(dplyr)
 #
 # Calculates match-level metrics for game summaries.
 #
+# Notes (fixes applied):
+#
+# - normalize_team_name() now comes from 00_config.R only, instead of being
+#   redefined locally (see 30_team_metrics.R for the matching note).
+#
+# - Draws are now handled explicitly. expected_winner / actual_winner
+#   previously used if_else() with no tie branch, so a drawn match
+#   (home_score == away_score) had actual_winner silently set to
+#   away_team - fabricating a result, and potentially flagging a fair draw
+#   as a "robbery" if the xscore model favoured the home side.
+#
+# - Expected-score coefficients are now named constants in 00_config.R
+#   (XSCORE_W_*) instead of bare literals here, with a comment there
+#   explaining what they currently represent (see 00_config.R).
 ##########################################################
 calculate_match_metrics <- function(results, team_line_snapshots, latest_round) {
     message("INFO: Starting Match Engine...")
-    
-    normalize_team_name <- function(team) {
-        case_when(
-            team %in% c("Adelaide", "Adelaide Crows") ~ "Adelaide Crows",
-            team %in% c("Brisbane", "Brisbane Lions") ~ "Brisbane Lions",
-            team %in% c("Carlton", "Carlton Blues")  ~ "Carlton Blues",
-            team == "Collingwood"                    ~ "Collingwood Magpies",
-            team == "Essendon"                       ~ "Essendon Bombers",
-            team == "Fremantle"                      ~ "Fremantle Dockers",
-            team %in% c("Geelong", "Geelong Cats")   ~ "Geelong Cats",
-            team %in% c("Gold Coast", "Gold Coast SUNS") ~ "Gold Coast Suns",
-            team %in% c("GWS", "Greater Western Sydney", "GWS GIANTS") ~ "GWS Giants",
-            team == "Hawthorn"                       ~ "Hawthorn Hawks",
-            team == "Melbourne"                      ~ "Melbourne Demons",
-            team %in% c("North Melbourne", "North")  ~ "North Melbourne Kangaroos",
-            team %in% c("Port Adelaide", "Port")     ~ "Port Adelaide Power",
-            team == "Richmond"                       ~ "Richmond Tigers",
-            team %in% c("St Kilda", "St Kilda Saints") ~ "St Kilda Saints",
-            team %in% c("Sydney", "Sydney Swans")     ~ "Sydney Swans",
-            team %in% c("West Coast", "West Coast Eagles") ~ "West Coast Eagles",
-            team %in% c("Western Bulldogs", "Western") ~ "Western Bulldogs",
-            TRUE                                     ~ team
-        )
-    }
 
     # 1. Structure match pairings from source JSON schedules
     match_pairings <- results |>
@@ -82,11 +72,11 @@ calculate_match_metrics <- function(results, team_line_snapshots, latest_round) 
     # 2. Convert raw scoring events to expected score performance baselines
     match_metrics <- match_pairings |>
         mutate(
-            home_raw_xscore = round(((home_goals * 0.55 + home_behinds * 0.35) * 6) + 
-                                    ((home_goals * 0.30 + home_behinds * 0.50) * 1), 1),
-            
-            away_raw_xscore = round(((away_goals * 0.55 + away_behinds * 0.35) * 6) + 
-                                    ((away_goals * 0.30 + away_behinds * 0.50) * 1), 1)
+            home_raw_xscore = round(((home_goals * XSCORE_W_GOAL_AS_GOAL + home_behinds * XSCORE_W_BEHIND_AS_GOAL) * 6) +
+                                    ((home_goals * XSCORE_W_GOAL_AS_BEHIND + home_behinds * XSCORE_W_BEHIND_AS_BEHIND) * 1), 1),
+
+            away_raw_xscore = round(((away_goals * XSCORE_W_GOAL_AS_GOAL + away_behinds * XSCORE_W_BEHIND_AS_GOAL) * 6) +
+                                    ((away_goals * XSCORE_W_GOAL_AS_BEHIND + away_behinds * XSCORE_W_BEHIND_AS_BEHIND) * 1), 1)
         ) |>
         # 3. Join Side-by-Side Team Line PIR & System Dynamics
         left_join(team_line_snapshots, by = c("round" = "round", "home_team" = "team")) |>
@@ -95,11 +85,34 @@ calculate_match_metrics <- function(results, team_line_snapshots, latest_round) 
         rename_with(~ paste0("away_", .), .cols = c(engine_room_pir, iron_curtain_pir, the_arsenal_pir, system_velocity)) |>
         select(-contains("total_player_pir"), -contains("DI_for"), -contains("approx_round_disposals"), -contains("overall_rating")) |>
         mutate(
-            expected_winner = if_else(home_raw_xscore > away_raw_xscore, home_team, away_team),
-            actual_winner   = if_else(home_score > away_score, home_team, away_team),
-            is_robbery      = expected_winner != actual_winner,
-            luck_delta      = abs((home_score - away_score) - (home_raw_xscore - away_raw_xscore))
+            expected_winner = case_when(
+                home_raw_xscore > away_raw_xscore ~ home_team,
+                away_raw_xscore > home_raw_xscore ~ away_team,
+                TRUE                              ~ "Draw"
+            ),
+            actual_winner = case_when(
+                home_score > away_score ~ home_team,
+                away_score > home_score ~ away_team,
+                TRUE                    ~ "Draw"
+            ),
+            # A genuine draw is its own outcome, not a mismatch against
+            # expectation - only flag a robbery when both sides produced a
+            # real winner and they disagree.
+            is_robbery = actual_winner != "Draw" & expected_winner != "Draw" & expected_winner != actual_winner,
+            luck_delta = abs((home_score - away_score) - (home_raw_xscore - away_raw_xscore))
         )
+
+    missing_lines <- match_metrics |>
+        filter(is.na(home_system_velocity) | is.na(away_system_velocity)) |>
+        nrow()
+
+    if (missing_lines > 0) {
+        message(
+            "WARNING: ", missing_lines,
+            " match(es) missing a team-line snapshot after join (bye rounds, finals, or data gaps) - ",
+            "check team_line_snapshots coverage for the affected round(s)."
+        )
+    }
 
     message("INFO: Completed Match Engine")
     return(match_metrics)

@@ -4,6 +4,7 @@ import path from "path";
 import Link from "next/link";
 import React, { useState } from "react";
 import config from "../config.json";
+import SiteHeader from "../components/SiteHeader";
 
 // ─────────────────────────────────────────────────────────────────────────
 // Types
@@ -60,24 +61,27 @@ type JusticeSpotlight = {
   biggestMover: JusticeTeam | null;
 };
 
+type PowerRankingTeam = {
+  team: string;
+  power_rank: number;
+  power_score: number;
+  trend: "Surging" | "Steady" | "Faltering";
+  rounds_in_window: number;
+};
+
+type MatchCentreGame = {
+  round: number;
+  home_team: string;
+  away_team: string;
+  home_score: number;
+  away_score: number;
+  is_robbery: boolean;
+  luck_delta: number;
+};
+
 // ─────────────────────────────────────────────────────────────────────────
 // Small presentational helpers
 // ─────────────────────────────────────────────────────────────────────────
-
-function NavTab({ href, label, emphasis = false }: { href: string; label: string; emphasis?: boolean }) {
-  return (
-    <Link
-      href={href}
-      className={`rounded-sm border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.1em] transition-colors ${
-        emphasis
-          ? "border-[var(--brass)] text-[var(--brass)] hover:bg-[var(--brass)]/10"
-          : "border-[var(--hairline)] text-[var(--slate)] hover:border-[var(--slate)] hover:text-[var(--parchment)]"
-      }`}
-    >
-      {label}
-    </Link>
-  );
-}
 
 function PlayerPhoto({ src, alt }: { src?: string; alt: string }) {
   const [failed, setFailed] = useState(false);
@@ -229,7 +233,17 @@ function buildFallbackNarrative(
 // Page Component
 // ─────────────────────────────────────────────────────────────────────────
 
-export default function Home({ data, justice }: { data: InsightData; justice: JusticeSpotlight }) {
+export default function Home({
+  data,
+  justice,
+  topPower,
+  featuredMatch,
+}: {
+  data: InsightData;
+  justice: JusticeSpotlight;
+  topPower: PowerRankingTeam | null;
+  featuredMatch: MatchCentreGame | null;
+}) {
   const { headline, dek } = data.headline
     ? { headline: data.headline, dek: data.dek || "" }
     : buildFallbackNarrative(data, justice);
@@ -244,53 +258,10 @@ export default function Home({ data, justice }: { data: InsightData; justice: Ju
 
   return (
     <>
-      <style jsx global>{`
-        :root {
-          --ink: #10151a;
-          --panel: #161d22;
-          --panel-hover: #1b2329;
-          --parchment: #ede6d6;
-          --brass: #c9a227;
-          --brass-bright: #e0be4a;
-          --fern-light: #8fbd7c;
-          --oxblood: #a8433a;
-          --oxblood-light: #d97862;
-          --slate: #8c97a0;
-          --hairline: #262e33;
-        }
-        .font-display {
-          font-family: "Fraunces", Georgia, serif;
-        }
-        .font-mono {
-          font-family: "JetBrains Mono", ui-monospace, monospace;
-        }
-        .font-body {
-          font-family: "Inter", system-ui, sans-serif;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          * {
-            transition-duration: 0.01ms !important;
-          }
-        }
-      `}</style>
-
       <main className="font-body min-h-screen bg-[var(--ink)] px-6 py-10 text-[var(--parchment)] sm:px-10 lg:px-16">
         <div className="mx-auto max-w-6xl">
           {/* ── Utility bar ──────────────────────────────────────── */}
-          <div className="mb-10 flex flex-col gap-4 border-b border-[var(--hairline)] pb-6 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-3 font-mono text-[11px] tracking-[0.25em] text-[var(--brass)]">
-              <span className="inline-block h-px w-8 bg-[var(--brass)]" />
-              FOOTY NARRATIVE ENGINE
-            </div>
-            <nav className="flex flex-wrap gap-2">
-              <NavTab href="/teams" label="Team Insights" />
-              <NavTab href="/players" label="Player Ratings" />
-              <NavTab href="/stats/top-games" label="Top Games" />
-              <NavTab href="/stats/category-kings" label="Category Kings" />
-              <NavTab href="/stats/breakout-watch" label="Breakout Watch" />
-              <NavTab href="/stats/justice-ladder" label="Justice Ladder" emphasis />
-            </nav>
-          </div>
+          <SiteHeader />
 
           {/* ── Hero storyline ───────────────────────────────────── */}
           <header className="mb-14">
@@ -338,7 +309,7 @@ export default function Home({ data, justice }: { data: InsightData; justice: Ju
                 <h2 className="font-display mt-1 text-xl font-semibold text-[var(--parchment)]">Dig Deeper</h2>
               </div>
             </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {topContender && (
                 <TeaserTile
                   href="/teams"
@@ -347,6 +318,16 @@ export default function Home({ data, justice }: { data: InsightData; justice: Ju
                   stat={`${topContender.contenderScore}/100`}
                   statLabel="contender score"
                   glyph="📊"
+                />
+              )}
+              {topPower && (
+                <TeaserTile
+                  href="/stats/team-power-rankings"
+                  eyebrow="Power Rankings"
+                  hook={`${topPower.team} tops the Power Rankings, ${topPower.trend.toLowerCase()} over its last ${topPower.rounds_in_window} rounds.`}
+                  stat={topPower.power_score.toFixed(1)}
+                  statLabel="power score"
+                  glyph="⚡"
                 />
               )}
               {topSeasonLeader && (
@@ -367,6 +348,20 @@ export default function Home({ data, justice }: { data: InsightData; justice: Ju
                   stat={topGame.PIR.toFixed(1)}
                   statLabel="PIR"
                   glyph="🔥"
+                />
+              )}
+              {featuredMatch && (
+                <TeaserTile
+                  href="/stats/match-centre"
+                  eyebrow="Match Centre"
+                  hook={
+                    featuredMatch.is_robbery
+                      ? `${featuredMatch.home_team} vs ${featuredMatch.away_team} defied the model — this round's biggest robbery.`
+                      : `${featuredMatch.home_team} vs ${featuredMatch.away_team} produced the round's biggest form swing.`
+                  }
+                  stat={featuredMatch.luck_delta.toFixed(1)}
+                  statLabel="luck index"
+                  glyph="🕵️"
                 />
               )}
               {topCategoryKing && (
@@ -513,6 +508,32 @@ export const getStaticProps: GetStaticProps = async () => {
     console.error("Justice Ladder spotlight unavailable for homepage:", err);
   }
 
+  // Power Rankings spotlight — same source file as /stats/team-power-rankings.
+  let topPower: PowerRankingTeam | null = null;
+  try {
+    const powerFilePath = path.join(process.cwd(), "json", currentSeason, "league", "power_rankings.json");
+    const powerData: PowerRankingTeam[] = JSON.parse(fs.readFileSync(powerFilePath, "utf-8"));
+    if (powerData.length) {
+      topPower = powerData.reduce((a, b) => (b.power_rank < a.power_rank ? b : a));
+    }
+  } catch (err) {
+    console.error("Power Rankings spotlight unavailable for homepage:", err);
+  }
+
+  // Match Centre spotlight — same source file as /stats/match-centre. Picks
+  // the match with the biggest gap between actual and expected margin,
+  // whichever way it broke, since that's the one worth clicking through to.
+  let featuredMatch: MatchCentreGame | null = null;
+  try {
+    const matchesFilePath = path.join(process.cwd(), "json", currentSeason, "matches", "team_match_centers.json");
+    const matchesData: MatchCentreGame[] = JSON.parse(fs.readFileSync(matchesFilePath, "utf-8"));
+    if (matchesData.length) {
+      featuredMatch = matchesData.reduce((a, b) => (b.luck_delta > a.luck_delta ? b : a));
+    }
+  } catch (err) {
+    console.error("Match Centre spotlight unavailable for homepage:", err);
+  }
+
   return {
     props: {
       data: {
@@ -523,6 +544,8 @@ export const getStaticProps: GetStaticProps = async () => {
         topCategoryKings,
       },
       justice,
+      topPower,
+      featuredMatch,
     },
     revalidate: 60,
   };

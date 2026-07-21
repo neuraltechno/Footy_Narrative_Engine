@@ -183,7 +183,7 @@ calculate_advanced_metrics_core <- function(players_season, processed_rounds, la
 
     breakout_watch <- players_season_gated %>%
         filter(Meets_Breakout_Eligibility) %>%
-        left_join(POS_NAME_LOOKUP, by = c("playerPosition" = "position_name"), relationship = "many-to-one") %>%
+        inner_join(POS_NAME_LOOKUP, by = c("playerPosition" = "position_name"), relationship = "many-to-one") %>%
         mutate(position_group = coalesce(position_group, "Unknown")) %>%
         inner_join(recent_form, by = "player.playerId") %>%
         inner_join(season_game_counts, by = "player.playerId") %>%
@@ -247,18 +247,6 @@ calculate_advanced_metrics_core <- function(players_season, processed_rounds, la
     # ==========================================================================
     # 2. Category Kings
     # ==========================================================================
-    # Category scores are derived directly from processed_rounds, NOT from
-    # players_season. players_season only ever holds the CURRENT run's
-    # season-to-date totals; catchup_category_kings_snapshots() truncates
-    # processed_rounds to "games up to round r" when backfilling history,
-    # but players_season is passed through unchanged for every backfilled
-    # round. Sourcing the category scores from players_season would mean
-    # every backfilled round is scored on today's season averages - i.e.
-    # every historical snapshot ends up identical to the current one, which
-    # is why movement showed "same" everywhere and streaks were inflated to
-    # the full season. Averaging the raw per-game norm_* columns straight
-    # from processed_rounds keeps each backfilled round genuinely "as of
-    # that round".
     category_averages <- processed_rounds %>%
         group_by(player.playerId) %>%
         summarise(
@@ -272,8 +260,6 @@ calculate_advanced_metrics_core <- function(players_season, processed_rounds, la
         ) %>%
         filter(Total_Games_Played >= CATEGORY_KINGS_MIN_GAMES)
 
-    # Static player attributes (name, team, photo, position group) are fine
-    # to take from players_season - those don't need to be point-in-time.
     eligible_season_data <- players_season %>%
         select(player.playerId, player.givenName, player.surname, team.name, photoURL, playerGroup) %>%
         inner_join(category_averages, by = "player.playerId")
@@ -358,34 +344,115 @@ calculate_advanced_metrics_core <- function(players_season, processed_rounds, la
     )
 
     # ==========================================================================
-    # 3. Top Games (Sorted by Traditional PIR)
+    # 3. Top Games & Performance Leaderboards (Sorted by Traditional PIR)
     # ==========================================================================
-    top_games <- processed_rounds %>%
+    # Raw stat columns for the leaderboard exports: everything in the
+    # provider's box-score block, from gamesPlayed through to the last
+    # extendedStats field. Derived by name (not hardcoded) so any new
+    # stat added upstream automatically flows through without a code
+    # change here. lastUpdated is dropped as it's a timestamp, not a stat.
+    box_score_start <- "gamesPlayed"
+    box_score_end   <- "extendedStats.kickinsPlayon"
+    all_col_names   <- names(processed_rounds)
+    start_idx       <- match(box_score_start, all_col_names)
+    end_idx         <- match(box_score_end, all_col_names)
+
+    if (is.na(start_idx) || is.na(end_idx)) {
+        message(
+            "WARN: Could not locate box-score column range ('", box_score_start,
+            "' to '", box_score_end, "') in processed_rounds - falling back to ",
+            "a minimal core stat set for the top games exports."
+        )
+        raw_stat_columns <- c(
+            "disposals", "kicks", "handballs", "marks", "tackles",
+            "goals", "behinds", "hitouts", "clearances.totalClearances",
+            "inside50s", "rebound50s", "scoreInvolvements", "turnovers", "metresGained"
+        )
+    } else {
+        raw_stat_columns <- setdiff(all_col_names[start_idx:end_idx], "lastUpdated")
+    }
+    
+    games_base <- processed_rounds %>%
         mutate(
             raw_opponent       = ifelse(teamStatus == "home", away.team.name, home.team.name),
-            match.opponentName = sapply(raw_opponent, normalize_team_name)
-        ) %>%
+            match.opponentName = sapply(raw_opponent, normalize_team_name),
+            game_title         = paste0("Round ", round.roundNumber, " vs ", match.opponentName)
+        )
+        
+    select_leaderboard_fields <- function(df) {
+        df %>% 
+            select(
+                playerId    = player.playerId, 
+                givenName   = player.givenName, 
+                surname     = player.surname, 
+                team        = team.name, 
+                jumperNumber, 
+                photoURL    = player.photoURL, 
+                round       = round.roundNumber, 
+                opponent    = match.opponentName, 
+                PIR, 
+                game_title,
+                any_of(raw_stat_columns)
+            )
+    }
+
+    # Top 50 PIR games played for the entire season
+    top_games_season <- games_base %>%
         arrange(desc(PIR)) %>%
         slice(1:50) %>%
-        mutate(
-            game_title = paste0("Round ", round.roundNumber, " vs ", match.opponentName)
+        select_leaderboard_fields()
+
+    # Top PIR games specifically for the current round
+    top_games_round <- games_base %>%
+        filter(round.roundNumber == latest_round) %>%
+        arrange(desc(PIR)) %>%
+        select_leaderboard_fields()
+
+    # Highest cumulative three-round PIR score per player
+    top_three_round_stretches <- processed_rounds %>%
+        filter(round.roundNumber > (latest_round - 3)) %>% 
+        group_by(player.playerId) %>%
+        summarise(
+            rounds_played = n(),
+            cumulative_pir = sum(PIR, na.rm = TRUE),
+            .groups = 'drop'
         ) %>%
+        filter(rounds_played == 3) %>% 
+        inner_join(
+            players_season %>% select(player.playerId, player.givenName, player.surname, team.name, photoURL), 
+            by = "player.playerId"
+        ) %>%
+        arrange(desc(cumulative_pir)) %>%
+        slice(1:10) %>%
         select(
+            playerId = player.playerId,
+            givenName = player.givenName,
+            surname = player.surname,
+            team = team.name,
+            photoURL,
+            cumulative_three_round_pir = cumulative_pir
+        )
+
+    # Team of the Round
+    # NOTE: processed_rounds now arrives with position_name/position_group
+    # already attached upstream, so no join against POS_NAME_LOOKUP is needed
+    # here anymore - re-joining was producing a stale/missing key error.
+    team_of_the_round_base <- games_base %>%
+        filter(round.roundNumber == latest_round)
+
+    team_of_the_round <- team_of_the_round_base %>%
+        mutate(position_group = coalesce(position_group, "Unknown")) %>%
+        group_by(position_group) %>%
+        slice_max(order_by = PIR, n = 1, with_ties = FALSE) %>%
+        ungroup() %>%
+        select(
+            position_group,
             playerId    = player.playerId, 
             givenName   = player.givenName, 
             surname     = player.surname, 
             team        = team.name, 
-            jumperNumber, 
-            photoURL    = player.photoURL, 
-            round       = round.roundNumber, 
-            opponent    = match.opponentName, 
-            PIR, 
-            disposal    = norm_disposal, 
-            contest     = norm_contest, 
-            damage      = norm_damage, 
-            grit        = norm_grit, 
-            ruck        = norm_ruck, 
-            game_title
+            photoURL    = player.photoURL,
+            PIR
         )
 
     # ==========================================================================
@@ -427,11 +494,60 @@ calculate_advanced_metrics_core <- function(players_season, processed_rounds, la
             game_title
         )
     
+    # ==========================================================================
+    # 5. Team PIR Ladder
+    #
+    # Description:
+    #   Cumulative team output as measured by summed player PIR - the
+    #   team a player was playing for in each individual game (team.name),
+    #   not their club allegiance in general. Two views: season-to-date
+    #   total, and the current round in isolation.
+    # ==========================================================================
+    team_pir_ladder_season <- processed_rounds %>%
+        group_by(team.name) %>%
+        summarise(
+            total_pir     = sum(PIR, na.rm = TRUE),
+            games_played  = n_distinct(round.roundNumber),
+            avg_pir       = round(sum(PIR, na.rm = TRUE) / n_distinct(round.roundNumber), 1),
+            .groups       = 'drop'
+        ) %>%
+        arrange(desc(total_pir)) %>%
+        mutate(
+            rank      = row_number(),
+            total_pir = round(total_pir, 1)
+        ) %>%
+        select(rank, team = team.name, total_pir, avg_pir, games_played)
+
+    team_pir_ladder_round <- processed_rounds %>%
+        filter(round.roundNumber == latest_round) %>%
+        group_by(team.name) %>%
+        summarise(
+            total_pir    = sum(PIR, na.rm = TRUE),
+            players_used = n(),
+            .groups      = 'drop'
+        ) %>%
+        arrange(desc(total_pir)) %>%
+        mutate(
+            rank      = row_number(),
+            total_pir = round(total_pir, 1)
+        ) %>%
+        select(rank, team = team.name, total_pir, players_used)
+
+    team_pir_ladder <- list(
+        generated_round = latest_round,
+        season          = team_pir_ladder_season,
+        round           = team_pir_ladder_round
+    )
+
     return(list(
-        breakout_watch = breakout_watch, 
-        category_kings = category_kings, 
-        top_games      = top_games,       
-        top_esc_games  = top_esc_games    
+        breakout_watch            = breakout_watch, 
+        category_kings            = category_kings, 
+        top_games_season          = top_games_season,       
+        top_games_round           = top_games_round,
+        top_three_round_stretches = top_three_round_stretches,
+        team_of_the_round         = team_of_the_round,
+        top_esc_games             = top_esc_games,
+        team_pir_ladder           = team_pir_ladder
     ))
 }
 

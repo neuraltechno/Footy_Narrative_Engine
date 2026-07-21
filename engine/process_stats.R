@@ -61,6 +61,11 @@ main <- function() {
         processed_rounds = season_agg$clean_processed_rounds, 
         latest_round     = season_agg$latest_round
     )
+    message("INFO: processed_rounds rows = ", nrow(season_agg$clean_processed_rounds))
+    message("INFO: top_games_season rows = ", nrow(advanced_metrics$top_games_season))
+    message("INFO: top_games_round rows = ", nrow(advanced_metrics$top_games_round))
+    message("INFO: top_three_round_stretches rows = ", nrow(advanced_metrics$top_three_round_stretches))
+    message("INFO: team_of_the_round rows = ", nrow(advanced_metrics$team_of_the_round))
     
     # ==============================================================================
     # 6. CALCULATE ADVANCED TEAM & MATCH ENGINE METRICS
@@ -118,10 +123,19 @@ main <- function() {
         match_centers        = match_evals |> filter(round == season_agg$latest_round),
         robbery_of_the_round = narrative_outputs$robbery_match,
         power_rankings       = power_ranks,
-        breakout_watch       = advanced_metrics$breakout_watch,   # Key matched to 15_ and 99_
-        category_kings       = advanced_metrics$category_kings,
-        top_games            = advanced_metrics$top_games,
-        top_esc_games        = advanced_metrics$top_esc_games,
+        # Full multi-round team_profiles history (not just the latest round)
+        # so the frontend can render team trend charts (PIR by line, system
+        # velocity, etc.) with zero client-side calculation, matching the
+        # rest of the "static JSON, no client compute" design.
+        team_metrics_history = team_profiles,
+        breakout_watch             = advanced_metrics$breakout_watch,   # Key matched to 15_ and 99_
+        category_kings             = advanced_metrics$category_kings,
+        top_games_season           = advanced_metrics$top_games_season,
+        top_games_round            = advanced_metrics$top_games_round,
+        top_three_round_stretches  = advanced_metrics$top_three_round_stretches,
+        team_of_the_round          = advanced_metrics$team_of_the_round,
+        top_esc_games              = advanced_metrics$top_esc_games,
+        team_pir_ladder            = advanced_metrics$team_pir_ladder,
         # Streamlined single-source luck metrics
         luck_unlucky         = luck_unlucky
     )

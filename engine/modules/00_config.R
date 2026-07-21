@@ -226,3 +226,44 @@ PIR_W_CONTEST_DEF_LOSS        <- 4.0    # Points per lost defensive one-on-one c
 PIR_TOG_FULL_GAME_THRESHOLD   <- 80.0   # TOG% at/above which no modifier is applied
 PIR_TOG_FLOOR                  <- 15.0   # Minimum TOG% used in the modifier calc, preventing a near-zero-minute cameo from producing an extreme boost
 PIR_TOG_BOOST_SLOPE           <- 0.7    # Maximum modifier boost (as a fraction) applied at PIR_TOG_FLOOR
+
+# ==========================================================================
+# Team Metrics Tuning Parameters (30_team_metrics.R)
+# ==========================================================================
+# Fallback used only when a team is entirely missing from the raw
+# team_stats extract (e.g. early-season data gaps). This is already a
+# single-round estimate (a typical AFL team's total disposals in ONE
+# match), so it is used as-is and is NOT divided by rounds played - unlike
+# DI_for below, which is a season-to-date cumulative figure and does need
+# to be divided by rounds elapsed to become a per-round estimate.
+TEAM_METRICS_DEFAULT_ROUND_DISPOSALS <- 350
+
+# ==========================================================================
+# Match Engine - Expected Score Weights (40_match_metrics.R)
+# ==========================================================================
+# "Expected" score reweights a team's own goal/behind counts into a scoring
+# baseline used as the reference point for luck_delta / robbery detection.
+# NOTE: these are the historical/legacy coefficients carried over from the
+# original engine. Expanding the formula, a goal is worth
+# (XSCORE_W_GOAL_AS_GOAL * 6 + XSCORE_W_GOAL_AS_BEHIND * 1) = 3.6 points
+# here (vs 6 actual), and a behind is worth
+# (XSCORE_W_BEHIND_AS_GOAL * 6 + XSCORE_W_BEHIND_AS_BEHIND * 1) = 2.6 points
+# here (vs 1 actual) - i.e. goals are discounted and behinds are inflated
+# relative to the real scoreboard. This is not a league-average-conversion
+# model (the coefficients don't sum to 1), so treat it as a deliberately
+# smoothed baseline rather than a calibrated "true expected score". Revisit
+# if a probability-based model (e.g. league-average shot conversion rate
+# applied to total scoring shots) is wanted instead.
+XSCORE_W_GOAL_AS_GOAL     <- 0.55   # Weight of goal count in the "goal-value" term
+XSCORE_W_BEHIND_AS_GOAL   <- 0.35   # Weight of behind count in the "goal-value" term
+XSCORE_W_GOAL_AS_BEHIND   <- 0.30   # Weight of goal count in the "behind-value" term
+XSCORE_W_BEHIND_AS_BEHIND <- 0.50   # Weight of behind count in the "behind-value" term
+
+# ==========================================================================
+# Power Rankings Tuning Parameters (60_power_rankings.R)
+# ==========================================================================
+POWER_RANKINGS_ROLLING_WINDOW   <- 3     # Trailing rounds averaged into the power score ("current form" window)
+POWER_SCORE_WEIGHT_RATING       <- 0.7   # Weight applied to rolling overall_rating
+POWER_SCORE_WEIGHT_VELOCITY     <- 30    # Weight applied to rolling system_velocity
+POWER_TREND_SURGING_THRESHOLD   <- 1.5   # Rolling system_velocity at/above which a team is labelled "Surging"
+POWER_TREND_FALTERING_THRESHOLD <- 0.9   # Rolling system_velocity at/below which a team is labelled "Faltering"
