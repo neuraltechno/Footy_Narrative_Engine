@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import RankingMomentum from '../components/RankingMomentum';
 import RoundHistoryChart from '../components/RoundHistoryChart';
+import SiteHeader from '../components/SiteHeader';
 
 const ITEMS_PER_PAGE = 24;
 
@@ -453,30 +454,13 @@ const PlayersPage = ({ allPlayersData, currentSeason }: { allPlayersData: any[];
 
   return (
     <>
-      <style jsx global>{`
-        :root {
-          --ink: #10151a;
-          --panel: #161d22;
-          --panel-hover: #1b2329;
-          --parchment: #ede6d6;
-          --brass: #c9a227;
-          --brass-bright: #e0be4a;
-          --fern-light: #8fbd7c;
-          --oxblood: #a8433a;
-          --oxblood-light: #d97862;
-          --slate: #8c97a0;
-          --hairline: #262e33;
-        }
-        .font-display { font-family: 'Fraunces', Georgia, serif; }
-        .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
-        .font-body { font-family: 'Inter', system-ui, sans-serif; }
-        @media (prefers-reduced-motion: reduce) {
-          * { transition-duration: 0.01ms !important; }
-        }
-      `}</style>
+      
 
       <main className="font-body min-h-screen bg-[var(--ink)] px-6 py-12 text-[var(--parchment)] sm:px-10 lg:px-16">
         <div className="mx-auto max-w-7xl">
+          
+                    <SiteHeader />
+          
           {/* ── Header ───────────────────────────────────────────── */}
           <header className="mb-10 border-b border-[var(--hairline)] pb-8">
             <div className="mb-3 flex items-center justify-between gap-3">

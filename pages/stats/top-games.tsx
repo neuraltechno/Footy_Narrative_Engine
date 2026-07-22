@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import fs from 'fs';
 import path from 'path';
+import SiteHeader from '../../components/SiteHeader';
 
 // ─────────────────────────────────────────────────────────────────────────
 // Types
@@ -41,7 +42,10 @@ type ThreeRoundStretch = {
 };
 
 type TeamOfRoundPlayer = {
+  slot_order: number;
+  position_name: string;
   position_group: string;
+  position_line: string;
   playerId: string;
   givenName: string;
   surname: string;
@@ -123,7 +127,24 @@ function formatStatValue(value: any): string {
 
 const CORE_STAT_KEYS = ['disposals', 'goals', 'tackles', 'marks', 'clearances.totalClearances', 'inside50s'];
 
-const POSITION_GROUP_PRIORITY = ['Defender', 'Midfielder', 'Ruck', 'Forward', 'Interchange', 'Unknown'];
+// ─────────────────────────────────────────────────────────────────────────
+// Formation layout for Team of the Round
+//
+// The 18 on-field slot_orders (from the R script) are grouped into the six
+// real AFL lines, ordered forward line first (attacking end) down to the
+// back line, three players per row - same order a team sheet is read in.
+// Slots 19-23 (Utility/interchange) aren't part of any line, so they're
+// rendered separately as a bench strip beneath the ground rows.
+// ─────────────────────────────────────────────────────────────────────────
+
+const FORMATION_ROWS: { label: string; slots: [number, number, number] }[] = [
+  { label: 'Forward Line', slots: [16, 17, 18] },
+  { label: 'Half-Forward Line', slots: [13, 14, 15] },
+  { label: 'Followers', slots: [10, 11, 12] },
+  { label: 'Centre Line', slots: [7, 8, 9] },
+  { label: 'Half-Back Line', slots: [4, 5, 6] },
+  { label: 'Back Line', slots: [1, 2, 3] },
+];
 
 // ─────────────────────────────────────────────────────────────────────────
 // Small presentational helpers (shared visual language with the Breakout Dossier)
@@ -165,6 +186,21 @@ function RankBadge({ rank }: { rank: number }) {
     <span className="font-display text-lg font-semibold text-[var(--brass)]">
       №{String(rank).padStart(2, '0')}
     </span>
+  );
+}
+
+function PositionCard({ player }: { player: TeamOfRoundPlayer }) {
+  const fullName = `${player.givenName} ${player.surname}`;
+  return (
+    <div className="rounded-sm border border-[var(--hairline)] bg-[var(--ink)] p-3 text-center">
+      <div className="flex justify-center">
+        <PlayerPhoto src={player.photoURL} alt={fullName} size={16} />
+      </div>
+      <div className="font-mono text-[9px] uppercase tracking-wide text-[var(--slate)]">{player.position_name}</div>
+      <div className="font-display mt-1 truncate text-sm font-medium text-[var(--parchment)]">{fullName}</div>
+      <div className="font-mono text-[10px] text-[var(--slate)]">{player.team}</div>
+      <div className="font-display mt-1 text-lg font-semibold text-[var(--brass)]">{formatStatValue(player.PIR)}</div>
+    </div>
   );
 }
 
@@ -346,21 +382,10 @@ export default function TopGamesLedger({
       });
   }, [activeTab, seasonGames, roundGames, escGames, query, teamFilter]);
 
-  const groupedTeamOfRound = useMemo(() => {
-    const groups = new Map<string, TeamOfRoundPlayer[]>();
-    for (const p of teamOfRound) {
-      const list = groups.get(p.position_group) ?? [];
-      list.push(p);
-      groups.set(p.position_group, list);
-    }
-    return Array.from(groups.entries()).sort((a, b) => {
-      const ai = POSITION_GROUP_PRIORITY.indexOf(a[0]);
-      const bi = POSITION_GROUP_PRIORITY.indexOf(b[0]);
-      const aRank = ai === -1 ? POSITION_GROUP_PRIORITY.length : ai;
-      const bRank = bi === -1 ? POSITION_GROUP_PRIORITY.length : bi;
-      return aRank !== bRank ? aRank - bRank : a[0].localeCompare(b[0]);
-    });
-  }, [teamOfRound]);
+  const interchangeBench = useMemo(
+    () => [...teamOfRound].filter((p) => p.slot_order > 18).sort((a, b) => a.slot_order - b.slot_order),
+    [teamOfRound]
+  );
 
   function switchTab(key: LedgerTab) {
     setActiveTab(key);
@@ -371,38 +396,13 @@ export default function TopGamesLedger({
 
   return (
     <>
-      <style jsx global>{`
-        :root {
-          --ink: #10151a;
-          --panel: #161d22;
-          --panel-hover: #1b2329;
-          --parchment: #ede6d6;
-          --brass: #c9a227;
-          --brass-bright: #e0be4a;
-          --fern-light: #8fbd7c;
-          --oxblood: #a8433a;
-          --oxblood-light: #d97862;
-          --slate: #8c97a0;
-          --hairline: #262e33;
-        }
-        .font-display {
-          font-family: 'Fraunces', Georgia, serif;
-        }
-        .font-mono {
-          font-family: 'JetBrains Mono', ui-monospace, monospace;
-        }
-        .font-body {
-          font-family: 'Inter', system-ui, sans-serif;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          * {
-            transition-duration: 0.01ms !important;
-          }
-        }
-      `}</style>
+      
 
       <main className="font-body min-h-screen bg-[var(--ink)] px-6 py-12 text-[var(--parchment)] sm:px-10 lg:px-16">
         <div className="mx-auto max-w-6xl">
+
+                    <SiteHeader />
+          
           {/* ── Header ───────────────────────────────────────────── */}
           <header className="mb-10 border-b border-[var(--hairline)] pb-8">
             <div className="mb-3 flex items-center gap-3 font-mono text-[11px] tracking-[0.25em] text-[var(--brass)]">
@@ -509,32 +509,37 @@ export default function TopGamesLedger({
                 <EmptyState text="No team of the round has been generated yet." />
               ) : (
                 <div className="space-y-6">
-                  {groupedTeamOfRound.map(([group, players]) => (
-                    <div key={group}>
+                  {FORMATION_ROWS.map((row) => {
+                    const players = row.slots
+                      .map((slot) => teamOfRound.find((p) => p.slot_order === slot))
+                      .filter((p): p is TeamOfRoundPlayer => Boolean(p));
+                    if (players.length === 0) return null;
+                    return (
+                      <div key={row.label}>
+                        <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--brass)]">
+                          {row.label}
+                        </div>
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                          {players.map((p) => (
+                            <PositionCard key={p.playerId} player={p} />
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+
+                  {interchangeBench.length > 0 && (
+                    <div>
                       <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--brass)]">
-                        {group} · Best on Ground
+                        Interchange · {interchangeBench.length}
                       </div>
                       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-                        {players
-                          .sort((a, b) => b.PIR - a.PIR)
-                          .map((p) => {
-                            const fullName = `${p.givenName} ${p.surname}`;
-                            return (
-                              <div key={p.playerId} className="rounded-sm border border-[var(--hairline)] bg-[var(--ink)] p-3 text-center">
-                                <div className="flex justify-center">
-                                  <PlayerPhoto src={p.photoURL} alt={fullName} size={16} />
-                                </div>
-                                <div className="font-display mt-2 truncate text-sm font-medium text-[var(--parchment)]">{fullName}</div>
-                                <div className="font-mono text-[10px] text-[var(--slate)]">{p.team}</div>
-                                <div className="font-display mt-1 text-lg font-semibold text-[var(--brass)]">
-                                  {formatStatValue(p.PIR)}
-                                </div>
-                              </div>
-                            );
-                          })}
+                        {interchangeBench.map((p) => (
+                          <PositionCard key={p.playerId} player={p} />
+                        ))}
                       </div>
                     </div>
-                  ))}
+                  )}
                 </div>
               )
             )}
@@ -576,7 +581,7 @@ export default function TopGamesLedger({
           <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-wide text-[var(--slate)]">
             <span>PIR = Traditional Player Impact Rating</span>
             <span>ESC = Expected Score Contribution, weighted for scoring impact over raw volume</span>
-            <span>Team of the Round = highest single-game PIR per position group in the latest round</span>
+            <span>Team of the Round = top single-game PIR at each on-field position in the latest round, filling a full 23-player match-day sheet (18 starters + 5 interchange)</span>
           </div>
         </div>
       </main>

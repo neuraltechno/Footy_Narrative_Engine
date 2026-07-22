@@ -437,16 +437,67 @@ calculate_advanced_metrics_core <- function(players_season, processed_rounds, la
     # NOTE: processed_rounds now arrives with position_name/position_group
     # already attached upstream, so no join against POS_NAME_LOOKUP is needed
     # here anymore - re-joining was producing a stale/missing key error.
+    #
+    # A full match-day team sheet is 23: 18 on-field slots + 4 interchange +
+    # 1 medical sub. Several position_name labels cover two physical slots
+    # (e.g. "Back Pocket" covers both BPL and BPR, "Wing" covers WL and WR),
+    # since processed_rounds carries the label rather than the L/R code -
+    # TEAM_OF_ROUND_SLOTS lists each slot individually so those positions
+    # correctly pull the top 2 PIR performers rather than just 1.
+    #
+    # slot_order lays the picks out in guernsey reading order (backline,
+    # half-back, centre line, half-forward, forward line, ruck, interchange)
+    # so the frontend doesn't have to re-derive formation shape itself.
+    TEAM_OF_ROUND_SLOTS <- data.frame(
+        position_name = c(
+            "Back Pocket", "Full Back", "Back Pocket",
+            "Half Back Flank", "Centre Half Back", "Half Back Flank",
+            "Wing", "Inside/Outside Mid", "Wing",
+            "Inside Mid", "Ruckman", "Inside Mid",
+            "Half Forward Flank", "Centre Half Forward", "Half Forward Flank",
+            "Forward Pocket", "Full Forward", "Forward Pocket",
+            rep("Utility", 5)
+        ),
+        slot_order = seq_len(23),
+        stringsAsFactors = FALSE
+    )
+
     team_of_the_round_base <- games_base %>%
         filter(round.roundNumber == latest_round)
 
-    team_of_the_round <- team_of_the_round_base %>%
-        mutate(position_group = coalesce(position_group, "Unknown")) %>%
-        group_by(position_group) %>%
-        slice_max(order_by = PIR, n = 1, with_ties = FALSE) %>%
+    # For each position_name, take the top-N PIR performers this round,
+    # where N is however many slots that label covers (1, 2, or 5 for
+    # Utility). Ranked within-label so duplicate-label slots (e.g. the two
+    # Back Pocket rows) each get a distinct player.
+    team_of_the_round_picks <- lapply(unique(TEAM_OF_ROUND_SLOTS$position_name), function(pos) {
+        n_needed <- sum(TEAM_OF_ROUND_SLOTS$position_name == pos)
+        team_of_the_round_base %>%
+            filter(.data$position_name == pos) %>%
+            arrange(desc(PIR)) %>%
+            slice(1:n_needed) %>%
+            mutate(pick_rank = row_number())
+    }) %>%
+        bind_rows()
+
+    team_of_the_round <- TEAM_OF_ROUND_SLOTS %>%
+        group_by(position_name) %>%
+        mutate(pick_rank = row_number()) %>%
         ungroup() %>%
+        left_join(team_of_the_round_picks, by = c("position_name", "pick_rank")) %>%
+        # Bye-heavy/early-season rounds can leave a slot without a qualifying
+        # player (e.g. fewer than 5 players tagged Utility) - drop unfilled
+        # slots rather than emitting nulls into the public JSON.
+        filter(!is.na(player.playerId)) %>%
+        arrange(slot_order) %>%
+        mutate(
+            position_group = coalesce(position_group, "Unknown"),
+            position_line  = coalesce(position_line, "Unknown")
+        ) %>%
         select(
+            slot_order,
+            position_name,
             position_group,
+            position_line,
             playerId    = player.playerId, 
             givenName   = player.givenName, 
             surname     = player.surname, 
