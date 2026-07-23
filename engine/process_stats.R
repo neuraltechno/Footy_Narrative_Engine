@@ -136,6 +136,7 @@ main <- function() {
         team_of_the_round          = advanced_metrics$team_of_the_round,
         top_esc_games              = advanced_metrics$top_esc_games,
         team_pir_ladder            = advanced_metrics$team_pir_ladder,
+        meters_gained_metrics      = advanced_metrics$meters_gained_metrics,
         # Streamlined single-source luck metrics
         luck_unlucky         = luck_unlucky
     )

@@ -1,0 +1,2103 @@
+{
+  "generated_round": 19,
+  "cumulative": [
+    {
+      "team": "Adelaide Crows",
+      "round": 1,
+      "round_metres": 6697,
+      "cumulative_metres": 6697
+    },
+    {
+      "team": "Adelaide Crows",
+      "round": 2,
+      "round_metres": 6107,
+      "cumulative_metres": 12804
+    },
+    {
+      "team": "Adelaide Crows",
+      "round": 3,
+      "round_metres": 6523,
+      "cumulative_metres": 19327
+    },
+    {
+      "team": "Adelaide Crows",
+      "round": 4,
+      "round_metres": 5880,
+      "cumulative_metres": 25207
+    },
+    {
+      "team": "Adelaide Crows",
+      "round": 5,
+      "round_metres": 7109,
+      "cumulative_metres": 32316
+    },
+    {
+      "team": "Adelaide Crows",
+      "round": 6,
+      "round_metres": 6306,
+      "cumulative_metres": 38622
+    },
+    {
+      "team": "Adelaide Crows",
+      "round": 7,
+      "round_metres": 5409,
+      "cumulative_metres": 44031
+    },
+    {
+      "team": "Adelaide Crows",
+      "round": 8,
+      "round_metres": 6089,
+      "cumulative_metres": 50120
+    },
+    {
+      "team": "Adelaide Crows",
+      "round": 9,
+      "round_metres": 5900,
+      "cumulative_metres": 56020
+    },
+    {
+      "team": "Adelaide Crows",
+      "round": 10,
+      "round_metres": 5889,
+      "cumulative_metres": 61909
+    },
+    {
+      "team": "Adelaide Crows",
+      "round": 11,
+      "round_metres": 6364,
+      "cumulative_metres": 68273
+    },
+    {
+      "team": "Adelaide Crows",
+      "round": 13,
+      "round_metres": 6548,
+      "cumulative_metres": 74821
+    },
+    {
+      "team": "Adelaide Crows",
+      "round": 14,
+      "round_metres": 6511,
+      "cumulative_metres": 81332
+    },
+    {
+      "team": "Adelaide Crows",
+      "round": 15,
+      "round_metres": 6259,
+      "cumulative_metres": 87591
+    },
+    {
+      "team": "Adelaide Crows",
+      "round": 16,
+      "round_metres": 5599,
+      "cumulative_metres": 93190
+    },
+    {
+      "team": "Adelaide Crows",
+      "round": 17,
+      "round_metres": 5848,
+      "cumulative_metres": 99038
+    },
+    {
+      "team": "Adelaide Crows",
+      "round": 18,
+      "round_metres": 5977,
+      "cumulative_metres": 105015
+    },
+    {
+      "team": "Adelaide Crows",
+      "round": 19,
+      "round_metres": 6653,
+      "cumulative_metres": 111668
+    },
+    {
+      "team": "Brisbane Lions",
+      "round": 0,
+      "round_metres": 6338,
+      "cumulative_metres": 6338
+    },
+    {
+      "team": "Brisbane Lions",
+      "round": 1,
+      "round_metres": 5846,
+      "cumulative_metres": 12184
+    },
+    {
+      "team": "Brisbane Lions",
+      "round": 3,
+      "round_metres": 6138,
+      "cumulative_metres": 18322
+    },
+    {
+      "team": "Brisbane Lions",
+      "round": 4,
+      "round_metres": 6426,
+      "cumulative_metres": 24748
+    },
+    {
+      "team": "Brisbane Lions",
+      "round": 5,
+      "round_metres": 5799,
+      "cumulative_metres": 30547
+    },
+    {
+      "team": "Brisbane Lions",
+      "round": 6,
+      "round_metres": 5971,
+      "cumulative_metres": 36518
+    },
+    {
+      "team": "Brisbane Lions",
+      "round": 7,
+      "round_metres": 6160,
+      "cumulative_metres": 42678
+    },
+    {
+      "team": "Brisbane Lions",
+      "round": 8,
+      "round_metres": 6729,
+      "cumulative_metres": 49407
+    },
+    {
+      "team": "Brisbane Lions",
+      "round": 9,
+      "round_metres": 5976,
+      "cumulative_metres": 55383
+    },
+    {
+      "team": "Brisbane Lions",
+      "round": 10,
+      "round_metres": 6396,
+      "cumulative_metres": 61779
+    },
+    {
+      "team": "Brisbane Lions",
+      "round": 11,
+      "round_metres": 5974,
+      "cumulative_metres": 67753
+    },
+    {
+      "team": "Brisbane Lions",
+      "round": 12,
+      "round_metres": 5557,
+      "cumulative_metres": 73310
+    },
+    {
+      "team": "Brisbane Lions",
+      "round": 13,
+      "round_metres": 6270,
+      "cumulative_metres": 79580
+    },
+    {
+      "team": "Brisbane Lions",
+      "round": 14,
+      "round_metres": 5988,
+      "cumulative_metres": 85568
+    },
+    {
+      "team": "Brisbane Lions",
+      "round": 16,
+      "round_metres": 6351,
+      "cumulative_metres": 91919
+    },
+    {
+      "team": "Brisbane Lions",
+      "round": 17,
+      "round_metres": 6919,
+      "cumulative_metres": 98838
+    },
+    {
+      "team": "Brisbane Lions",
+      "round": 18,
+      "round_metres": 6767,
+      "cumulative_metres": 105605
+    },
+    {
+      "team": "Brisbane Lions",
+      "round": 19,
+      "round_metres": 6482,
+      "cumulative_metres": 112087
+    },
+    {
+      "team": "Carlton Blues",
+      "round": 0,
+      "round_metres": 6117,
+      "cumulative_metres": 6117
+    },
+    {
+      "team": "Carlton Blues",
+      "round": 1,
+      "round_metres": 6123,
+      "cumulative_metres": 12240
+    },
+    {
+      "team": "Carlton Blues",
+      "round": 3,
+      "round_metres": 5972,
+      "cumulative_metres": 18212
+    },
+    {
+      "team": "Carlton Blues",
+      "round": 4,
+      "round_metres": 5138,
+      "cumulative_metres": 23350
+    },
+    {
+      "team": "Carlton Blues",
+      "round": 5,
+      "round_metres": 6379,
+      "cumulative_metres": 29729
+    },
+    {
+      "team": "Carlton Blues",
+      "round": 6,
+      "round_metres": 5686,
+      "cumulative_metres": 35415
+    },
+    {
+      "team": "Carlton Blues",
+      "round": 7,
+      "round_metres": 5557,
+      "cumulative_metres": 40972
+    },
+    {
+      "team": "Carlton Blues",
+      "round": 8,
+      "round_metres": 5673,
+      "cumulative_metres": 46645
+    },
+    {
+      "team": "Carlton Blues",
+      "round": 9,
+      "round_metres": 6013,
+      "cumulative_metres": 52658
+    },
+    {
+      "team": "Carlton Blues",
+      "round": 10,
+      "round_metres": 5816,
+      "cumulative_metres": 58474
+    },
+    {
+      "team": "Carlton Blues",
+      "round": 11,
+      "round_metres": 6222,
+      "cumulative_metres": 64696
+    },
+    {
+      "team": "Carlton Blues",
+      "round": 12,
+      "round_metres": 5853,
+      "cumulative_metres": 70549
+    },
+    {
+      "team": "Carlton Blues",
+      "round": 13,
+      "round_metres": 5522,
+      "cumulative_metres": 76071
+    },
+    {
+      "team": "Carlton Blues",
+      "round": 15,
+      "round_metres": 6497,
+      "cumulative_metres": 82568
+    },
+    {
+      "team": "Carlton Blues",
+      "round": 16,
+      "round_metres": 6355,
+      "cumulative_metres": 88923
+    },
+    {
+      "team": "Carlton Blues",
+      "round": 17,
+      "round_metres": 5698,
+      "cumulative_metres": 94621
+    },
+    {
+      "team": "Carlton Blues",
+      "round": 18,
+      "round_metres": 5306,
+      "cumulative_metres": 99927
+    },
+    {
+      "team": "Carlton Blues",
+      "round": 19,
+      "round_metres": 5903,
+      "cumulative_metres": 105830
+    },
+    {
+      "team": "Collingwood Magpies",
+      "round": 0,
+      "round_metres": 6335,
+      "cumulative_metres": 6335
+    },
+    {
+      "team": "Collingwood Magpies",
+      "round": 1,
+      "round_metres": 6749,
+      "cumulative_metres": 13084
+    },
+    {
+      "team": "Collingwood Magpies",
+      "round": 3,
+      "round_metres": 6073,
+      "cumulative_metres": 19157
+    },
+    {
+      "team": "Collingwood Magpies",
+      "round": 4,
+      "round_metres": 5333,
+      "cumulative_metres": 24490
+    },
+    {
+      "team": "Collingwood Magpies",
+      "round": 5,
+      "round_metres": 5812,
+      "cumulative_metres": 30302
+    },
+    {
+      "team": "Collingwood Magpies",
+      "round": 6,
+      "round_metres": 5822,
+      "cumulative_metres": 36124
+    },
+    {
+      "team": "Collingwood Magpies",
+      "round": 7,
+      "round_metres": 6595,
+      "cumulative_metres": 42719
+    },
+    {
+      "team": "Collingwood Magpies",
+      "round": 8,
+      "round_metres": 5900,
+      "cumulative_metres": 48619
+    },
+    {
+      "team": "Collingwood Magpies",
+      "round": 9,
+      "round_metres": 5969,
+      "cumulative_metres": 54588
+    },
+    {
+      "team": "Collingwood Magpies",
+      "round": 10,
+      "round_metres": 6876,
+      "cumulative_metres": 61464
+    },
+    {
+      "team": "Collingwood Magpies",
+      "round": 11,
+      "round_metres": 5649,
+      "cumulative_metres": 67113
+    },
+    {
+      "team": "Collingwood Magpies",
+      "round": 12,
+      "round_metres": 6556,
+      "cumulative_metres": 73669
+    },
+    {
+      "team": "Collingwood Magpies",
+      "round": 13,
+      "round_metres": 6631,
+      "cumulative_metres": 80300
+    },
+    {
+      "team": "Collingwood Magpies",
+      "round": 15,
+      "round_metres": 6050,
+      "cumulative_metres": 86350
+    },
+    {
+      "team": "Collingwood Magpies",
+      "round": 16,
+      "round_metres": 6039,
+      "cumulative_metres": 92389
+    },
+    {
+      "team": "Collingwood Magpies",
+      "round": 17,
+      "round_metres": 6229,
+      "cumulative_metres": 98618
+    },
+    {
+      "team": "Collingwood Magpies",
+      "round": 18,
+      "round_metres": 6130,
+      "cumulative_metres": 104748
+    },
+    {
+      "team": "Collingwood Magpies",
+      "round": 19,
+      "round_metres": 5760,
+      "cumulative_metres": 110508
+    },
+    {
+      "team": "Essendon Bombers",
+      "round": 1,
+      "round_metres": 5444,
+      "cumulative_metres": 5444
+    },
+    {
+      "team": "Essendon Bombers",
+      "round": 2,
+      "round_metres": 5102,
+      "cumulative_metres": 10546
+    },
+    {
+      "team": "Essendon Bombers",
+      "round": 3,
+      "round_metres": 5126,
+      "cumulative_metres": 15672
+    },
+    {
+      "team": "Essendon Bombers",
+      "round": 4,
+      "round_metres": 4998,
+      "cumulative_metres": 20670
+    },
+    {
+      "team": "Essendon Bombers",
+      "round": 5,
+      "round_metres": 6525,
+      "cumulative_metres": 27195
+    },
+    {
+      "team": "Essendon Bombers",
+      "round": 6,
+      "round_metres": 6406,
+      "cumulative_metres": 33601
+    },
+    {
+      "team": "Essendon Bombers",
+      "round": 7,
+      "round_metres": 5532,
+      "cumulative_metres": 39133
+    },
+    {
+      "team": "Essendon Bombers",
+      "round": 8,
+      "round_metres": 5499,
+      "cumulative_metres": 44632
+    },
+    {
+      "team": "Essendon Bombers",
+      "round": 9,
+      "round_metres": 6083,
+      "cumulative_metres": 50715
+    },
+    {
+      "team": "Essendon Bombers",
+      "round": 10,
+      "round_metres": 5038,
+      "cumulative_metres": 55753
+    },
+    {
+      "team": "Essendon Bombers",
+      "round": 11,
+      "round_metres": 5498,
+      "cumulative_metres": 61251
+    },
+    {
+      "team": "Essendon Bombers",
+      "round": 12,
+      "round_metres": 5765,
+      "cumulative_metres": 67016
+    },
+    {
+      "team": "Essendon Bombers",
+      "round": 13,
+      "round_metres": 5263,
+      "cumulative_metres": 72279
+    },
+    {
+      "team": "Essendon Bombers",
+      "round": 14,
+      "round_metres": 5281,
+      "cumulative_metres": 77560
+    },
+    {
+      "team": "Essendon Bombers",
+      "round": 16,
+      "round_metres": 5439,
+      "cumulative_metres": 82999
+    },
+    {
+      "team": "Essendon Bombers",
+      "round": 17,
+      "round_metres": 4947,
+      "cumulative_metres": 87946
+    },
+    {
+      "team": "Essendon Bombers",
+      "round": 18,
+      "round_metres": 5335,
+      "cumulative_metres": 93281
+    },
+    {
+      "team": "Essendon Bombers",
+      "round": 19,
+      "round_metres": 5380,
+      "cumulative_metres": 98661
+    },
+    {
+      "team": "Fremantle Dockers",
+      "round": 1,
+      "round_metres": 6112,
+      "cumulative_metres": 6112
+    },
+    {
+      "team": "Fremantle Dockers",
+      "round": 2,
+      "round_metres": 6993,
+      "cumulative_metres": 13105
+    },
+    {
+      "team": "Fremantle Dockers",
+      "round": 3,
+      "round_metres": 5916,
+      "cumulative_metres": 19021
+    },
+    {
+      "team": "Fremantle Dockers",
+      "round": 4,
+      "round_metres": 6046,
+      "cumulative_metres": 25067
+    },
+    {
+      "team": "Fremantle Dockers",
+      "round": 5,
+      "round_metres": 5795,
+      "cumulative_metres": 30862
+    },
+    {
+      "team": "Fremantle Dockers",
+      "round": 6,
+      "round_metres": 6295,
+      "cumulative_metres": 37157
+    },
+    {
+      "team": "Fremantle Dockers",
+      "round": 7,
+      "round_metres": 5843,
+      "cumulative_metres": 43000
+    },
+    {
+      "team": "Fremantle Dockers",
+      "round": 8,
+      "round_metres": 6539,
+      "cumulative_metres": 49539
+    },
+    {
+      "team": "Fremantle Dockers",
+      "round": 9,
+      "round_metres": 5649,
+      "cumulative_metres": 55188
+    },
+    {
+      "team": "Fremantle Dockers",
+      "round": 10,
+      "round_metres": 5561,
+      "cumulative_metres": 60749
+    },
+    {
+      "team": "Fremantle Dockers",
+      "round": 11,
+      "round_metres": 6076,
+      "cumulative_metres": 66825
+    },
+    {
+      "team": "Fremantle Dockers",
+      "round": 12,
+      "round_metres": 6157,
+      "cumulative_metres": 72982
+    },
+    {
+      "team": "Fremantle Dockers",
+      "round": 13,
+      "round_metres": 6113,
+      "cumulative_metres": 79095
+    },
+    {
+      "team": "Fremantle Dockers",
+      "round": 15,
+      "round_metres": 6142,
+      "cumulative_metres": 85237
+    },
+    {
+      "team": "Fremantle Dockers",
+      "round": 16,
+      "round_metres": 5697,
+      "cumulative_metres": 90934
+    },
+    {
+      "team": "Fremantle Dockers",
+      "round": 17,
+      "round_metres": 5984,
+      "cumulative_metres": 96918
+    },
+    {
+      "team": "Fremantle Dockers",
+      "round": 18,
+      "round_metres": 6777,
+      "cumulative_metres": 103695
+    },
+    {
+      "team": "Fremantle Dockers",
+      "round": 19,
+      "round_metres": 6115,
+      "cumulative_metres": 109810
+    },
+    {
+      "team": "GWS Giants",
+      "round": 0,
+      "round_metres": 6866,
+      "cumulative_metres": 6866
+    },
+    {
+      "team": "GWS Giants",
+      "round": 1,
+      "round_metres": 5328,
+      "cumulative_metres": 12194
+    },
+    {
+      "team": "GWS Giants",
+      "round": 2,
+      "round_metres": 6451,
+      "cumulative_metres": 18645
+    },
+    {
+      "team": "GWS Giants",
+      "round": 3,
+      "round_metres": 5889,
+      "cumulative_metres": 24534
+    },
+    {
+      "team": "GWS Giants",
+      "round": 5,
+      "round_metres": 7064,
+      "cumulative_metres": 31598
+    },
+    {
+      "team": "GWS Giants",
+      "round": 6,
+      "round_metres": 7006,
+      "cumulative_metres": 38604
+    },
+    {
+      "team": "GWS Giants",
+      "round": 7,
+      "round_metres": 6500,
+      "cumulative_metres": 45104
+    },
+    {
+      "team": "GWS Giants",
+      "round": 8,
+      "round_metres": 5982,
+      "cumulative_metres": 51086
+    },
+    {
+      "team": "GWS Giants",
+      "round": 9,
+      "round_metres": 6025,
+      "cumulative_metres": 57111
+    },
+    {
+      "team": "GWS Giants",
+      "round": 10,
+      "round_metres": 5065,
+      "cumulative_metres": 62176
+    },
+    {
+      "team": "GWS Giants",
+      "round": 11,
+      "round_metres": 7256,
+      "cumulative_metres": 69432
+    },
+    {
+      "team": "GWS Giants",
+      "round": 12,
+      "round_metres": 6700,
+      "cumulative_metres": 76132
+    },
+    {
+      "team": "GWS Giants",
+      "round": 14,
+      "round_metres": 5787,
+      "cumulative_metres": 81919
+    },
+    {
+      "team": "GWS Giants",
+      "round": 15,
+      "round_metres": 6145,
+      "cumulative_metres": 88064
+    },
+    {
+      "team": "GWS Giants",
+      "round": 16,
+      "round_metres": 5325,
+      "cumulative_metres": 93389
+    },
+    {
+      "team": "GWS Giants",
+      "round": 17,
+      "round_metres": 6501,
+      "cumulative_metres": 99890
+    },
+    {
+      "team": "GWS Giants",
+      "round": 18,
+      "round_metres": 6939,
+      "cumulative_metres": 106829
+    },
+    {
+      "team": "GWS Giants",
+      "round": 19,
+      "round_metres": 5083,
+      "cumulative_metres": 111912
+    },
+    {
+      "team": "Geelong Cats",
+      "round": 0,
+      "round_metres": 6132,
+      "cumulative_metres": 6132
+    },
+    {
+      "team": "Geelong Cats",
+      "round": 1,
+      "round_metres": 6479,
+      "cumulative_metres": 12611
+    },
+    {
+      "team": "Geelong Cats",
+      "round": 3,
+      "round_metres": 6885,
+      "cumulative_metres": 19496
+    },
+    {
+      "team": "Geelong Cats",
+      "round": 4,
+      "round_metres": 6193,
+      "cumulative_metres": 25689
+    },
+    {
+      "team": "Geelong Cats",
+      "round": 5,
+      "round_metres": 6802,
+      "cumulative_metres": 32491
+    },
+    {
+      "team": "Geelong Cats",
+      "round": 6,
+      "round_metres": 6485,
+      "cumulative_metres": 38976
+    },
+    {
+      "team": "Geelong Cats",
+      "round": 7,
+      "round_metres": 5587,
+      "cumulative_metres": 44563
+    },
+    {
+      "team": "Geelong Cats",
+      "round": 8,
+      "round_metres": 6249,
+      "cumulative_metres": 50812
+    },
+    {
+      "team": "Geelong Cats",
+      "round": 9,
+      "round_metres": 6687,
+      "cumulative_metres": 57499
+    },
+    {
+      "team": "Geelong Cats",
+      "round": 10,
+      "round_metres": 7090,
+      "cumulative_metres": 64589
+    },
+    {
+      "team": "Geelong Cats",
+      "round": 11,
+      "round_metres": 7072,
+      "cumulative_metres": 71661
+    },
+    {
+      "team": "Geelong Cats",
+      "round": 12,
+      "round_metres": 5769,
+      "cumulative_metres": 77430
+    },
+    {
+      "team": "Geelong Cats",
+      "round": 13,
+      "round_metres": 6378,
+      "cumulative_metres": 83808
+    },
+    {
+      "team": "Geelong Cats",
+      "round": 14,
+      "round_metres": 6576,
+      "cumulative_metres": 90384
+    },
+    {
+      "team": "Geelong Cats",
+      "round": 15,
+      "round_metres": 5848,
+      "cumulative_metres": 96232
+    },
+    {
+      "team": "Geelong Cats",
+      "round": 17,
+      "round_metres": 6712,
+      "cumulative_metres": 102944
+    },
+    {
+      "team": "Geelong Cats",
+      "round": 18,
+      "round_metres": 6755,
+      "cumulative_metres": 109699
+    },
+    {
+      "team": "Geelong Cats",
+      "round": 19,
+      "round_metres": 6207,
+      "cumulative_metres": 115906
+    },
+    {
+      "team": "Gold Coast Suns",
+      "round": 0,
+      "round_metres": 7119,
+      "cumulative_metres": 7119
+    },
+    {
+      "team": "Gold Coast Suns",
+      "round": 1,
+      "round_metres": 6495,
+      "cumulative_metres": 13614
+    },
+    {
+      "team": "Gold Coast Suns",
+      "round": 2,
+      "round_metres": 6207,
+      "cumulative_metres": 19821
+    },
+    {
+      "team": "Gold Coast Suns",
+      "round": 4,
+      "round_metres": 5851,
+      "cumulative_metres": 25672
+    },
+    {
+      "team": "Gold Coast Suns",
+      "round": 5,
+      "round_metres": 6498,
+      "cumulative_metres": 32170
+    },
+    {
+      "team": "Gold Coast Suns",
+      "round": 6,
+      "round_metres": 6466,
+      "cumulative_metres": 38636
+    },
+    {
+      "team": "Gold Coast Suns",
+      "round": 7,
+      "round_metres": 6937,
+      "cumulative_metres": 45573
+    },
+    {
+      "team": "Gold Coast Suns",
+      "round": 8,
+      "round_metres": 6508,
+      "cumulative_metres": 52081
+    },
+    {
+      "team": "Gold Coast Suns",
+      "round": 9,
+      "round_metres": 6835,
+      "cumulative_metres": 58916
+    },
+    {
+      "team": "Gold Coast Suns",
+      "round": 10,
+      "round_metres": 7706,
+      "cumulative_metres": 66622
+    },
+    {
+      "team": "Gold Coast Suns",
+      "round": 11,
+      "round_metres": 5487,
+      "cumulative_metres": 72109
+    },
+    {
+      "team": "Gold Coast Suns",
+      "round": 13,
+      "round_metres": 6048,
+      "cumulative_metres": 78157
+    },
+    {
+      "team": "Gold Coast Suns",
+      "round": 14,
+      "round_metres": 5960,
+      "cumulative_metres": 84117
+    },
+    {
+      "team": "Gold Coast Suns",
+      "round": 15,
+      "round_metres": 6562,
+      "cumulative_metres": 90679
+    },
+    {
+      "team": "Gold Coast Suns",
+      "round": 16,
+      "round_metres": 5310,
+      "cumulative_metres": 95989
+    },
+    {
+      "team": "Gold Coast Suns",
+      "round": 17,
+      "round_metres": 6143,
+      "cumulative_metres": 102132
+    },
+    {
+      "team": "Gold Coast Suns",
+      "round": 18,
+      "round_metres": 5153,
+      "cumulative_metres": 107285
+    },
+    {
+      "team": "Gold Coast Suns",
+      "round": 19,
+      "round_metres": 6149,
+      "cumulative_metres": 113434
+    },
+    {
+      "team": "Hawthorn Hawks",
+      "round": 0,
+      "round_metres": 6419,
+      "cumulative_metres": 6419
+    },
+    {
+      "team": "Hawthorn Hawks",
+      "round": 1,
+      "round_metres": 6383,
+      "cumulative_metres": 12802
+    },
+    {
+      "team": "Hawthorn Hawks",
+      "round": 2,
+      "round_metres": 6602,
+      "cumulative_metres": 19404
+    },
+    {
+      "team": "Hawthorn Hawks",
+      "round": 4,
+      "round_metres": 6250,
+      "cumulative_metres": 25654
+    },
+    {
+      "team": "Hawthorn Hawks",
+      "round": 5,
+      "round_metres": 6163,
+      "cumulative_metres": 31817
+    },
+    {
+      "team": "Hawthorn Hawks",
+      "round": 6,
+      "round_metres": 5530,
+      "cumulative_metres": 37347
+    },
+    {
+      "team": "Hawthorn Hawks",
+      "round": 7,
+      "round_metres": 7381,
+      "cumulative_metres": 44728
+    },
+    {
+      "team": "Hawthorn Hawks",
+      "round": 8,
+      "round_metres": 5993,
+      "cumulative_metres": 50721
+    },
+    {
+      "team": "Hawthorn Hawks",
+      "round": 9,
+      "round_metres": 5661,
+      "cumulative_metres": 56382
+    },
+    {
+      "team": "Hawthorn Hawks",
+      "round": 10,
+      "round_metres": 6087,
+      "cumulative_metres": 62469
+    },
+    {
+      "team": "Hawthorn Hawks",
+      "round": 11,
+      "round_metres": 6467,
+      "cumulative_metres": 68936
+    },
+    {
+      "team": "Hawthorn Hawks",
+      "round": 12,
+      "round_metres": 6449,
+      "cumulative_metres": 75385
+    },
+    {
+      "team": "Hawthorn Hawks",
+      "round": 13,
+      "round_metres": 6244,
+      "cumulative_metres": 81629
+    },
+    {
+      "team": "Hawthorn Hawks",
+      "round": 15,
+      "round_metres": 6424,
+      "cumulative_metres": 88053
+    },
+    {
+      "team": "Hawthorn Hawks",
+      "round": 16,
+      "round_metres": 5777,
+      "cumulative_metres": 93830
+    },
+    {
+      "team": "Hawthorn Hawks",
+      "round": 17,
+      "round_metres": 6142,
+      "cumulative_metres": 99972
+    },
+    {
+      "team": "Hawthorn Hawks",
+      "round": 18,
+      "round_metres": 5967,
+      "cumulative_metres": 105939
+    },
+    {
+      "team": "Hawthorn Hawks",
+      "round": 19,
+      "round_metres": 6466,
+      "cumulative_metres": 112405
+    },
+    {
+      "team": "Melbourne Demons",
+      "round": 1,
+      "round_metres": 6312,
+      "cumulative_metres": 6312
+    },
+    {
+      "team": "Melbourne Demons",
+      "round": 2,
+      "round_metres": 6335,
+      "cumulative_metres": 12647
+    },
+    {
+      "team": "Melbourne Demons",
+      "round": 3,
+      "round_metres": 6315,
+      "cumulative_metres": 18962
+    },
+    {
+      "team": "Melbourne Demons",
+      "round": 4,
+      "round_metres": 5862,
+      "cumulative_metres": 24824
+    },
+    {
+      "team": "Melbourne Demons",
+      "round": 5,
+      "round_metres": 6036,
+      "cumulative_metres": 30860
+    },
+    {
+      "team": "Melbourne Demons",
+      "round": 6,
+      "round_metres": 6173,
+      "cumulative_metres": 37033
+    },
+    {
+      "team": "Melbourne Demons",
+      "round": 7,
+      "round_metres": 6323,
+      "cumulative_metres": 43356
+    },
+    {
+      "team": "Melbourne Demons",
+      "round": 8,
+      "round_metres": 6206,
+      "cumulative_metres": 49562
+    },
+    {
+      "team": "Melbourne Demons",
+      "round": 9,
+      "round_metres": 5976,
+      "cumulative_metres": 55538
+    },
+    {
+      "team": "Melbourne Demons",
+      "round": 10,
+      "round_metres": 6572,
+      "cumulative_metres": 62110
+    },
+    {
+      "team": "Melbourne Demons",
+      "round": 11,
+      "round_metres": 6051,
+      "cumulative_metres": 68161
+    },
+    {
+      "team": "Melbourne Demons",
+      "round": 12,
+      "round_metres": 6085,
+      "cumulative_metres": 74246
+    },
+    {
+      "team": "Melbourne Demons",
+      "round": 13,
+      "round_metres": 6589,
+      "cumulative_metres": 80835
+    },
+    {
+      "team": "Melbourne Demons",
+      "round": 14,
+      "round_metres": 6480,
+      "cumulative_metres": 87315
+    },
+    {
+      "team": "Melbourne Demons",
+      "round": 15,
+      "round_metres": 6042,
+      "cumulative_metres": 93357
+    },
+    {
+      "team": "Melbourne Demons",
+      "round": 17,
+      "round_metres": 6422,
+      "cumulative_metres": 99779
+    },
+    {
+      "team": "Melbourne Demons",
+      "round": 18,
+      "round_metres": 6420,
+      "cumulative_metres": 106199
+    },
+    {
+      "team": "Melbourne Demons",
+      "round": 19,
+      "round_metres": 6029,
+      "cumulative_metres": 112228
+    },
+    {
+      "team": "Nth Melbourne Kangaroos",
+      "round": 1,
+      "round_metres": 5740,
+      "cumulative_metres": 5740
+    },
+    {
+      "team": "Nth Melbourne Kangaroos",
+      "round": 2,
+      "round_metres": 5897,
+      "cumulative_metres": 11637
+    },
+    {
+      "team": "Nth Melbourne Kangaroos",
+      "round": 3,
+      "round_metres": 5578,
+      "cumulative_metres": 17215
+    },
+    {
+      "team": "Nth Melbourne Kangaroos",
+      "round": 4,
+      "round_metres": 5545,
+      "cumulative_metres": 22760
+    },
+    {
+      "team": "Nth Melbourne Kangaroos",
+      "round": 5,
+      "round_metres": 5750,
+      "cumulative_metres": 28510
+    },
+    {
+      "team": "Nth Melbourne Kangaroos",
+      "round": 6,
+      "round_metres": 6471,
+      "cumulative_metres": 34981
+    },
+    {
+      "team": "Nth Melbourne Kangaroos",
+      "round": 7,
+      "round_metres": 6420,
+      "cumulative_metres": 41401
+    },
+    {
+      "team": "Nth Melbourne Kangaroos",
+      "round": 8,
+      "round_metres": 5662,
+      "cumulative_metres": 47063
+    },
+    {
+      "team": "Nth Melbourne Kangaroos",
+      "round": 9,
+      "round_metres": 6238,
+      "cumulative_metres": 53301
+    },
+    {
+      "team": "Nth Melbourne Kangaroos",
+      "round": 10,
+      "round_metres": 4759,
+      "cumulative_metres": 58060
+    },
+    {
+      "team": "Nth Melbourne Kangaroos",
+      "round": 11,
+      "round_metres": 5822,
+      "cumulative_metres": 63882
+    },
+    {
+      "team": "Nth Melbourne Kangaroos",
+      "round": 13,
+      "round_metres": 4506,
+      "cumulative_metres": 68388
+    },
+    {
+      "team": "Nth Melbourne Kangaroos",
+      "round": 14,
+      "round_metres": 5435,
+      "cumulative_metres": 73823
+    },
+    {
+      "team": "Nth Melbourne Kangaroos",
+      "round": 15,
+      "round_metres": 5515,
+      "cumulative_metres": 79338
+    },
+    {
+      "team": "Nth Melbourne Kangaroos",
+      "round": 16,
+      "round_metres": 5826,
+      "cumulative_metres": 85164
+    },
+    {
+      "team": "Nth Melbourne Kangaroos",
+      "round": 17,
+      "round_metres": 5523,
+      "cumulative_metres": 90687
+    },
+    {
+      "team": "Nth Melbourne Kangaroos",
+      "round": 18,
+      "round_metres": 6196,
+      "cumulative_metres": 96883
+    },
+    {
+      "team": "Nth Melbourne Kangaroos",
+      "round": 19,
+      "round_metres": 6148,
+      "cumulative_metres": 103031
+    },
+    {
+      "team": "Port Adelaide Power",
+      "round": 1,
+      "round_metres": 5015,
+      "cumulative_metres": 5015
+    },
+    {
+      "team": "Port Adelaide Power",
+      "round": 2,
+      "round_metres": 6345,
+      "cumulative_metres": 11360
+    },
+    {
+      "team": "Port Adelaide Power",
+      "round": 3,
+      "round_metres": 5855,
+      "cumulative_metres": 17215
+    },
+    {
+      "team": "Port Adelaide Power",
+      "round": 4,
+      "round_metres": 6174,
+      "cumulative_metres": 23389
+    },
+    {
+      "team": "Port Adelaide Power",
+      "round": 5,
+      "round_metres": 6276,
+      "cumulative_metres": 29665
+    },
+    {
+      "team": "Port Adelaide Power",
+      "round": 6,
+      "round_metres": 5527,
+      "cumulative_metres": 35192
+    },
+    {
+      "team": "Port Adelaide Power",
+      "round": 7,
+      "round_metres": 6253,
+      "cumulative_metres": 41445
+    },
+    {
+      "team": "Port Adelaide Power",
+      "round": 8,
+      "round_metres": 6004,
+      "cumulative_metres": 47449
+    },
+    {
+      "team": "Port Adelaide Power",
+      "round": 9,
+      "round_metres": 5394,
+      "cumulative_metres": 52843
+    },
+    {
+      "team": "Port Adelaide Power",
+      "round": 10,
+      "round_metres": 7234,
+      "cumulative_metres": 60077
+    },
+    {
+      "team": "Port Adelaide Power",
+      "round": 11,
+      "round_metres": 5614,
+      "cumulative_metres": 65691
+    },
+    {
+      "team": "Port Adelaide Power",
+      "round": 13,
+      "round_metres": 5879,
+      "cumulative_metres": 71570
+    },
+    {
+      "team": "Port Adelaide Power",
+      "round": 14,
+      "round_metres": 6054,
+      "cumulative_metres": 77624
+    },
+    {
+      "team": "Port Adelaide Power",
+      "round": 15,
+      "round_metres": 5803,
+      "cumulative_metres": 83427
+    },
+    {
+      "team": "Port Adelaide Power",
+      "round": 16,
+      "round_metres": 5814,
+      "cumulative_metres": 89241
+    },
+    {
+      "team": "Port Adelaide Power",
+      "round": 17,
+      "round_metres": 5899,
+      "cumulative_metres": 95140
+    },
+    {
+      "team": "Port Adelaide Power",
+      "round": 18,
+      "round_metres": 5772,
+      "cumulative_metres": 100912
+    },
+    {
+      "team": "Port Adelaide Power",
+      "round": 19,
+      "round_metres": 5326,
+      "cumulative_metres": 106238
+    },
+    {
+      "team": "Richmond Tigers",
+      "round": 1,
+      "round_metres": 6467,
+      "cumulative_metres": 6467
+    },
+    {
+      "team": "Richmond Tigers",
+      "round": 2,
+      "round_metres": 5124,
+      "cumulative_metres": 11591
+    },
+    {
+      "team": "Richmond Tigers",
+      "round": 3,
+      "round_metres": 4800,
+      "cumulative_metres": 16391
+    },
+    {
+      "team": "Richmond Tigers",
+      "round": 4,
+      "round_metres": 5631,
+      "cumulative_metres": 22022
+    },
+    {
+      "team": "Richmond Tigers",
+      "round": 5,
+      "round_metres": 5895,
+      "cumulative_metres": 27917
+    },
+    {
+      "team": "Richmond Tigers",
+      "round": 6,
+      "round_metres": 5067,
+      "cumulative_metres": 32984
+    },
+    {
+      "team": "Richmond Tigers",
+      "round": 7,
+      "round_metres": 5177,
+      "cumulative_metres": 38161
+    },
+    {
+      "team": "Richmond Tigers",
+      "round": 8,
+      "round_metres": 5993,
+      "cumulative_metres": 44154
+    },
+    {
+      "team": "Richmond Tigers",
+      "round": 9,
+      "round_metres": 5271,
+      "cumulative_metres": 49425
+    },
+    {
+      "team": "Richmond Tigers",
+      "round": 10,
+      "round_metres": 5430,
+      "cumulative_metres": 54855
+    },
+    {
+      "team": "Richmond Tigers",
+      "round": 11,
+      "round_metres": 5540,
+      "cumulative_metres": 60395
+    },
+    {
+      "team": "Richmond Tigers",
+      "round": 12,
+      "round_metres": 5358,
+      "cumulative_metres": 65753
+    },
+    {
+      "team": "Richmond Tigers",
+      "round": 14,
+      "round_metres": 5549,
+      "cumulative_metres": 71302
+    },
+    {
+      "team": "Richmond Tigers",
+      "round": 15,
+      "round_metres": 5123,
+      "cumulative_metres": 76425
+    },
+    {
+      "team": "Richmond Tigers",
+      "round": 16,
+      "round_metres": 5736,
+      "cumulative_metres": 82161
+    },
+    {
+      "team": "Richmond Tigers",
+      "round": 17,
+      "round_metres": 5356,
+      "cumulative_metres": 87517
+    },
+    {
+      "team": "Richmond Tigers",
+      "round": 18,
+      "round_metres": 5887,
+      "cumulative_metres": 93404
+    },
+    {
+      "team": "Richmond Tigers",
+      "round": 19,
+      "round_metres": 5299,
+      "cumulative_metres": 98703
+    },
+    {
+      "team": "St Kilda Saints",
+      "round": 0,
+      "round_metres": 6253,
+      "cumulative_metres": 6253
+    },
+    {
+      "team": "St Kilda Saints",
+      "round": 1,
+      "round_metres": 6299,
+      "cumulative_metres": 12552
+    },
+    {
+      "team": "St Kilda Saints",
+      "round": 2,
+      "round_metres": 6137,
+      "cumulative_metres": 18689
+    },
+    {
+      "team": "St Kilda Saints",
+      "round": 3,
+      "round_metres": 5555,
+      "cumulative_metres": 24244
+    },
+    {
+      "team": "St Kilda Saints",
+      "round": 5,
+      "round_metres": 5942,
+      "cumulative_metres": 30186
+    },
+    {
+      "team": "St Kilda Saints",
+      "round": 6,
+      "round_metres": 6269,
+      "cumulative_metres": 36455
+    },
+    {
+      "team": "St Kilda Saints",
+      "round": 7,
+      "round_metres": 6952,
+      "cumulative_metres": 43407
+    },
+    {
+      "team": "St Kilda Saints",
+      "round": 8,
+      "round_metres": 6088,
+      "cumulative_metres": 49495
+    },
+    {
+      "team": "St Kilda Saints",
+      "round": 9,
+      "round_metres": 6418,
+      "cumulative_metres": 55913
+    },
+    {
+      "team": "St Kilda Saints",
+      "round": 10,
+      "round_metres": 5841,
+      "cumulative_metres": 61754
+    },
+    {
+      "team": "St Kilda Saints",
+      "round": 11,
+      "round_metres": 5488,
+      "cumulative_metres": 67242
+    },
+    {
+      "team": "St Kilda Saints",
+      "round": 12,
+      "round_metres": 5661,
+      "cumulative_metres": 72903
+    },
+    {
+      "team": "St Kilda Saints",
+      "round": 13,
+      "round_metres": 6490,
+      "cumulative_metres": 79393
+    },
+    {
+      "team": "St Kilda Saints",
+      "round": 14,
+      "round_metres": 5578,
+      "cumulative_metres": 84971
+    },
+    {
+      "team": "St Kilda Saints",
+      "round": 15,
+      "round_metres": 6294,
+      "cumulative_metres": 91265
+    },
+    {
+      "team": "St Kilda Saints",
+      "round": 17,
+      "round_metres": 6004,
+      "cumulative_metres": 97269
+    },
+    {
+      "team": "St Kilda Saints",
+      "round": 18,
+      "round_metres": 5932,
+      "cumulative_metres": 103201
+    },
+    {
+      "team": "St Kilda Saints",
+      "round": 19,
+      "round_metres": 5978,
+      "cumulative_metres": 109179
+    },
+    {
+      "team": "Sydney Swans",
+      "round": 0,
+      "round_metres": 6769,
+      "cumulative_metres": 6769
+    },
+    {
+      "team": "Sydney Swans",
+      "round": 1,
+      "round_metres": 6699,
+      "cumulative_metres": 13468
+    },
+    {
+      "team": "Sydney Swans",
+      "round": 2,
+      "round_metres": 6236,
+      "cumulative_metres": 19704
+    },
+    {
+      "team": "Sydney Swans",
+      "round": 4,
+      "round_metres": 6954,
+      "cumulative_metres": 26658
+    },
+    {
+      "team": "Sydney Swans",
+      "round": 5,
+      "round_metres": 7008,
+      "cumulative_metres": 33666
+    },
+    {
+      "team": "Sydney Swans",
+      "round": 6,
+      "round_metres": 7226,
+      "cumulative_metres": 40892
+    },
+    {
+      "team": "Sydney Swans",
+      "round": 7,
+      "round_metres": 6937,
+      "cumulative_metres": 47829
+    },
+    {
+      "team": "Sydney Swans",
+      "round": 8,
+      "round_metres": 6576,
+      "cumulative_metres": 54405
+    },
+    {
+      "team": "Sydney Swans",
+      "round": 9,
+      "round_metres": 6049,
+      "cumulative_metres": 60454
+    },
+    {
+      "team": "Sydney Swans",
+      "round": 10,
+      "round_metres": 7162,
+      "cumulative_metres": 67616
+    },
+    {
+      "team": "Sydney Swans",
+      "round": 11,
+      "round_metres": 6615,
+      "cumulative_metres": 74231
+    },
+    {
+      "team": "Sydney Swans",
+      "round": 12,
+      "round_metres": 7269,
+      "cumulative_metres": 81500
+    },
+    {
+      "team": "Sydney Swans",
+      "round": 13,
+      "round_metres": 6722,
+      "cumulative_metres": 88222
+    },
+    {
+      "team": "Sydney Swans",
+      "round": 14,
+      "round_metres": 5949,
+      "cumulative_metres": 94171
+    },
+    {
+      "team": "Sydney Swans",
+      "round": 16,
+      "round_metres": 5903,
+      "cumulative_metres": 100074
+    },
+    {
+      "team": "Sydney Swans",
+      "round": 17,
+      "round_metres": 6376,
+      "cumulative_metres": 106450
+    },
+    {
+      "team": "Sydney Swans",
+      "round": 18,
+      "round_metres": 6221,
+      "cumulative_metres": 112671
+    },
+    {
+      "team": "Sydney Swans",
+      "round": 19,
+      "round_metres": 6398,
+      "cumulative_metres": 119069
+    },
+    {
+      "team": "West Coast Eagles",
+      "round": 1,
+      "round_metres": 5346,
+      "cumulative_metres": 5346
+    },
+    {
+      "team": "West Coast Eagles",
+      "round": 2,
+      "round_metres": 6083,
+      "cumulative_metres": 11429
+    },
+    {
+      "team": "West Coast Eagles",
+      "round": 3,
+      "round_metres": 5716,
+      "cumulative_metres": 17145
+    },
+    {
+      "team": "West Coast Eagles",
+      "round": 4,
+      "round_metres": 5009,
+      "cumulative_metres": 22154
+    },
+    {
+      "team": "West Coast Eagles",
+      "round": 5,
+      "round_metres": 6232,
+      "cumulative_metres": 28386
+    },
+    {
+      "team": "West Coast Eagles",
+      "round": 6,
+      "round_metres": 5723,
+      "cumulative_metres": 34109
+    },
+    {
+      "team": "West Coast Eagles",
+      "round": 7,
+      "round_metres": 5394,
+      "cumulative_metres": 39503
+    },
+    {
+      "team": "West Coast Eagles",
+      "round": 8,
+      "round_metres": 5971,
+      "cumulative_metres": 45474
+    },
+    {
+      "team": "West Coast Eagles",
+      "round": 9,
+      "round_metres": 5556,
+      "cumulative_metres": 51030
+    },
+    {
+      "team": "West Coast Eagles",
+      "round": 10,
+      "round_metres": 5454,
+      "cumulative_metres": 56484
+    },
+    {
+      "team": "West Coast Eagles",
+      "round": 11,
+      "round_metres": 5744,
+      "cumulative_metres": 62228
+    },
+    {
+      "team": "West Coast Eagles",
+      "round": 12,
+      "round_metres": 6115,
+      "cumulative_metres": 68343
+    },
+    {
+      "team": "West Coast Eagles",
+      "round": 13,
+      "round_metres": 5772,
+      "cumulative_metres": 74115
+    },
+    {
+      "team": "West Coast Eagles",
+      "round": 14,
+      "round_metres": 5354,
+      "cumulative_metres": 79469
+    },
+    {
+      "team": "West Coast Eagles",
+      "round": 16,
+      "round_metres": 5216,
+      "cumulative_metres": 84685
+    },
+    {
+      "team": "West Coast Eagles",
+      "round": 17,
+      "round_metres": 5332,
+      "cumulative_metres": 90017
+    },
+    {
+      "team": "West Coast Eagles",
+      "round": 18,
+      "round_metres": 5353,
+      "cumulative_metres": 95370
+    },
+    {
+      "team": "West Coast Eagles",
+      "round": 19,
+      "round_metres": 5896,
+      "cumulative_metres": 101266
+    },
+    {
+      "team": "Western Bulldogs",
+      "round": 0,
+      "round_metres": 5967,
+      "cumulative_metres": 5967
+    },
+    {
+      "team": "Western Bulldogs",
+      "round": 1,
+      "round_metres": 6504,
+      "cumulative_metres": 12471
+    },
+    {
+      "team": "Western Bulldogs",
+      "round": 2,
+      "round_metres": 6284,
+      "cumulative_metres": 18755
+    },
+    {
+      "team": "Western Bulldogs",
+      "round": 4,
+      "round_metres": 5375,
+      "cumulative_metres": 24130
+    },
+    {
+      "team": "Western Bulldogs",
+      "round": 5,
+      "round_metres": 5823,
+      "cumulative_metres": 29953
+    },
+    {
+      "team": "Western Bulldogs",
+      "round": 6,
+      "round_metres": 5679,
+      "cumulative_metres": 35632
+    },
+    {
+      "team": "Western Bulldogs",
+      "round": 7,
+      "round_metres": 5740,
+      "cumulative_metres": 41372
+    },
+    {
+      "team": "Western Bulldogs",
+      "round": 8,
+      "round_metres": 5958,
+      "cumulative_metres": 47330
+    },
+    {
+      "team": "Western Bulldogs",
+      "round": 9,
+      "round_metres": 5656,
+      "cumulative_metres": 52986
+    },
+    {
+      "team": "Western Bulldogs",
+      "round": 10,
+      "round_metres": 5251,
+      "cumulative_metres": 58237
+    },
+    {
+      "team": "Western Bulldogs",
+      "round": 11,
+      "round_metres": 6234,
+      "cumulative_metres": 64471
+    },
+    {
+      "team": "Western Bulldogs",
+      "round": 12,
+      "round_metres": 6615,
+      "cumulative_metres": 71086
+    },
+    {
+      "team": "Western Bulldogs",
+      "round": 13,
+      "round_metres": 5917,
+      "cumulative_metres": 77003
+    },
+    {
+      "team": "Western Bulldogs",
+      "round": 14,
+      "round_metres": 5384,
+      "cumulative_metres": 82387
+    },
+    {
+      "team": "Western Bulldogs",
+      "round": 15,
+      "round_metres": 6428,
+      "cumulative_metres": 88815
+    },
+    {
+      "team": "Western Bulldogs",
+      "round": 17,
+      "round_metres": 5869,
+      "cumulative_metres": 94684
+    },
+    {
+      "team": "Western Bulldogs",
+      "round": 18,
+      "round_metres": 5581,
+      "cumulative_metres": 100265
+    },
+    {
+      "team": "Western Bulldogs",
+      "round": 19,
+      "round_metres": 5907,
+      "cumulative_metres": 106172
+    }
+  ],
+  "round": [
+    {
+      "rank": 1,
+      "team": "Adelaide Crows",
+      "total_metres": 6653
+    },
+    {
+      "rank": 2,
+      "team": "Brisbane Lions",
+      "total_metres": 6482
+    },
+    {
+      "rank": 3,
+      "team": "Hawthorn Hawks",
+      "total_metres": 6466
+    },
+    {
+      "rank": 4,
+      "team": "Sydney Swans",
+      "total_metres": 6398
+    },
+    {
+      "rank": 5,
+      "team": "Geelong Cats",
+      "total_metres": 6207
+    },
+    {
+      "rank": 6,
+      "team": "Gold Coast Suns",
+      "total_metres": 6149
+    },
+    {
+      "rank": 7,
+      "team": "Nth Melbourne Kangaroos",
+      "total_metres": 6148
+    },
+    {
+      "rank": 8,
+      "team": "Fremantle Dockers",
+      "total_metres": 6115
+    },
+    {
+      "rank": 9,
+      "team": "Melbourne Demons",
+      "total_metres": 6029
+    },
+    {
+      "rank": 10,
+      "team": "St Kilda Saints",
+      "total_metres": 5978
+    },
+    {
+      "rank": 11,
+      "team": "Western Bulldogs",
+      "total_metres": 5907
+    },
+    {
+      "rank": 12,
+      "team": "Carlton Blues",
+      "total_metres": 5903
+    },
+    {
+      "rank": 13,
+      "team": "West Coast Eagles",
+      "total_metres": 5896
+    },
+    {
+      "rank": 14,
+      "team": "Collingwood Magpies",
+      "total_metres": 5760
+    },
+    {
+      "rank": 15,
+      "team": "Essendon Bombers",
+      "total_metres": 5380
+    },
+    {
+      "rank": 16,
+      "team": "Port Adelaide Power",
+      "total_metres": 5326
+    },
+    {
+      "rank": 17,
+      "team": "Richmond Tigers",
+      "total_metres": 5299
+    },
+    {
+      "rank": 18,
+      "team": "GWS Giants",
+      "total_metres": 5083
+    }
+  ],
+  "top_games": [
+    {
+      "playerId": "CD_I1009199",
+      "givenName": "Noah",
+      "surname": "Anderson",
+      "team": "Gold Coast Suns",
+      "jumperNumber": 15,
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1009199.png?im=Scale,width=0.6,height=0.6",
+      "round": 10,
+      "opponent": "Port Adelaide Power",
+      "metresGained": 958,
+      "game_title": "Round 10 vs Port Adelaide Power"
+    },
+    {
+      "playerId": "CD_I1009253",
+      "givenName": "Lachie",
+      "surname": "Ash",
+      "team": "GWS Giants",
+      "jumperNumber": 7,
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1009253.png?im=Scale,width=0.6,height=0.6",
+      "round": 5,
+      "opponent": "Richmond Tigers",
+      "metresGained": 932,
+      "game_title": "Round 5 vs Richmond Tigers"
+    },
+    {
+      "playerId": "CD_I1015507",
+      "givenName": "Nasiah",
+      "surname": "Wanganeen-Milera",
+      "team": "St Kilda Saints",
+      "jumperNumber": 7,
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1015507.png?im=Scale,width=0.6,height=0.6",
+      "round": 15,
+      "opponent": "Western Bulldogs",
+      "metresGained": 916,
+      "game_title": "Round 15 vs Western Bulldogs"
+    },
+    {
+      "playerId": "CD_I1006028",
+      "givenName": "Nick",
+      "surname": "Blakey",
+      "team": "Sydney Swans",
+      "jumperNumber": 22,
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1006028.png?im=Scale,width=0.6,height=0.6",
+      "round": 10,
+      "opponent": "Collingwood Magpies",
+      "metresGained": 902,
+      "game_title": "Round 10 vs Collingwood Magpies"
+    },
+    {
+      "playerId": "CD_I1015507",
+      "givenName": "Nasiah",
+      "surname": "Wanganeen-Milera",
+      "team": "St Kilda Saints",
+      "jumperNumber": 7,
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1015507.png?im=Scale,width=0.6,height=0.6",
+      "round": 17,
+      "opponent": "Essendon Bombers",
+      "metresGained": 897,
+      "game_title": "Round 17 vs Essendon Bombers"
+    }
+  ]
+}

@@ -590,6 +590,77 @@ calculate_advanced_metrics_core <- function(players_season, processed_rounds, la
         round           = team_pir_ladder_round
     )
 
+    # ==========================================================================
+    # 6. Meters Gained Analytics
+    #
+    # Description:
+    #   Ground-gained territory metric sourced from metresGained. Three views
+    #   packaged together so the frontend needs a single fetch: a per-team
+    #   cumulative running total by round (powers a build-up/cumulative line
+    #   chart across the season), the latest round's team totals in isolation
+    #   (a simple round-on-round bar comparison), and the single best
+    #   individual game performances (top 5) recorded anywhere this season.
+    # ==========================================================================
+    meters_gained_by_round_team <- processed_rounds %>%
+        group_by(team.name, round.roundNumber) %>%
+        summarise(
+            round_metres = sum(metresGained, na.rm = TRUE),
+            .groups      = 'drop'
+        ) %>%
+        arrange(team.name, round.roundNumber) %>%
+        group_by(team.name) %>%
+        mutate(cumulative_metres = cumsum(round_metres)) %>%
+        ungroup()
+
+    meters_gained_cumulative <- meters_gained_by_round_team %>%
+        arrange(team.name, round.roundNumber) %>%
+        mutate(
+            round_metres      = round(round_metres, 0),
+            cumulative_metres = round(cumulative_metres, 0)
+        ) %>%
+        select(
+            team              = team.name,
+            round             = round.roundNumber,
+            round_metres,
+            cumulative_metres
+        )
+
+    meters_gained_round <- meters_gained_by_round_team %>%
+        filter(round.roundNumber == latest_round) %>%
+        arrange(desc(round_metres)) %>%
+        mutate(
+            rank         = row_number(),
+            total_metres = round(round_metres, 0)
+        ) %>%
+        select(rank, team = team.name, total_metres)
+
+    # Top 5 individual-game meters gained performances for the season. Reuses
+    # games_base (built in Section 3) so opponent/game_title stay consistent
+    # with every other leaderboard export.
+    top_meters_gained_games <- games_base %>%
+        filter(!is.na(metresGained)) %>%
+        arrange(desc(metresGained)) %>%
+        slice(1:5) %>%
+        select(
+            playerId    = player.playerId, 
+            givenName   = player.givenName, 
+            surname     = player.surname, 
+            team        = team.name, 
+            jumperNumber, 
+            photoURL    = player.photoURL, 
+            round       = round.roundNumber, 
+            opponent    = match.opponentName, 
+            metresGained,
+            game_title
+        )
+
+    meters_gained_metrics <- list(
+        generated_round = latest_round,
+        cumulative      = meters_gained_cumulative,
+        round           = meters_gained_round,
+        top_games       = top_meters_gained_games
+    )
+
     return(list(
         breakout_watch            = breakout_watch, 
         category_kings            = category_kings, 
@@ -598,7 +669,8 @@ calculate_advanced_metrics_core <- function(players_season, processed_rounds, la
         top_three_round_stretches = top_three_round_stretches,
         team_of_the_round         = team_of_the_round,
         top_esc_games             = top_esc_games,
-        team_pir_ladder           = team_pir_ladder
+        team_pir_ladder           = team_pir_ladder,
+        meters_gained_metrics     = meters_gained_metrics
     ))
 }
 

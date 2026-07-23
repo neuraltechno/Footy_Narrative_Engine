@@ -1,16 +1,22 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 // ─────────────────────────────────────────────────────────────────────────
 // NavTab — single pill-style nav link
+// `active` = current-page styling (brass highlight); everything else is
+// the same neutral slate style.
 // ─────────────────────────────────────────────────────────────────────────
 
-function NavTab({ href, label, emphasis = false }: { href: string; label: string; emphasis?: boolean }) {
+function NavTab({ href, label, active = false }: { href: string; label: string; active?: boolean }) {
   return (
     <Link
       href={href}
+      aria-current={active ? "page" : undefined}
       className={`rounded-sm border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.1em] transition-colors ${
-        emphasis
-          ? "border-[var(--brass)] text-[var(--brass)] hover:bg-[var(--brass)]/10"
+        active
+          ? "border-[var(--brass)] text-[var(--brass)] bg-[var(--brass)]/10"
           : "border-[var(--hairline)] text-[var(--slate)] hover:border-[var(--slate)] hover:text-[var(--parchment)]"
       }`}
     >
@@ -24,7 +30,7 @@ function NavTab({ href, label, emphasis = false }: { href: string; label: string
 // Edit this array to add/remove/reorder links across every page at once.
 // ─────────────────────────────────────────────────────────────────────────
 
-const NAV_LINKS: { href: string; label: string; emphasis?: boolean }[] = [
+const NAV_LINKS: { href: string; label: string }[] = [
   { href: "/teams", label: "Team Insights" },
   { href: "/stats/team-power-rankings", label: "Power Rankings" },
   { href: "/players", label: "Player Ratings" },
@@ -32,7 +38,8 @@ const NAV_LINKS: { href: string; label: string; emphasis?: boolean }[] = [
   { href: "/stats/top-games", label: "Top Games" },
   { href: "/stats/category-kings", label: "Category Kings" },
   { href: "/stats/breakout-watch", label: "Breakout Watch" },
-  { href: "/stats/justice-ladder", label: "Justice Ladder", emphasis: true },
+  { href: "/stats/metres-gained", label: "Metres Gained" },
+  { href: "/stats/justice-ladder", label: "Justice Ladder" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -41,6 +48,8 @@ const NAV_LINKS: { href: string; label: string; emphasis?: boolean }[] = [
 // ─────────────────────────────────────────────────────────────────────────
 
 export default function SiteHeader() {
+  const pathname = usePathname();
+
   return (
     <div className="mb-10 flex flex-col gap-4 border-b border-[var(--hairline)] pb-6 sm:flex-row sm:items-center sm:justify-between">
       <Link
@@ -51,9 +60,16 @@ export default function SiteHeader() {
         FOOTY NARRATIVE ENGINE
       </Link>
       <nav className="flex flex-wrap gap-2">
-        {NAV_LINKS.map((link) => (
-          <NavTab key={link.href} href={link.href} label={link.label} emphasis={link.emphasis} />
-        ))}
+        {NAV_LINKS.map((link) => {
+          // Exact match for the home-adjacent root paths, prefix match for
+          // nested routes (e.g. /players/123 still highlights "Player Ratings")
+          const isActive =
+            pathname === link.href || pathname.startsWith(`${link.href}/`);
+
+          return (
+            <NavTab key={link.href} href={link.href} label={link.label} active={isActive} />
+          );
+        })}
       </nav>
     </div>
   );
