@@ -90,7 +90,11 @@ main <- function() {
     }
 
     # Run modular calculation chains passing targeted parameters
-    team_profiles     <- calculate_team_metrics(season_agg$final_processed_stats, team_stats_raw, season_agg$latest_round)
+    # team_stats_raw (DI_for etc.) is no longer used here - team_metrics now
+    # derives real per-round disposal totals from clean_processed_rounds
+    # (actual player-level per-round data) instead of approximating from a
+    # season-cumulative total. See notes in 30_team_metrics.R.
+    team_profiles     <- calculate_team_metrics(season_agg$final_processed_stats, season_agg$clean_processed_rounds, season_agg$latest_round)
     match_evals       <- calculate_match_metrics(results_raw, team_profiles, season_agg$latest_round, quarter_scores = quarter_scores)
     
     # --- PROBABILISTIC SNAPSHOT & MOVEMENT LIFECYCLE ---
@@ -128,7 +132,7 @@ main <- function() {
     luck_unlucky <- calculate_luck_extremes(match_evals, group_by_round = TRUE)
     # ----------------------------------------------------
     
-    power_ranks       <- calculate_power_rankings(team_profiles, season_agg$latest_round)
+    power_ranks       <- calculate_power_rankings(team_profiles, match_evals, season_agg$latest_round)
     narrative_outputs <- generate_narrative_summaries(match_evals, justice_standings, season_agg$latest_round)
     
     # 7. Final Export Dictionary compilation

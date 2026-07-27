@@ -167,6 +167,16 @@ build_match_momentum <- function(match_id, home_team, away_team, actual_winner, 
 # - Expected-score coefficients are now named constants in 00_config.R
 #   (XSCORE_W_*) instead of bare literals here, with a comment there
 #   explaining what they currently represent (see 00_config.R).
+#
+# - The team_line_snapshots cleanup select() was still dropping a column
+#   named DI_for, which 30_team_metrics.R renamed to actual_round_disposals
+#   a while back (see notes there). Since only 4 of the 8 metric columns
+#   on team_line_snapshots get a home_/away_ prefix between the two
+#   left_join()s below, the other 4 collide on the second join and dplyr
+#   suffixes them .x/.y - the old DI_for pattern no longer matched
+#   anything, so actual_round_disposals.x/.y were silently leaking through
+#   into match_metrics (and from there into team_match_centers.json)
+#   uncleaned. Swapped the stale DI_for pattern for actual_round_disposals.
 ##########################################################
 calculate_match_metrics <- function(results, team_line_snapshots, latest_round, quarter_scores = NULL) {
     message("INFO: Starting Match Engine...")
@@ -229,7 +239,7 @@ calculate_match_metrics <- function(results, team_line_snapshots, latest_round, 
         rename_with(~ paste0("home_", .), .cols = c(engine_room_pir, iron_curtain_pir, the_arsenal_pir, system_velocity)) |>
         left_join(team_line_snapshots, by = c("round" = "round", "away_team" = "team")) |>
         rename_with(~ paste0("away_", .), .cols = c(engine_room_pir, iron_curtain_pir, the_arsenal_pir, system_velocity)) |>
-        select(-contains("total_player_pir"), -contains("DI_for"), -contains("approx_round_disposals"), -contains("overall_rating")) |>
+        select(-contains("total_player_pir"), -contains("actual_round_disposals"), -contains("approx_round_disposals"), -contains("overall_rating")) |>
         mutate(
             expected_winner = case_when(
                 home_raw_xscore > away_raw_xscore ~ home_team,

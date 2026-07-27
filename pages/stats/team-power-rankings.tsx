@@ -12,7 +12,7 @@ import SiteHeader from '../../components/SiteHeader';
 // per-team line breakdown and season sparkline below the fold.
 // ─────────────────────────────────────────────────────────────────────────
 
-type Trend = 'Surging' | 'Steady' | 'Faltering';
+type Trend = 'Surging' | 'Steady' | 'Faltering' | 'New / Insufficient History';
 
 type PowerRanking = {
   team: string;
@@ -21,6 +21,20 @@ type PowerRanking = {
   rolling_overall_rating: number;
   rolling_system_velocity: number;
   power_score: number;
+  power_score_delta: number | null;
+  // Opponent-strength adjustment (see 60_power_rankings.R). opponent_strength_index
+  // is the average season-to-date power_score of whoever this team actually
+  // played across the current form window; league_avg_strength is the
+  // league-wide baseline it's compared against. strength_adjustment_factor
+  // is opponent_strength_index / league_avg_strength (1 = average draw of
+  // opposition). strength_adjusted_power_score is power_score scaled by
+  // that factor, and is what power_rank/trend are now based on - power_score
+  // itself is unchanged and still included for comparison.
+  opponent_strength_index: number | null;
+  league_avg_strength: number;
+  strength_adjustment_factor: number | null;
+  strength_adjusted_power_score: number;
+  strength_adjusted_power_score_delta: number | null;
   trend: Trend;
   power_rank: number;
 };
@@ -32,7 +46,12 @@ type TeamRoundMetrics = {
   iron_curtain_pir: number;
   the_arsenal_pir: number;
   total_player_pir: number;
-  DI_for: number | null;
+  // Real per-round disposal total, summed from actual player-level game
+  // data (see 30_team_metrics.R). null when no real match data was found
+  // for this round/team (e.g. a genuine data gap) and the
+  // TEAM_METRICS_DEFAULT_ROUND_DISPOSALS fallback was used instead.
+  // Replaces the old DI_for (season-cumulative approximation) field.
+  actual_round_disposals: number | null;
   approx_round_disposals: number;
   system_velocity: number;
   overall_rating: number;
@@ -104,6 +123,7 @@ const TREND_STYLE: Record<Trend, { border: string; text: string; glyph: string }
   Surging: { border: 'border-[var(--fern-light)]', text: 'text-[var(--fern-light)]', glyph: '▲' },
   Steady: { border: 'border-[var(--slate)]', text: 'text-[var(--slate)]', glyph: '▬' },
   Faltering: { border: 'border-[var(--oxblood-light)]', text: 'text-[var(--oxblood-light)]', glyph: '▼' },
+  'New / Insufficient History': { border: 'border-[var(--slate)]', text: 'text-[var(--slate)]', glyph: '•' },
 };
 
 // Line-breakdown categories, in a fixed order, with the colour language
@@ -137,6 +157,21 @@ function TrendBadge({ trend }: { trend: Trend }) {
     <span className={`inline-flex items-center gap-1 rounded-sm border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wide ${s.border} ${s.text}`}>
       <span>{s.glyph}</span>
       {trend}
+    </span>
+  );
+}
+
+// Shows the actual number behind the trend label - "Surging"/"Faltering" on
+// their own don't say by how much, or make it obvious why two teams with
+// similar power scores can carry opposite badges.
+function DeltaChip({ delta }: { delta: number | null | undefined }) {
+  if (delta == null || Number.isNaN(delta)) return null;
+  const color = delta > 0 ? 'text-[var(--fern-light)]' : delta < 0 ? 'text-[var(--oxblood-light)]' : 'text-[var(--slate)]';
+  const sign = delta > 0 ? '+' : '';
+  return (
+    <span className={`font-mono text-[10px] ${color}`}>
+      {sign}
+      {formatStatValue(delta)} vs last stretch
     </span>
   );
 }
@@ -226,8 +261,9 @@ function TeamRow({
         <TeamMonogram team={ranking.team} />
         <div className="min-w-0 flex-1">
           <div className="font-display truncate text-base font-medium text-[var(--parchment)]">{ranking.team}</div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <TrendBadge trend={ranking.trend} />
+            <DeltaChip delta={ranking.strength_adjusted_power_score_delta} />
             {thinSample && (
               <span className="font-mono text-[9px] uppercase tracking-wide text-[var(--slate)]">
                 {ranking.rounds_in_window}-rd sample
@@ -237,8 +273,9 @@ function TeamRow({
         </div>
         <div className="flex gap-6 text-right">
           <div>
-            <div className="font-display text-2xl font-semibold text-[var(--brass)]">{formatStatValue(ranking.power_score)}</div>
+            <div className="font-display text-2xl font-semibold text-[var(--brass)]">{formatStatValue(ranking.strength_adjusted_power_score)}</div>
             <div className="font-mono text-[9px] uppercase tracking-wide text-[var(--slate)]">Power Score</div>
+            <div className="font-mono text-[9px] text-[var(--slate)]/60">raw {formatStatValue(ranking.power_score)}</div>
           </div>
         </div>
         <span className="font-mono text-[9px] uppercase tracking-wide text-[var(--slate)]">{expanded ? '▲' : '▼'}</span>
@@ -286,6 +323,25 @@ function TeamRow({
                   <div className="text-[9px] uppercase tracking-wide text-[var(--slate)]">Form Window</div>
                   <div className="text-[var(--parchment)]">{ranking.rounds_in_window} round{ranking.rounds_in_window === 1 ? '' : 's'}</div>
                 </div>
+                <div>
+                  <div className="text-[9px] uppercase tracking-wide text-[var(--slate)]">Opponent Strength (window)</div>
+                  <div className="text-[var(--parchment)]">
+                    {formatStatValue(ranking.opponent_strength_index)}
+                    <span className="text-[var(--slate)]"> · league avg {formatStatValue(ranking.league_avg_strength)}</span>
+                  </div>
+                </div>
+                <div>
+                  <div className="text-[9px] uppercase tracking-wide text-[var(--slate)]">Draw Difficulty</div>
+                  <div className="text-[var(--parchment)]">
+                    {ranking.strength_adjustment_factor == null
+                      ? '—'
+                      : ranking.strength_adjustment_factor > 1.02
+                        ? `Tougher than average (×${formatStatValue(ranking.strength_adjustment_factor, 2)})`
+                        : ranking.strength_adjustment_factor < 0.98
+                          ? `Easier than average (×${formatStatValue(ranking.strength_adjustment_factor, 2)})`
+                          : `About average (×${formatStatValue(ranking.strength_adjustment_factor, 2)})`}
+                  </div>
+                </div>
                 {latestRoundLine && (
                   <>
                     <div>
@@ -295,7 +351,7 @@ function TeamRow({
                     <div>
                       <div className="text-[9px] uppercase tracking-wide text-[var(--slate)]">Disposal Baseline</div>
                       <div className="text-[var(--parchment)]">
-                        {latestRoundLine.DI_for == null ? 'Estimated' : 'Season-to-date'}
+                        {latestRoundLine.actual_round_disposals == null ? 'Estimated' : 'Actual'}
                       </div>
                     </div>
                   </>
@@ -387,9 +443,10 @@ export default function TeamPowerRankings({
             </h1>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--slate)]">
               Every team ranked on a rolling {powerRankings[0]?.rounds_in_window ? `${Math.max(...powerRankings.map((r) => r.rounds_in_window))}-round` : 'trailing'} form
-              window, not a single result. {surgingCount} club{surgingCount === 1 ? ' is' : 's are'} surging,{' '}
+              window, adjusted for the strength of the sides they've actually played — not a single result, and not a
+              soft draw. {surgingCount} club{surgingCount === 1 ? ' is' : 's are'} surging,{' '}
               {falteringCount} {falteringCount === 1 ? 'is' : 'are'} faltering. Open a team to see its Engine Room / Iron
-              Curtain / Arsenal split and its velocity trend for the season.
+              Curtain / Arsenal split, its draw difficulty, and its velocity trend for the season.
             </p>
           </header>
 
@@ -425,8 +482,9 @@ export default function TeamPowerRankings({
 
           {/* ── Legend ───────────────────────────────────────────── */}
           <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-wide text-[var(--slate)]">
-            <span>Power Score = (Rolling Overall Rating × 0.7) + (Rolling System Velocity × 30)</span>
-            <span>System Velocity = team PIR per estimated disposal, a shape-of-play read independent of raw PIR volume</span>
+            <span>Power Score = (Rolling Overall Rating × 0.7) + (Rolling System Velocity × 30), then scaled by opponent strength faced</span>
+            <span>Draw Difficulty = strength of opponents actually played this window vs. the league average - beating tough teams counts for more</span>
+            <span>System Velocity = team PIR per disposal, a shape-of-play read independent of raw PIR volume</span>
             <span>Engine Room = Midfield + Ruck · Iron Curtain = Backs · The Arsenal = Forwards</span>
           </div>
         </div>

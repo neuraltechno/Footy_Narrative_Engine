@@ -265,5 +265,23 @@ XSCORE_W_BEHIND_AS_BEHIND <- 0.50   # Weight of behind count in the "behind-valu
 POWER_RANKINGS_ROLLING_WINDOW   <- 3     # Trailing rounds averaged into the power score ("current form" window)
 POWER_SCORE_WEIGHT_RATING       <- 0.7   # Weight applied to rolling overall_rating
 POWER_SCORE_WEIGHT_VELOCITY     <- 30    # Weight applied to rolling system_velocity
-POWER_TREND_SURGING_THRESHOLD   <- 1.5   # Rolling system_velocity at/above which a team is labelled "Surging"
-POWER_TREND_FALTERING_THRESHOLD <- 0.9   # Rolling system_velocity at/below which a team is labelled "Faltering"
+
+# --- Trend (momentum) thresholds ---
+# Trend now compares a team's power_score across two non-overlapping rolling
+# windows (the current POWER_RANKINGS_ROLLING_WINDOW rounds vs. the
+# POWER_RANKINGS_ROLLING_WINDOW rounds immediately before that), rather than
+# checking the current window's system_velocity against a fixed absolute
+# level. system_velocity (total_player_pir / approx_round_disposals, see
+# 30_team_metrics.R) is a quality-per-possession *level*, not a rate of
+# change, so it was never meaningful to threshold on its own - every team
+# sat well above the old 1.5/0.9 thresholds regardless of form, which is why
+# every team was previously labelled "Surging".
+#
+# These delta values are a starting placeholder (~1.5-2% of a typical
+# power_score, which clusters roughly 400-520) and should be revisited once
+# a real season's worth of round-on-round deltas is available - consider
+# switching to a percentile-based cut (e.g. top/bottom quartile of this
+# round's deltas) if a fixed points threshold proves too strict/loose as the
+# competition's overall pace shifts through the season.
+POWER_TREND_SURGING_DELTA       <- 8     # power_score change vs prior window at/above which a team is labelled "Surging"
+POWER_TREND_FALTERING_DELTA     <- -8    # power_score change vs prior window at/below which a team is labelled "Faltering"
