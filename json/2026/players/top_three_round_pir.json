@@ -1,11 +1,11 @@
 [
   {
-    "playerId": "CD_I992468",
-    "givenName": "Rowan",
-    "surname": "Marshall",
-    "team": "St Kilda Saints",
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/992468.png?im=Scale,width=0.6,height=0.6",
-    "cumulative_three_round_pir": 1037.9088
+    "playerId": "CD_I990291",
+    "givenName": "Darcy",
+    "surname": "Cameron",
+    "team": "Collingwood Magpies",
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/990291.png?im=Scale,width=0.6,height=0.6",
+    "cumulative_three_round_pir": 953.4946
   },
   {
     "playerId": "CD_I297373",
@@ -13,7 +13,7 @@
     "surname": "Bontempelli",
     "team": "Western Bulldogs",
     "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/297373.png?im=Scale,width=0.6,height=0.6",
-    "cumulative_three_round_pir": 914.9729
+    "cumulative_three_round_pir": 940.0812
   },
   {
     "playerId": "CD_I1023517",
@@ -21,62 +21,62 @@
     "surname": "Ashcroft",
     "team": "Brisbane Lions",
     "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1023517.png?im=Scale,width=0.6,height=0.6",
-    "cumulative_three_round_pir": 902.9542
+    "cumulative_three_round_pir": 910.5119
   },
   {
-    "playerId": "CD_I293535",
-    "givenName": "Lachie",
-    "surname": "Neale",
-    "team": "Brisbane Lions",
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/293535.png?im=Scale,width=0.6,height=0.6",
-    "cumulative_three_round_pir": 891.5888
+    "playerId": "CD_I990704",
+    "givenName": "Patrick",
+    "surname": "Cripps",
+    "team": "Carlton Blues",
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/990704.png?im=Scale,width=0.6,height=0.6",
+    "cumulative_three_round_pir": 903.8714
   },
   {
-    "playerId": "CD_I999391",
-    "givenName": "Tom",
-    "surname": "Sparrow",
-    "team": "Melbourne Demons",
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/999391.png?im=Scale,width=0.6,height=0.6",
-    "cumulative_three_round_pir": 854.246
-  },
-  {
-    "playerId": "CD_I1006013",
-    "givenName": "James",
-    "surname": "Peatling",
+    "playerId": "CD_I1001195",
+    "givenName": "Izak",
+    "surname": "Rankine",
     "team": "Adelaide Crows",
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1006013.png?im=Scale,width=0.6,height=0.6",
-    "cumulative_three_round_pir": 852.5185
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1001195.png?im=Scale,width=0.6,height=0.6",
+    "cumulative_three_round_pir": 896.3004
   },
   {
-    "playerId": "CD_I1000980",
-    "givenName": "Lloyd",
-    "surname": "Meek",
+    "playerId": "CD_I1015507",
+    "givenName": "Nasiah",
+    "surname": "Wanganeen-Milera",
+    "team": "St Kilda Saints",
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1015507.png?im=Scale,width=0.6,height=0.6",
+    "cumulative_three_round_pir": 868.7743
+  },
+  {
+    "playerId": "CD_I1006126",
+    "givenName": "James",
+    "surname": "Rowbottom",
+    "team": "Sydney Swans",
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1006126.png?im=Scale,width=0.6,height=0.6",
+    "cumulative_three_round_pir": 854.5927
+  },
+  {
+    "playerId": "CD_I296254",
+    "givenName": "Jarman",
+    "surname": "Impey",
     "team": "Hawthorn Hawks",
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1000980.png?im=Scale,width=0.6,height=0.6",
-    "cumulative_three_round_pir": 837.713
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/296254.png?im=Scale,width=0.6,height=0.6",
+    "cumulative_three_round_pir": 849.0786
   },
   {
-    "playerId": "CD_I1006130",
-    "givenName": "Bailey",
-    "surname": "Smith",
-    "team": "Geelong Cats",
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1006130.png?im=Scale,width=0.6,height=0.6",
-    "cumulative_three_round_pir": 829.6471
+    "playerId": "CD_I1012014",
+    "givenName": "Chad",
+    "surname": "Warner",
+    "team": "Sydney Swans",
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1012014.png?im=Scale,width=0.6,height=0.6",
+    "cumulative_three_round_pir": 847.2412
   },
   {
-    "playerId": "CD_I1023518",
-    "givenName": "Harry",
-    "surname": "Sheezel",
-    "team": "Nth Melbourne Kangaroos",
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1023518.png?im=Scale,width=0.6,height=0.6",
-    "cumulative_three_round_pir": 828.2426
-  },
-  {
-    "playerId": "CD_I290528",
-    "givenName": "Max",
-    "surname": "Gawn",
-    "team": "Melbourne Demons",
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/290528.png?im=Scale,width=0.6,height=0.6",
-    "cumulative_three_round_pir": 823.3887
+    "playerId": "CD_I1012807",
+    "givenName": "Sam",
+    "surname": "Berry",
+    "team": "Adelaide Crows",
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1012807.png?im=Scale,width=0.6,height=0.6",
+    "cumulative_three_round_pir": 828.0324
   }
 ]

@@ -132,6 +132,18 @@
     "game_title": "Round 14 vs Western Bulldogs"
   },
   {
+    "playerId": "CD_I1008893",
+    "givenName": "Harrison",
+    "surname": "Petty",
+    "team": "Melbourne Demons",
+    "jumperNumber": 35,
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1008893.png?im=Scale,width=0.6,height=0.6",
+    "round": 20,
+    "opponent": "Geelong Cats",
+    "ESC": 52.1,
+    "game_title": "Round 20 vs Geelong Cats"
+  },
+  {
     "playerId": "CD_I1017720",
     "givenName": "Jacob",
     "surname": "van Rooyen",
@@ -298,6 +310,18 @@
     "opponent": "Melbourne Demons",
     "ESC": 47.3,
     "game_title": "Round 8 vs Melbourne Demons"
+  },
+  {
+    "playerId": "CD_I291351",
+    "givenName": "Jack",
+    "surname": "Gunston",
+    "team": "Hawthorn Hawks",
+    "jumperNumber": 19,
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/291351.png?im=Scale,width=0.6,height=0.6",
+    "round": 20,
+    "opponent": "Essendon Bombers",
+    "ESC": 47.2,
+    "game_title": "Round 20 vs Essendon Bombers"
   },
   {
     "playerId": "CD_I1017720",
@@ -574,29 +598,5 @@
     "opponent": "Gold Coast Suns",
     "ESC": 43.4,
     "game_title": "Round 17 vs Gold Coast Suns"
-  },
-  {
-    "playerId": "CD_I1012014",
-    "givenName": "Chad",
-    "surname": "Warner",
-    "team": "Sydney Swans",
-    "jumperNumber": 1,
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1012014.png?im=Scale,width=0.6,height=0.6",
-    "round": 12,
-    "opponent": "Richmond Tigers",
-    "ESC": 43.3,
-    "game_title": "Round 12 vs Richmond Tigers"
-  },
-  {
-    "playerId": "CD_I1014026",
-    "givenName": "Kai",
-    "surname": "Lohmann",
-    "team": "Brisbane Lions",
-    "jumperNumber": 1,
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1014026.png?im=Scale,width=0.6,height=0.6",
-    "round": 8,
-    "opponent": "Essendon Bombers",
-    "ESC": 43.1,
-    "game_title": "Round 8 vs Essendon Bombers"
   }
 ]

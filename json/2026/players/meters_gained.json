@@ -1,5 +1,5 @@
 {
-  "generated_round": 19,
+  "generated_round": 20,
   "cumulative": [
     {
       "team": "Adelaide Crows",
@@ -110,6 +110,12 @@
       "cumulative_metres": 111668
     },
     {
+      "team": "Adelaide Crows",
+      "round": 20,
+      "round_metres": 5486,
+      "cumulative_metres": 117154
+    },
+    {
       "team": "Brisbane Lions",
       "round": 0,
       "round_metres": 6338,
@@ -216,6 +222,12 @@
       "round": 19,
       "round_metres": 6482,
       "cumulative_metres": 112087
+    },
+    {
+      "team": "Brisbane Lions",
+      "round": 20,
+      "round_metres": 6243,
+      "cumulative_metres": 118330
     },
     {
       "team": "Carlton Blues",
@@ -326,6 +338,12 @@
       "cumulative_metres": 105830
     },
     {
+      "team": "Carlton Blues",
+      "round": 20,
+      "round_metres": 5814,
+      "cumulative_metres": 111644
+    },
+    {
       "team": "Collingwood Magpies",
       "round": 0,
       "round_metres": 6335,
@@ -430,8 +448,14 @@
     {
       "team": "Collingwood Magpies",
       "round": 19,
-      "round_metres": 5760,
-      "cumulative_metres": 110508
+      "round_metres": 5796,
+      "cumulative_metres": 110544
+    },
+    {
+      "team": "Collingwood Magpies",
+      "round": 20,
+      "round_metres": 6231,
+      "cumulative_metres": 116775
     },
     {
       "team": "Essendon Bombers",
@@ -542,6 +566,12 @@
       "cumulative_metres": 98661
     },
     {
+      "team": "Essendon Bombers",
+      "round": 20,
+      "round_metres": 4802,
+      "cumulative_metres": 103463
+    },
+    {
       "team": "Fremantle Dockers",
       "round": 1,
       "round_metres": 6112,
@@ -648,6 +678,12 @@
       "round": 19,
       "round_metres": 6115,
       "cumulative_metres": 109810
+    },
+    {
+      "team": "Fremantle Dockers",
+      "round": 20,
+      "round_metres": 5960,
+      "cumulative_metres": 115770
     },
     {
       "team": "GWS Giants",
@@ -758,6 +794,12 @@
       "cumulative_metres": 111912
     },
     {
+      "team": "GWS Giants",
+      "round": 20,
+      "round_metres": 5797,
+      "cumulative_metres": 117709
+    },
+    {
       "team": "Geelong Cats",
       "round": 0,
       "round_metres": 6132,
@@ -864,6 +906,12 @@
       "round": 19,
       "round_metres": 6207,
       "cumulative_metres": 115906
+    },
+    {
+      "team": "Geelong Cats",
+      "round": 20,
+      "round_metres": 6649,
+      "cumulative_metres": 122555
     },
     {
       "team": "Gold Coast Suns",
@@ -974,6 +1022,12 @@
       "cumulative_metres": 113434
     },
     {
+      "team": "Gold Coast Suns",
+      "round": 20,
+      "round_metres": 5489,
+      "cumulative_metres": 118923
+    },
+    {
       "team": "Hawthorn Hawks",
       "round": 0,
       "round_metres": 6419,
@@ -1080,6 +1134,12 @@
       "round": 19,
       "round_metres": 6466,
       "cumulative_metres": 112405
+    },
+    {
+      "team": "Hawthorn Hawks",
+      "round": 20,
+      "round_metres": 6567,
+      "cumulative_metres": 118972
     },
     {
       "team": "Melbourne Demons",
@@ -1190,6 +1250,12 @@
       "cumulative_metres": 112228
     },
     {
+      "team": "Melbourne Demons",
+      "round": 20,
+      "round_metres": 6281,
+      "cumulative_metres": 118509
+    },
+    {
       "team": "Nth Melbourne Kangaroos",
       "round": 1,
       "round_metres": 5740,
@@ -1296,6 +1362,12 @@
       "round": 19,
       "round_metres": 6148,
       "cumulative_metres": 103031
+    },
+    {
+      "team": "Nth Melbourne Kangaroos",
+      "round": 20,
+      "round_metres": 5526,
+      "cumulative_metres": 108557
     },
     {
       "team": "Port Adelaide Power",
@@ -1406,6 +1478,12 @@
       "cumulative_metres": 106238
     },
     {
+      "team": "Port Adelaide Power",
+      "round": 20,
+      "round_metres": 5266,
+      "cumulative_metres": 111504
+    },
+    {
       "team": "Richmond Tigers",
       "round": 1,
       "round_metres": 6467,
@@ -1512,6 +1590,12 @@
       "round": 19,
       "round_metres": 5299,
       "cumulative_metres": 98703
+    },
+    {
+      "team": "Richmond Tigers",
+      "round": 20,
+      "round_metres": 5098,
+      "cumulative_metres": 103801
     },
     {
       "team": "St Kilda Saints",
@@ -1622,6 +1706,12 @@
       "cumulative_metres": 109179
     },
     {
+      "team": "St Kilda Saints",
+      "round": 20,
+      "round_metres": 6056,
+      "cumulative_metres": 115235
+    },
+    {
       "team": "Sydney Swans",
       "round": 0,
       "round_metres": 6769,
@@ -1728,6 +1818,12 @@
       "round": 19,
       "round_metres": 6398,
       "cumulative_metres": 119069
+    },
+    {
+      "team": "Sydney Swans",
+      "round": 20,
+      "round_metres": 6441,
+      "cumulative_metres": 125510
     },
     {
       "team": "West Coast Eagles",
@@ -1838,6 +1934,12 @@
       "cumulative_metres": 101266
     },
     {
+      "team": "West Coast Eagles",
+      "round": 20,
+      "round_metres": 4966,
+      "cumulative_metres": 106232
+    },
+    {
       "team": "Western Bulldogs",
       "round": 0,
       "round_metres": 5967,
@@ -1944,101 +2046,131 @@
       "round": 19,
       "round_metres": 5907,
       "cumulative_metres": 106172
+    },
+    {
+      "team": "Western Bulldogs",
+      "round": 20,
+      "round_metres": 6103,
+      "cumulative_metres": 112275
     }
   ],
   "round": [
     {
       "rank": 1,
-      "team": "Adelaide Crows",
-      "total_metres": 6653
+      "team": "Geelong Cats",
+      "total_metres": 6649
     },
     {
       "rank": 2,
-      "team": "Brisbane Lions",
-      "total_metres": 6482
+      "team": "Hawthorn Hawks",
+      "total_metres": 6567
     },
     {
       "rank": 3,
-      "team": "Hawthorn Hawks",
-      "total_metres": 6466
+      "team": "Sydney Swans",
+      "total_metres": 6441
     },
     {
       "rank": 4,
-      "team": "Sydney Swans",
-      "total_metres": 6398
+      "team": "Melbourne Demons",
+      "total_metres": 6281
     },
     {
       "rank": 5,
-      "team": "Geelong Cats",
-      "total_metres": 6207
+      "team": "Brisbane Lions",
+      "total_metres": 6243
     },
     {
       "rank": 6,
-      "team": "Gold Coast Suns",
-      "total_metres": 6149
+      "team": "Collingwood Magpies",
+      "total_metres": 6231
     },
     {
       "rank": 7,
-      "team": "Nth Melbourne Kangaroos",
-      "total_metres": 6148
+      "team": "Western Bulldogs",
+      "total_metres": 6103
     },
     {
       "rank": 8,
-      "team": "Fremantle Dockers",
-      "total_metres": 6115
+      "team": "St Kilda Saints",
+      "total_metres": 6056
     },
     {
       "rank": 9,
-      "team": "Melbourne Demons",
-      "total_metres": 6029
+      "team": "Fremantle Dockers",
+      "total_metres": 5960
     },
     {
       "rank": 10,
-      "team": "St Kilda Saints",
-      "total_metres": 5978
+      "team": "Carlton Blues",
+      "total_metres": 5814
     },
     {
       "rank": 11,
-      "team": "Western Bulldogs",
-      "total_metres": 5907
+      "team": "GWS Giants",
+      "total_metres": 5797
     },
     {
       "rank": 12,
-      "team": "Carlton Blues",
-      "total_metres": 5903
+      "team": "Nth Melbourne Kangaroos",
+      "total_metres": 5526
     },
     {
       "rank": 13,
-      "team": "West Coast Eagles",
-      "total_metres": 5896
+      "team": "Gold Coast Suns",
+      "total_metres": 5489
     },
     {
       "rank": 14,
-      "team": "Collingwood Magpies",
-      "total_metres": 5760
+      "team": "Adelaide Crows",
+      "total_metres": 5486
     },
     {
       "rank": 15,
-      "team": "Essendon Bombers",
-      "total_metres": 5380
+      "team": "Port Adelaide Power",
+      "total_metres": 5266
     },
     {
       "rank": 16,
-      "team": "Port Adelaide Power",
-      "total_metres": 5326
+      "team": "Richmond Tigers",
+      "total_metres": 5098
     },
     {
       "rank": 17,
-      "team": "Richmond Tigers",
-      "total_metres": 5299
+      "team": "West Coast Eagles",
+      "total_metres": 4966
     },
     {
       "rank": 18,
-      "team": "GWS Giants",
-      "total_metres": 5083
+      "team": "Essendon Bombers",
+      "total_metres": 4802
     }
   ],
   "top_games": [
+    {
+      "playerId": "CD_I1015507",
+      "givenName": "Nasiah",
+      "surname": "Wanganeen-Milera",
+      "team": "St Kilda Saints",
+      "jumperNumber": 7,
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1015507.png?im=Scale,width=0.6,height=0.6",
+      "round": 20,
+      "opponent": "Nth Melbourne Kangaroos",
+      "metresGained": 1060,
+      "game_title": "Round 20 vs Nth Melbourne Kangaroos"
+    },
+    {
+      "playerId": "CD_I1013128",
+      "givenName": "Errol",
+      "surname": "Gulden",
+      "team": "Sydney Swans",
+      "jumperNumber": 21,
+      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1013128.png?im=Scale,width=0.6,height=0.6",
+      "round": 20,
+      "opponent": "GWS Giants",
+      "metresGained": 1047,
+      "game_title": "Round 20 vs GWS Giants"
+    },
     {
       "playerId": "CD_I1009199",
       "givenName": "Noah",
@@ -2074,30 +2206,6 @@
       "opponent": "Western Bulldogs",
       "metresGained": 916,
       "game_title": "Round 15 vs Western Bulldogs"
-    },
-    {
-      "playerId": "CD_I1006028",
-      "givenName": "Nick",
-      "surname": "Blakey",
-      "team": "Sydney Swans",
-      "jumperNumber": 22,
-      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1006028.png?im=Scale,width=0.6,height=0.6",
-      "round": 10,
-      "opponent": "Collingwood Magpies",
-      "metresGained": 902,
-      "game_title": "Round 10 vs Collingwood Magpies"
-    },
-    {
-      "playerId": "CD_I1015507",
-      "givenName": "Nasiah",
-      "surname": "Wanganeen-Milera",
-      "team": "St Kilda Saints",
-      "jumperNumber": 7,
-      "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1015507.png?im=Scale,width=0.6,height=0.6",
-      "round": 17,
-      "opponent": "Essendon Bombers",
-      "metresGained": 897,
-      "game_title": "Round 17 vs Essendon Bombers"
     }
   ]
 }

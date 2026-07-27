@@ -1,240 +1,240 @@
 {
-  "generated_round": 19,
+  "generated_round": 20,
   "season": [
     {
       "rank": 1,
       "team": "Sydney Swans",
-      "total_pir": 78170.1,
-      "avg_pir": 4342.8,
-      "games_played": 18
+      "total_pir": 82293.7,
+      "avg_pir": 4331.2,
+      "games_played": 19
     },
     {
       "rank": 2,
       "team": "Brisbane Lions",
-      "total_pir": 75768.5,
-      "avg_pir": 4209.4,
-      "games_played": 18
+      "total_pir": 80112.2,
+      "avg_pir": 4216.4,
+      "games_played": 19
     },
     {
       "rank": 3,
-      "team": "Adelaide Crows",
-      "total_pir": 75598.4,
-      "avg_pir": 4199.9,
-      "games_played": 18
+      "team": "Hawthorn Hawks",
+      "total_pir": 80082.9,
+      "avg_pir": 4214.9,
+      "games_played": 19
     },
     {
       "rank": 4,
-      "team": "Hawthorn Hawks",
-      "total_pir": 75449.2,
-      "avg_pir": 4191.6,
-      "games_played": 18
+      "team": "Adelaide Crows",
+      "total_pir": 79697,
+      "avg_pir": 4194.6,
+      "games_played": 19
     },
     {
       "rank": 5,
       "team": "Geelong Cats",
-      "total_pir": 75308,
-      "avg_pir": 4183.8,
-      "games_played": 18
+      "total_pir": 79603.5,
+      "avg_pir": 4189.7,
+      "games_played": 19
     },
     {
       "rank": 6,
-      "team": "GWS Giants",
-      "total_pir": 74575.9,
-      "avg_pir": 4143.1,
-      "games_played": 18
+      "team": "Fremantle Dockers",
+      "total_pir": 78507.5,
+      "avg_pir": 4132,
+      "games_played": 19
     },
     {
       "rank": 7,
-      "team": "Fremantle Dockers",
-      "total_pir": 74330.5,
-      "avg_pir": 4129.5,
-      "games_played": 18
+      "team": "GWS Giants",
+      "total_pir": 78385.5,
+      "avg_pir": 4125.6,
+      "games_played": 19
     },
     {
       "rank": 8,
       "team": "St Kilda Saints",
-      "total_pir": 73322.5,
-      "avg_pir": 4073.5,
-      "games_played": 18
+      "total_pir": 77393.1,
+      "avg_pir": 4073.3,
+      "games_played": 19
     },
     {
       "rank": 9,
       "team": "Melbourne Demons",
-      "total_pir": 73130.3,
-      "avg_pir": 4062.8,
-      "games_played": 18
+      "total_pir": 77247.2,
+      "avg_pir": 4065.6,
+      "games_played": 19
     },
     {
       "rank": 10,
       "team": "Collingwood Magpies",
-      "total_pir": 72240.1,
-      "avg_pir": 4013.3,
-      "games_played": 18
+      "total_pir": 76606.3,
+      "avg_pir": 4031.9,
+      "games_played": 19
     },
     {
       "rank": 11,
       "team": "Carlton Blues",
-      "total_pir": 71499.1,
-      "avg_pir": 3972.2,
-      "games_played": 18
+      "total_pir": 75888.9,
+      "avg_pir": 3994.2,
+      "games_played": 19
     },
     {
       "rank": 12,
-      "team": "Gold Coast Suns",
-      "total_pir": 70931.7,
-      "avg_pir": 3940.7,
-      "games_played": 18
+      "team": "Western Bulldogs",
+      "total_pir": 74520.4,
+      "avg_pir": 3922.1,
+      "games_played": 19
     },
     {
       "rank": 13,
-      "team": "Western Bulldogs",
-      "total_pir": 69998.6,
-      "avg_pir": 3888.8,
-      "games_played": 18
+      "team": "Gold Coast Suns",
+      "total_pir": 74444.5,
+      "avg_pir": 3918.1,
+      "games_played": 19
     },
     {
       "rank": 14,
       "team": "Port Adelaide Power",
-      "total_pir": 68935.2,
-      "avg_pir": 3829.7,
-      "games_played": 18
+      "total_pir": 72390.5,
+      "avg_pir": 3810,
+      "games_played": 19
     },
     {
       "rank": 15,
       "team": "Nth Melbourne Kangaroos",
-      "total_pir": 68570.7,
-      "avg_pir": 3809.5,
-      "games_played": 18
+      "total_pir": 72053.6,
+      "avg_pir": 3792.3,
+      "games_played": 19
     },
     {
       "rank": 16,
       "team": "West Coast Eagles",
-      "total_pir": 66071.3,
-      "avg_pir": 3670.6,
-      "games_played": 18
+      "total_pir": 69353.3,
+      "avg_pir": 3650.2,
+      "games_played": 19
     },
     {
       "rank": 17,
       "team": "Essendon Bombers",
-      "total_pir": 64340.5,
-      "avg_pir": 3574.5,
-      "games_played": 18
+      "total_pir": 67534.1,
+      "avg_pir": 3554.4,
+      "games_played": 19
     },
     {
       "rank": 18,
       "team": "Richmond Tigers",
-      "total_pir": 63623.7,
-      "avg_pir": 3534.7,
-      "games_played": 18
+      "total_pir": 67115.4,
+      "avg_pir": 3532.4,
+      "games_played": 19
     }
   ],
   "round": [
     {
       "rank": 1,
-      "team": "Adelaide Crows",
-      "total_pir": 4618.5,
+      "team": "Hawthorn Hawks",
+      "total_pir": 4633.7,
       "players_used": 23
     },
     {
       "rank": 2,
-      "team": "Geelong Cats",
-      "total_pir": 4440.4,
+      "team": "Western Bulldogs",
+      "total_pir": 4521.8,
       "players_used": 23
     },
     {
       "rank": 3,
-      "team": "Brisbane Lions",
-      "total_pir": 4399.6,
+      "team": "Carlton Blues",
+      "total_pir": 4389.4,
       "players_used": 23
     },
     {
       "rank": 4,
-      "team": "Hawthorn Hawks",
-      "total_pir": 4341.7,
+      "team": "Collingwood Magpies",
+      "total_pir": 4364.3,
       "players_used": 23
     },
     {
       "rank": 5,
-      "team": "Fremantle Dockers",
-      "total_pir": 4153,
+      "team": "Brisbane Lions",
+      "total_pir": 4343.7,
       "players_used": 23
     },
     {
       "rank": 6,
-      "team": "Sydney Swans",
-      "total_pir": 4127.8,
+      "team": "Geelong Cats",
+      "total_pir": 4295.5,
       "players_used": 23
     },
     {
       "rank": 7,
-      "team": "St Kilda Saints",
-      "total_pir": 3993.2,
+      "team": "Fremantle Dockers",
+      "total_pir": 4177,
       "players_used": 23
     },
     {
       "rank": 8,
-      "team": "Collingwood Magpies",
-      "total_pir": 3975.9,
+      "team": "Sydney Swans",
+      "total_pir": 4123.5,
       "players_used": 23
     },
     {
       "rank": 9,
       "team": "Melbourne Demons",
-      "total_pir": 3931.1,
+      "total_pir": 4116.9,
       "players_used": 23
     },
     {
       "rank": 10,
-      "team": "Gold Coast Suns",
-      "total_pir": 3835.4,
+      "team": "Adelaide Crows",
+      "total_pir": 4098.6,
       "players_used": 23
     },
     {
       "rank": 11,
-      "team": "GWS Giants",
-      "total_pir": 3835.3,
+      "team": "St Kilda Saints",
+      "total_pir": 4070.6,
       "players_used": 23
     },
     {
       "rank": 12,
-      "team": "Nth Melbourne Kangaroos",
-      "total_pir": 3745.4,
+      "team": "GWS Giants",
+      "total_pir": 3809.6,
       "players_used": 23
     },
     {
       "rank": 13,
-      "team": "Port Adelaide Power",
-      "total_pir": 3711.9,
+      "team": "Gold Coast Suns",
+      "total_pir": 3512.7,
       "players_used": 23
     },
     {
       "rank": 14,
-      "team": "Essendon Bombers",
-      "total_pir": 3689.7,
+      "team": "Richmond Tigers",
+      "total_pir": 3491.7,
       "players_used": 23
     },
     {
       "rank": 15,
-      "team": "Carlton Blues",
-      "total_pir": 3669.3,
+      "team": "Nth Melbourne Kangaroos",
+      "total_pir": 3482.9,
       "players_used": 23
     },
     {
       "rank": 16,
-      "team": "West Coast Eagles",
-      "total_pir": 3620.1,
+      "team": "Port Adelaide Power",
+      "total_pir": 3455.3,
       "players_used": 23
     },
     {
       "rank": 17,
-      "team": "Western Bulldogs",
-      "total_pir": 3520.6,
+      "team": "West Coast Eagles",
+      "total_pir": 3281.9,
       "players_used": 23
     },
     {
       "rank": 18,
-      "team": "Richmond Tigers",
-      "total_pir": 3412.5,
+      "team": "Essendon Bombers",
+      "total_pir": 3193.7,
       "players_used": 23
     }
   ]

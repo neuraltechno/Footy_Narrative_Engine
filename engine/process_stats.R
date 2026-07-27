@@ -73,10 +73,25 @@ main <- function() {
     message("INFO: Sourcing raw database structures for team analytics allocation...")
     team_stats_raw <- readRDS(file.path(DATA_RAW_DIR, paste0("afl_team_stats_", CURRENT_SEASON, ".rds")))
     results_raw    <- readRDS(file.path(DATA_RAW_DIR, paste0("afl_results_", CURRENT_SEASON, ".rds")))
-    
+
+    # Quarter-by-quarter team scores (score-worm data) from update_data.R -
+    # optional: if the file doesn't exist yet (e.g. update_data.R hasn't
+    # been run since this feature was added), the match engine falls back
+    # to full-game-only metrics rather than failing the whole pipeline.
+    quarter_scores_path <- file.path(DATA_RAW_DIR, paste0("afl_quarter_scores_", CURRENT_SEASON, ".rds"))
+    quarter_scores <- if (file.exists(quarter_scores_path)) {
+        readRDS(quarter_scores_path)
+    } else {
+        message(
+            "INFO: No quarter_scores RDS found at ", quarter_scores_path,
+            " - match engine will skip quarter-level momentum metrics this run."
+        )
+        NULL
+    }
+
     # Run modular calculation chains passing targeted parameters
     team_profiles     <- calculate_team_metrics(season_agg$final_processed_stats, team_stats_raw, season_agg$latest_round)
-    match_evals       <- calculate_match_metrics(results_raw, team_profiles, season_agg$latest_round)
+    match_evals       <- calculate_match_metrics(results_raw, team_profiles, season_agg$latest_round, quarter_scores = quarter_scores)
     
     # --- PROBABILISTIC SNAPSHOT & MOVEMENT LIFECYCLE ---
     current_round <- season_agg$latest_round
@@ -129,7 +144,7 @@ main <- function() {
         # rest of the "static JSON, no client compute" design.
         team_metrics_history = team_profiles,
         breakout_watch             = advanced_metrics$breakout_watch,   # Key matched to 15_ and 99_
-        category_kings             = advanced_metrics$category_kings,
+        category_kings              = advanced_metrics$category_kings,
         top_games_season           = advanced_metrics$top_games_season,
         top_games_round            = advanced_metrics$top_games_round,
         top_three_round_stretches  = advanced_metrics$top_three_round_stretches,

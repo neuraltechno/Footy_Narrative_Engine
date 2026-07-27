@@ -2,6 +2,7 @@ library(fitzRoy)
 library(dplyr)
 library(tidyr)
 library(stringr)
+library(purrr)
 
 # Define a standard naming convention
 normalize_team_name <- function(team) {
@@ -28,7 +29,7 @@ normalize_team_name <- function(team) {
     team == "Sydney" | team == "Sydney Swans"        ~ "Sydney Swans",
     team == "West Coast" | team == "West Coast Eagles" ~ "West Coast Eagles",
     team == "Western Bulldogs" | team == "Western"   ~ "Western Bulldogs",
-    TRUE                                             ~ team
+    TRUE                                              ~ team
   )
 }
 
@@ -167,3 +168,81 @@ save_rds_safely <- function(object, path) {
 save_rds_safely(final_player_data, file.path(DATA_RAW_DIR, paste0("afl_combined_data_", CURRENT_SEASON, ".rds")))
 save_rds_safely(team_stats, file.path(DATA_RAW_DIR, paste0("afl_team_stats_", CURRENT_SEASON, ".rds")))
 save_rds_safely(results, file.path(DATA_RAW_DIR, paste0("afl_results_", CURRENT_SEASON, ".rds")))
+
+
+# ==============================================================================
+# 7. Build Quarter-by-Quarter Team Scores
+# ==============================================================================
+# fetch_results() already returns a per-quarter breakdown nested inside
+# each match row - homeTeamScore.periodScore / awayTeamScore.periodScore
+# are list-columns, one small data frame per match (periodNumber,
+# score.goals, score.behinds, score.totalScore per quarter). This needs
+# NO extra API calls: it's a pure unnest/reshape of data already fetched
+# in step 1 above, unlike an earlier version of this section that fetched
+# a separate score-worm timeline per match.
+#
+# `matchId` (the flat top-level column) is used as the match key - there's
+# also a nested `match.matchId` carrying what looks like the same value.
+# If that assumption turns out wrong, the join in 40_match_metrics.R will
+# simply find no quarter data for the affected rows (degrades gracefully -
+# see build_match_momentum() there) rather than erroring, so it's a safe
+# assumption to run with.
+required_period_cols <- c("homeTeamScore.periodScore", "awayTeamScore.periodScore")
+missing_period_cols <- setdiff(required_period_cols, names(results))
+if (length(missing_period_cols) > 0) {
+  stop(sprintf(
+    "Expected column(s) not found on `results`: %s. Quarter-by-quarter scores can't be built - check the current fetch_results() schema (run names(results) to see what's available).",
+    paste(missing_period_cols, collapse = ", ")
+  ))
+}
+
+concluded_results <- results %>% filter(status == "CONCLUDED")
+
+quarter_scores <- bind_rows(
+  concluded_results %>%
+    transmute(
+      match_id = matchId,
+      round    = round.roundNumber,
+      team     = match.homeTeam.name,   # already normalized in step 2
+      periods  = homeTeamScore.periodScore
+    ),
+  concluded_results %>%
+    transmute(
+      match_id = matchId,
+      round    = round.roundNumber,
+      team     = match.awayTeam.name,   # already normalized in step 2
+      periods  = awayTeamScore.periodScore
+    )
+) %>%
+  filter(!purrr::map_lgl(periods, is.null)) %>%
+  unnest(periods) %>%
+  transmute(
+    match_id,
+    round,
+    team,
+    quarter         = periodNumber,
+    goals           = score.goals,
+    behinds         = score.behinds,
+    points_reported = score.totalScore
+  )
+
+# Validate: goals*6 + behinds should reconcile with the period's own
+# reported total score. A mismatch would flag a scoring-play type (e.g. a
+# supergoal) that isn't captured by the plain goals/behinds fields, rather
+# than silently producing a wrong quarter-level expected score downstream.
+reconciliation_issues <- quarter_scores %>%
+  mutate(reconciled_points = goals * 6 + behinds) %>%
+  filter(reconciled_points != points_reported)
+
+if (nrow(reconciliation_issues) > 0) {
+  message(
+    "WARNING: ", nrow(reconciliation_issues),
+    " team-quarter row(s) where goals*6+behinds != the period's reported total score - ",
+    "check for scoring-play types (e.g. supergoals) outside standard goals/behinds. ",
+    "Affected match_ids: ", paste(unique(reconciliation_issues$match_id), collapse = ", ")
+  )
+}
+
+quarter_scores <- quarter_scores %>% select(-points_reported)
+
+save_rds_safely(quarter_scores, file.path(DATA_RAW_DIR, paste0("afl_quarter_scores_", CURRENT_SEASON, ".rds")))
