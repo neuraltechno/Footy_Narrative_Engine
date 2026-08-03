@@ -6,8 +6,10 @@ import SiteHeader from '../../components/SiteHeader';
 // ─────────────────────────────────────────────────────────────────────────
 // Types
 //
-// team_match_centers.json is match_evals filtered to the latest completed
-// round (see 40_match_metrics.R / process_stats.R) - one row per fixture.
+// match_centers_index.json lists every available round and a compact match
+// summary per round (enough for the round navigator UI). All round data is
+// read at build time by getStaticProps and passed as allRounds — switching
+// rounds is instant with no client-side fetch required.
 //
 // quarter_breakdown / quarters_led_* / is_comeback_win / etc. come from the
 // score-worm quarter data added in 40_match_metrics.R: nulls are expected
@@ -15,6 +17,27 @@ import SiteHeader from '../../components/SiteHeader';
 // source feed for that match) or where the game was a draw (no "winner's
 // deficit" to measure) - every component below treats them as optional.
 // ─────────────────────────────────────────────────────────────────────────
+
+type RoundIndexEntry = {
+  round: number;
+  file: string;
+  match_count: number;
+  has_robbery: boolean;
+  matches: {
+    home_team: string;
+    away_team: string;
+    score_string: string;
+    winner: string;
+    is_robbery: boolean;
+  }[];
+};
+
+type MatchCentersIndex = {
+  season: number;
+  latest_round: number;
+  round_count: number;
+  rounds: RoundIndexEntry[];
+};
 
 type QuarterBreakdown = {
   quarter: number;
@@ -90,16 +113,33 @@ export const getStaticProps = async () => {
     const currentSeason = config.CURRENT_SEASON;
     const matchesDir = (file: string) => path.join(process.cwd(), 'json', currentSeason, 'matches', file);
 
-    const matches: MatchCenter[] = safeRead(matchesDir('team_match_centers.json'), []);
+    const index: MatchCentersIndex = safeRead(matchesDir('match_centers_index.json'), {
+      season: currentSeason,
+      latest_round: 0,
+      round_count: 0,
+      rounds: [],
+    });
+
+    // Read every round's file at build time. Switching rounds is then instant
+    // client-side — no fetch, no API route, no loading state. Total payload
+    // across a full 24-round season is ~500 KB, well within Next.js prop limits.
+    const allRounds: Record<number, MatchCenter[]> = {};
+    for (const entry of index.rounds) {
+      allRounds[entry.round] = safeRead(matchesDir(entry.file), []);
+    }
 
     return {
-      props: { matches, currentSeason },
+      props: { index, allRounds, currentSeason },
       revalidate: 60,
     };
   } catch (error) {
     console.error('Static build compilation failed for match centre pipeline:', error);
     return {
-      props: { matches: [], currentSeason: '' },
+      props: {
+        index: { season: '', latest_round: 0, round_count: 0, rounds: [] },
+        allRounds: {},
+        currentSeason: '',
+      },
       revalidate: 10,
     };
   }
@@ -191,13 +231,18 @@ function momentumCaption(match: MatchCenter): string | null {
 // Small presentational helpers
 // ─────────────────────────────────────────────────────────────────────────
 
-function TeamMonogram({ team, size = 12 }: { team: string; size?: number }) {
-  const dim = `h-${size} w-${size}`;
+function TeamMonogram({ team, size = 32 }: { team: string; size?: number }) {
   const color = monogramColor(team);
   return (
     <div
-      className={`flex ${dim} shrink-0 items-center justify-center rounded-sm border bg-[var(--ink)] font-display text-xs font-semibold`}
-      style={{ borderColor: color, color }}
+      className="flex shrink-0 items-center justify-center rounded-sm border bg-[var(--ink)] font-display font-semibold"
+      style={{
+        width: size,
+        height: size,
+        borderColor: color,
+        color,
+        fontSize: Math.max(9, Math.round(size * 0.38)),
+      }}
     >
       {initials(team)}
     </div>
@@ -377,7 +422,15 @@ function MomentumWorm({
   const fontLabel = compact ? 6 : 7;
 
   return (
-    <svg viewBox={`0 0 ${width} ${height}`} style={{ width: '100%', height: compact ? 108 : 168, display: 'block' }}>
+    <div className="flex items-center gap-1.5">
+      {/* Badges sit left of the chart, roughly level with home's score row
+          (top) and away's score row (bottom) so the brass/oxblood colour
+          coding used inside the SVG is legible without a legend. */}
+      <div className="flex flex-col justify-between self-stretch py-1">
+        <TeamMonogram team={homeTeam} size={compact ? 18 : 22} />
+        <TeamMonogram team={awayTeam} size={compact ? 18 : 22} />
+      </div>
+      <svg viewBox={`0 0 ${width} ${height}`} style={{ width: '100%', height: compact ? 108 : 168, display: 'block' }}>
       <line x1={xLeft} y1={mid} x2={xRight} y2={mid} stroke="var(--hairline)" strokeWidth={1} />
       <clipPath id={upperClipId}>
         <rect x="0" y={topPad} width={width} height={plotHeight / 2} />
@@ -432,7 +485,8 @@ function MomentumWorm({
           </g>
         );
       })}
-    </svg>
+      </svg>
+    </div>
   );
 }
 
@@ -510,24 +564,18 @@ function MatchCard({
 
       {/* ── Scoreline ─────────────────────────────────────────── */}
       <div className="mt-3 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
-        <div className="flex items-center gap-2">
-          <TeamMonogram team={match.home_team} />
-          <div className="min-w-0">
-            <div className={`font-display truncate text-sm font-medium ${homeWon ? 'text-[var(--brass)]' : 'text-[var(--parchment)]'}`}>
-              {match.home_team}
-            </div>
-            <div className="font-mono text-[11px] text-[var(--slate)]">{scoreline(match.home_goals, match.home_behinds, match.home_score)}</div>
+        <div className="min-w-0">
+          <div className={`font-display truncate text-sm font-medium ${homeWon ? 'text-[var(--brass)]' : 'text-[var(--parchment)]'}`}>
+            {match.home_team}
           </div>
+          <div className="font-mono text-[11px] text-[var(--slate)]">{scoreline(match.home_goals, match.home_behinds, match.home_score)}</div>
         </div>
         <div className="font-mono text-[10px] uppercase tracking-wide text-[var(--slate)]">vs</div>
-        <div className="flex items-center justify-end gap-2 text-right">
-          <div className="min-w-0">
-            <div className={`font-display truncate text-sm font-medium ${awayWon ? 'text-[var(--brass)]' : 'text-[var(--parchment)]'}`}>
-              {match.away_team}
-            </div>
-            <div className="font-mono text-[11px] text-[var(--slate)]">{scoreline(match.away_goals, match.away_behinds, match.away_score)}</div>
+        <div className="min-w-0 text-right">
+          <div className={`font-display truncate text-sm font-medium ${awayWon ? 'text-[var(--brass)]' : 'text-[var(--parchment)]'}`}>
+            {match.away_team}
           </div>
-          <TeamMonogram team={match.away_team} />
+          <div className="font-mono text-[11px] text-[var(--slate)]">{scoreline(match.away_goals, match.away_behinds, match.away_score)}</div>
         </div>
       </div>
 
@@ -622,6 +670,14 @@ function SpotlightCard({ match }: { match: MatchCenter }) {
   const loser = match.actual_winner === match.home_team ? match.away_team : match.home_team;
   const caption = momentumCaption(match);
 
+  const winnerIsHome = match.actual_winner === match.home_team;
+  const winnerGoals   = winnerIsHome ? match.home_goals   : match.away_goals;
+  const winnerBehinds = winnerIsHome ? match.home_behinds : match.away_behinds;
+  const winnerScore   = winnerIsHome ? match.home_score   : match.away_score;
+  const loserGoals    = winnerIsHome ? match.away_goals   : match.home_goals;
+  const loserBehinds  = winnerIsHome ? match.away_behinds : match.home_behinds;
+  const loserScore    = winnerIsHome ? match.away_score   : match.home_score;
+
   return (
     <section className="mb-8 rounded-sm border border-[var(--brass)] bg-[var(--panel)] p-6">
       <div className="mb-3 flex items-center gap-3 font-mono text-[10px] uppercase tracking-wide text-[var(--brass)]">
@@ -630,13 +686,21 @@ function SpotlightCard({ match }: { match: MatchCenter }) {
       </div>
       <div className="flex flex-col gap-6 lg:flex-row lg:items-center">
         <div className="lg:w-72 lg:shrink-0">
-          <h2 className="font-display text-2xl font-semibold leading-tight text-[var(--parchment)]">
+          {/* Winner */}
+          <h2 className="font-display text-2xl font-semibold leading-tight text-[var(--brass)]">
             {match.actual_winner}
-            <span className="mx-2 text-[var(--slate)]">d.</span>
+          </h2>
+          <p className="font-mono text-[11px] text-[var(--slate)]">
+            {scoreline(winnerGoals, winnerBehinds, winnerScore)}
+          </p>
+          {/* Defeated label */}
+          <p className="my-1 font-mono text-[10px] uppercase tracking-wide text-[var(--slate)]">d.</p>
+          {/* Loser */}
+          <h2 className="font-display text-2xl font-semibold leading-tight text-[var(--parchment)]">
             {loser}
           </h2>
-          <p className="mt-1 font-mono text-[11px] text-[var(--slate)]">
-            {scoreline(match.home_goals, match.home_behinds, match.home_score)} — {scoreline(match.away_goals, match.away_behinds, match.away_score)}
+          <p className="font-mono text-[11px] text-[var(--slate)]">
+            {scoreline(loserGoals, loserBehinds, loserScore)}
           </p>
           {caption && <p className="mt-3 font-body text-sm leading-relaxed text-[var(--parchment)]">{caption}</p>}
         </div>
@@ -649,17 +713,99 @@ function SpotlightCard({ match }: { match: MatchCenter }) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────
+// Round navigator
+//
+// Prev / Next arrows flanking a <select> of all available rounds. The
+// select allows jumping directly to any round without stepping through each
+// one. Disabled states are handled: Prev is disabled on the earliest round,
+// Next on the latest.
+// ─────────────────────────────────────────────────────────────────────────
+
+function RoundNavigator({
+  rounds,
+  selectedRound,
+  latestRound,
+  onSelect,
+}: {
+  rounds: RoundIndexEntry[];
+  selectedRound: number;
+  latestRound: number;
+  onSelect: (round: number) => void;
+}) {
+  const sortedRounds = [...rounds].sort((a, b) => a.round - b.round);
+  const idx = sortedRounds.findIndex((r) => r.round === selectedRound);
+  const hasPrev = idx > 0;
+  const hasNext = idx < sortedRounds.length - 1;
+
+  const navBtn = `rounded-sm border border-[var(--hairline)] px-2.5 py-1 font-mono text-[11px] transition-colors
+    hover:border-[var(--slate)] disabled:cursor-not-allowed disabled:opacity-30
+    focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--brass)]`;
+
+  return (
+    <div className="flex items-center gap-2">
+      <button
+        className={navBtn}
+        disabled={!hasPrev}
+        onClick={() => hasPrev && onSelect(sortedRounds[idx - 1].round)}
+        aria-label="Previous round"
+      >
+        ←
+      </button>
+
+      <select
+        value={selectedRound}
+        onChange={(e) => onSelect(Number(e.target.value))}
+        className="rounded-sm border border-[var(--hairline)] bg-[var(--panel)] px-2.5 py-1 font-mono text-[11px] text-[var(--parchment)] focus:border-[var(--brass)] focus:outline-none"
+      >
+        {sortedRounds.map((r) => (
+          <option key={r.round} value={r.round}>
+            Round {r.round}{r.round === latestRound ? ' (latest)' : ''}{r.has_robbery ? ' ⚑' : ''}
+          </option>
+        ))}
+      </select>
+
+      <button
+        className={navBtn}
+        disabled={!hasNext}
+        onClick={() => hasNext && onSelect(sortedRounds[idx + 1].round)}
+        aria-label="Next round"
+      >
+        →
+      </button>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────
 // Page
 // ─────────────────────────────────────────────────────────────────────────
 
 type MatchFilter = 'all' | 'robberies' | 'comebacks';
 
-export default function MatchCentre({ matches, currentSeason }: { matches: MatchCenter[]; currentSeason: string }) {
+export default function MatchCentre({
+  index,
+  allRounds,
+  currentSeason,
+}: {
+  index: MatchCentersIndex;
+  allRounds: Record<number, MatchCenter[]>;
+  currentSeason: string;
+}) {
+  const [selectedRound, setSelectedRound] = useState<number>(index.latest_round);
   const [filter, setFilter] = useState<MatchFilter>('all');
   const [query, setQuery] = useState('');
   const [expandedKey, setExpandedKey] = useState<string | null>(null);
 
-  const latestRound = useMemo(() => (matches.length ? Math.max(...matches.map((m) => m.round)) : null), [matches]);
+  const matches = allRounds[selectedRound] ?? [];
+  const isLatestRound = selectedRound === index.latest_round;
+
+  const handleRoundSelect = (round: number) => {
+    if (round === selectedRound) return;
+    setSelectedRound(round);
+    setFilter('all');
+    setQuery('');
+    setExpandedKey(null);
+  };
 
   const robberyCount = matches.filter((m) => m.is_robbery).length;
   const comebackCount = matches.filter((m) => m.is_comeback_win).length;
@@ -670,6 +816,8 @@ export default function MatchCentre({ matches, currentSeason }: { matches: Match
     return comebacks.reduce((best, m) => ((m.biggest_deficit_overcome ?? 0) > (best.biggest_deficit_overcome ?? 0) ? m : best));
   }, [matches]);
 
+  // lineMaxima is scoped to the currently loaded round so bar widths are
+  // comparable match-to-match within that round, not across the whole season.
   const lineMaxima = useMemo(() => {
     const maxima: Record<string, number> = {};
     for (const cat of LINE_CATEGORIES) {
@@ -699,27 +847,39 @@ export default function MatchCentre({ matches, currentSeason }: { matches: Match
 
   return (
     <>
-      
-
       <main className="font-body min-h-screen bg-[var(--ink)] px-6 py-12 text-[var(--parchment)] sm:px-10 lg:px-16">
         <div className="mx-auto max-w-6xl">
-          
-                    <SiteHeader />
-          
+
+          <SiteHeader />
+
           {/* ── Header ───────────────────────────────────────────── */}
           <header className="mb-10 border-b border-[var(--hairline)] pb-8">
             <div className="mb-3 flex items-center gap-3 font-mono text-[11px] tracking-[0.25em] text-[var(--brass)]">
               <span className="inline-block h-px w-8 bg-[var(--brass)]" />
-              LEDGER · {currentSeason} SEASON{latestRound ? ` · ROUND ${latestRound}` : ''}
+              LEDGER · {currentSeason} SEASON · ROUND {selectedRound}
+              {isLatestRound && <span className="text-[var(--slate)]">· LATEST</span>}
             </div>
             <h1 className="font-display text-4xl font-semibold tracking-tight text-[var(--parchment)] sm:text-5xl">
               Match Centre
             </h1>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--slate)]">
-              Every result from Round {latestRound ?? '—'} against its expected-score baseline.{' '}
-              {summaryParts.length > 0 ? `${summaryParts.join(', ')} this round.` : 'Form held this round - no robberies, no comebacks.'}
+              Every result from Round {selectedRound} against its expected-score baseline.{' '}
+              {summaryParts.length > 0 ? `${summaryParts.join(', ')} this round.` : 'Form held this round — no robberies, no comebacks.'}
             </p>
           </header>
+
+          {/* ── Round navigator ──────────────────────────────────── */}
+          <div className="mb-8 flex items-center justify-between gap-4 rounded-sm border border-[var(--hairline)] bg-[var(--panel)] px-4 py-3">
+            <span className="font-mono text-[10px] uppercase tracking-wide text-[var(--slate)]">
+              {index.round_count} round{index.round_count === 1 ? '' : 's'} available
+            </span>
+            <RoundNavigator
+              rounds={index.rounds}
+              selectedRound={selectedRound}
+              latestRound={index.latest_round}
+              onSelect={handleRoundSelect}
+            />
+          </div>
 
           {/* ── Case of the Round ───────────────────────────────── */}
           {spotlightMatch && <SpotlightCard match={spotlightMatch} />}

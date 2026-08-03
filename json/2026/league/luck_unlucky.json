@@ -214,5 +214,29 @@
     "home_xscore": 68.8,
     "away_xscore": 68.2,
     "luck_variance": 2.0256
+  },
+  {
+    "round": 21,
+    "lucky_team": "Richmond Tigers",
+    "unlucky_team": "West Coast Eagles",
+    "home_team": "Richmond Tigers",
+    "away_team": "West Coast Eagles",
+    "home_score": 84,
+    "away_score": 73,
+    "home_xscore": 74.4,
+    "away_xscore": 81.8,
+    "luck_variance": 2.3139
+  },
+  {
+    "round": 21,
+    "lucky_team": "Melbourne Demons",
+    "unlucky_team": "Gold Coast Suns",
+    "home_team": "Gold Coast Suns",
+    "away_team": "Melbourne Demons",
+    "home_score": 105,
+    "away_score": 114,
+    "home_xscore": 81,
+    "away_xscore": 80.4,
+    "luck_variance": 2.0256
   }
 ]

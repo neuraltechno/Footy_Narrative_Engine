@@ -311,3 +311,114 @@ calculate_match_metrics <- function(results, team_line_snapshots, latest_round, 
     message("INFO: Completed Match Engine")
     return(match_metrics)
 }
+
+##########################################################
+# build_match_centers_export
+#
+# Description:
+#
+# Prepares the per-round match centre data structures that
+# 99_export_json.R writes to disk. All splitting, indexing,
+# and summary logic lives here so the export module stays
+# as pure save_json_file() calls with no embedded logic.
+#
+# Inputs:
+#
+# match_metrics  — full data frame returned by calculate_match_metrics()
+#                  (all concluded rounds, NOT pre-filtered)
+# latest_round   — integer; the most recently completed round, used to
+#                  set the "default" round in the frontend index
+#
+# Output:
+#
+# A named list:
+#   $index         — list written to match_centers_index.json
+#                    {season, latest_round, round_count, rounds:[...]}
+#                    Each rounds entry includes the filename, match count,
+#                    robbery flag, and a compact match-summary array so
+#                    the frontend can render a round-selector without
+#                    fetching the full per-round file.
+#   $rounds        — named list of data frames, one per round.
+#                    Names are the zero-padded filenames, e.g.
+#                    "team_match_centers_r01.json". The exporter iterates
+#                    this list and calls save_json_file() on each element.
+#
+# File layout produced (under json/<season>/matches/):
+#   match_centers_index.json
+#   team_match_centers_r01.json
+#   team_match_centers_r02.json
+#   ...
+#   team_match_centers_rNN.json
+##########################################################
+build_match_centers_export <- function(match_metrics, latest_round) {
+    message("INFO: Building per-round match centre export structures...")
+
+    if (is.null(match_metrics) || nrow(match_metrics) == 0) {
+        message("WARNING: match_metrics is empty - returning empty match centre export.")
+        return(list(
+            index  = list(
+                season       = CURRENT_SEASON,
+                latest_round = latest_round,
+                round_count  = 0L,
+                rounds       = list()
+            ),
+            rounds = list()
+        ))
+    }
+
+    available_rounds    <- sort(unique(match_metrics$round))
+    round_index_entries <- vector("list", length(available_rounds))
+    rounds_data         <- vector("list", length(available_rounds))
+
+    for (i in seq_along(available_rounds)) {
+        rnd      <- available_rounds[i]
+        # Zero-pad so filenames sort correctly in the filesystem:
+        # r01, r02 ... r09, r10 ... rather than r1, r10, r2 ...
+        rnd_str  <- sprintf("%02d", rnd)
+        filename <- paste0("team_match_centers_r", rnd_str, ".json")
+
+        round_data <- match_metrics |>
+            dplyr::filter(round == rnd)
+
+        # Compact per-match summary for the index — enough for a round-
+        # selector UI without pulling the full match file.
+        match_summaries <- lapply(seq_len(nrow(round_data)), function(j) {
+            list(
+                home_team    = round_data$home_team[j],
+                away_team    = round_data$away_team[j],
+                score_string = paste0(round_data$home_score[j], " - ", round_data$away_score[j]),
+                winner       = round_data$actual_winner[j],
+                is_robbery   = round_data$is_robbery[j]
+            )
+        })
+
+        round_index_entries[[i]] <- list(
+            round       = rnd,
+            file        = filename,
+            match_count = nrow(round_data),
+            has_robbery = any(round_data$is_robbery, na.rm = TRUE),
+            matches     = match_summaries
+        )
+
+        rounds_data[[i]] <- round_data
+        names(rounds_data)[i] <- filename
+
+        message(paste0("INFO:   Round ", rnd, " -> ", filename,
+                       " (", nrow(round_data), " matches)"))
+    }
+
+    index <- list(
+        season       = CURRENT_SEASON,
+        latest_round = latest_round,
+        round_count  = length(available_rounds),
+        rounds       = round_index_entries
+    )
+
+    message(paste0("INFO: Match centre export structures built (",
+                   length(available_rounds), " rounds)"))
+
+    list(
+        index  = index,
+        rounds = rounds_data
+    )
+}

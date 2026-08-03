@@ -204,6 +204,18 @@
     "game_title": "Round 10 vs Brisbane Lions"
   },
   {
+    "playerId": "CD_I1001195",
+    "givenName": "Izak",
+    "surname": "Rankine",
+    "team": "Adelaide Crows",
+    "jumperNumber": 23,
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1001195.png?im=Scale,width=0.6,height=0.6",
+    "round": 21,
+    "opponent": "Essendon Bombers",
+    "ESC": 50.5,
+    "game_title": "Round 21 vs Essendon Bombers"
+  },
+  {
     "playerId": "CD_I295344",
     "givenName": "Toby",
     "surname": "Greene",
@@ -372,6 +384,18 @@
     "game_title": "Round 2 vs Richmond Tigers"
   },
   {
+    "playerId": "CD_I1023473",
+    "givenName": "Nick",
+    "surname": "Watson",
+    "team": "Hawthorn Hawks",
+    "jumperNumber": 5,
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1023473.png?im=Scale,width=0.6,height=0.6",
+    "round": 21,
+    "opponent": "Nth Melbourne Kangaroos",
+    "ESC": 46.2,
+    "game_title": "Round 21 vs Nth Melbourne Kangaroos"
+  },
+  {
     "playerId": "CD_I1004364",
     "givenName": "Liam",
     "surname": "Ryan",
@@ -504,6 +528,18 @@
     "game_title": "Round 13 vs St Kilda Saints"
   },
   {
+    "playerId": "CD_I298289",
+    "givenName": "Peter",
+    "surname": "Wright",
+    "team": "Essendon Bombers",
+    "jumperNumber": 20,
+    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/298289.png?im=Scale,width=0.6,height=0.6",
+    "round": 21,
+    "opponent": "Adelaide Crows",
+    "ESC": 44.7,
+    "game_title": "Round 21 vs Adelaide Crows"
+  },
+  {
     "playerId": "CD_I990609",
     "givenName": "Charlie",
     "surname": "Cameron",
@@ -562,41 +598,5 @@
     "opponent": "Essendon Bombers",
     "ESC": 44.1,
     "game_title": "Round 6 vs Essendon Bombers"
-  },
-  {
-    "playerId": "CD_I260257",
-    "givenName": "Scott",
-    "surname": "Pendlebury",
-    "team": "Collingwood Magpies",
-    "jumperNumber": 10,
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/260257.png?im=Scale,width=0.6,height=0.6",
-    "round": 7,
-    "opponent": "Essendon Bombers",
-    "ESC": 43.8,
-    "game_title": "Round 7 vs Essendon Bombers"
-  },
-  {
-    "playerId": "CD_I992468",
-    "givenName": "Rowan",
-    "surname": "Marshall",
-    "team": "St Kilda Saints",
-    "jumperNumber": 19,
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/992468.png?im=Scale,width=0.6,height=0.6",
-    "round": 19,
-    "opponent": "Geelong Cats",
-    "ESC": 43.4,
-    "game_title": "Round 19 vs Geelong Cats"
-  },
-  {
-    "playerId": "CD_I1023261",
-    "givenName": "Nick",
-    "surname": "Daicos",
-    "team": "Collingwood Magpies",
-    "jumperNumber": 35,
-    "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1023261.png?im=Scale,width=0.6,height=0.6",
-    "round": 17,
-    "opponent": "Gold Coast Suns",
-    "ESC": 43.4,
-    "game_title": "Round 17 vs Gold Coast Suns"
   }
 ]

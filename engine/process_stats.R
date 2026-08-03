@@ -94,8 +94,12 @@ main <- function() {
     # derives real per-round disposal totals from clean_processed_rounds
     # (actual player-level per-round data) instead of approximating from a
     # season-cumulative total. See notes in 30_team_metrics.R.
-    team_profiles     <- calculate_team_metrics(season_agg$final_processed_stats, season_agg$clean_processed_rounds, season_agg$latest_round)
-    match_evals       <- calculate_match_metrics(results_raw, team_profiles, season_agg$latest_round, quarter_scores = quarter_scores)
+    team_profiles <- calculate_team_metrics(season_agg$final_processed_stats, season_agg$clean_processed_rounds, season_agg$latest_round)
+
+    # match_evals contains ALL rounds (not filtered). build_match_centers_export()
+    # then splits it into the per-round structures ready for the exporter.
+    match_evals         <- calculate_match_metrics(results_raw, team_profiles, season_agg$latest_round, quarter_scores = quarter_scores)
+    match_centers_export <- build_match_centers_export(match_evals, season_agg$latest_round)
     
     # --- PROBABILISTIC SNAPSHOT & MOVEMENT LIFECYCLE ---
     current_round <- season_agg$latest_round
@@ -139,7 +143,14 @@ main <- function() {
     metrics_list <- list(
         player_metrics       = season_agg$final_processed_stats, # Context rich df with timelines
         justice_ladder       = justice_standings,
-        match_centers        = match_evals |> filter(round == season_agg$latest_round),
+
+        # --- Match Centres ---
+        # Pre-split by build_match_centers_export() in 40_match_metrics.R.
+        # The exporter receives ready-to-write structures and calls
+        # save_json_file() directly — no logic in 99_export_json.R.
+        match_centers_index  = match_centers_export$index,
+        match_centers_rounds = match_centers_export$rounds,
+
         robbery_of_the_round = narrative_outputs$robbery_match,
         power_rankings       = power_ranks,
         # Full multi-round team_profiles history (not just the latest round)
