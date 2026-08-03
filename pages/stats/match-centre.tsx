@@ -179,10 +179,9 @@ function svgId(key: string): string {
   return key.replace(/[^a-zA-Z0-9-]/g, '-');
 }
 
-function initials(team: string): string {
+function nickname(team: string): string {
   const words = team.trim().split(/\s+/);
-  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
-  return (words[words.length - 2][0] + words[words.length - 1][0]).toUpperCase();
+  return words[words.length - 1];
 }
 
 const MONOGRAM_PALETTE = ['--brass', '--fern-light', '--oxblood-light', '--brass-bright'] as const;
@@ -233,18 +232,21 @@ function momentumCaption(match: MatchCenter): string | null {
 
 function TeamMonogram({ team, size = 32 }: { team: string; size?: number }) {
   const color = monogramColor(team);
+  const name = nickname(team);
+  const dynamicFontSize = Math.max(8, Math.min(size * 0.32, size * (1.3 / Math.max(1, name.length))));
+
   return (
     <div
-      className="flex shrink-0 items-center justify-center rounded-sm border bg-[var(--ink)] font-display font-semibold"
+      className="flex shrink-0 items-center justify-center rounded-sm border bg-[var(--ink)] font-display font-semibold tracking-tighter px-1"
       style={{
-        width: size,
+        width: size * 2.5,
         height: size,
         borderColor: color,
         color,
-        fontSize: Math.max(9, Math.round(size * 0.38)),
+        fontSize: dynamicFontSize,
       }}
     >
-      {initials(team)}
+      {name}
     </div>
   );
 }

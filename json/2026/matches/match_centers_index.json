@@ -5,7 +5,7 @@
   "rounds": [
     {
       "round": 0,
-      "file": "team_match_centers_r00.json",
+      "file": "by-round/team_match_centers_r00.json",
       "match_count": 5,
       "has_robbery": false,
       "matches": [
@@ -48,7 +48,7 @@
     },
     {
       "round": 1,
-      "file": "team_match_centers_r01.json",
+      "file": "by-round/team_match_centers_r01.json",
       "match_count": 9,
       "has_robbery": true,
       "matches": [
@@ -119,7 +119,7 @@
     },
     {
       "round": 2,
-      "file": "team_match_centers_r02.json",
+      "file": "by-round/team_match_centers_r02.json",
       "match_count": 7,
       "has_robbery": true,
       "matches": [
@@ -176,7 +176,7 @@
     },
     {
       "round": 3,
-      "file": "team_match_centers_r03.json",
+      "file": "by-round/team_match_centers_r03.json",
       "match_count": 7,
       "has_robbery": true,
       "matches": [
@@ -233,7 +233,7 @@
     },
     {
       "round": 4,
-      "file": "team_match_centers_r04.json",
+      "file": "by-round/team_match_centers_r04.json",
       "match_count": 8,
       "has_robbery": false,
       "matches": [
@@ -297,7 +297,7 @@
     },
     {
       "round": 5,
-      "file": "team_match_centers_r05.json",
+      "file": "by-round/team_match_centers_r05.json",
       "match_count": 9,
       "has_robbery": true,
       "matches": [
@@ -368,7 +368,7 @@
     },
     {
       "round": 6,
-      "file": "team_match_centers_r06.json",
+      "file": "by-round/team_match_centers_r06.json",
       "match_count": 9,
       "has_robbery": true,
       "matches": [
@@ -439,7 +439,7 @@
     },
     {
       "round": 7,
-      "file": "team_match_centers_r07.json",
+      "file": "by-round/team_match_centers_r07.json",
       "match_count": 9,
       "has_robbery": false,
       "matches": [
@@ -510,7 +510,7 @@
     },
     {
       "round": 8,
-      "file": "team_match_centers_r08.json",
+      "file": "by-round/team_match_centers_r08.json",
       "match_count": 9,
       "has_robbery": false,
       "matches": [
@@ -581,7 +581,7 @@
     },
     {
       "round": 9,
-      "file": "team_match_centers_r09.json",
+      "file": "by-round/team_match_centers_r09.json",
       "match_count": 9,
       "has_robbery": true,
       "matches": [
@@ -652,7 +652,7 @@
     },
     {
       "round": 10,
-      "file": "team_match_centers_r10.json",
+      "file": "by-round/team_match_centers_r10.json",
       "match_count": 9,
       "has_robbery": false,
       "matches": [
@@ -723,7 +723,7 @@
     },
     {
       "round": 11,
-      "file": "team_match_centers_r11.json",
+      "file": "by-round/team_match_centers_r11.json",
       "match_count": 9,
       "has_robbery": true,
       "matches": [
@@ -794,7 +794,7 @@
     },
     {
       "round": 12,
-      "file": "team_match_centers_r12.json",
+      "file": "by-round/team_match_centers_r12.json",
       "match_count": 7,
       "has_robbery": true,
       "matches": [
@@ -851,7 +851,7 @@
     },
     {
       "round": 13,
-      "file": "team_match_centers_r13.json",
+      "file": "by-round/team_match_centers_r13.json",
       "match_count": 8,
       "has_robbery": true,
       "matches": [
@@ -915,7 +915,7 @@
     },
     {
       "round": 14,
-      "file": "team_match_centers_r14.json",
+      "file": "by-round/team_match_centers_r14.json",
       "match_count": 7,
       "has_robbery": true,
       "matches": [
@@ -972,7 +972,7 @@
     },
     {
       "round": 15,
-      "file": "team_match_centers_r15.json",
+      "file": "by-round/team_match_centers_r15.json",
       "match_count": 7,
       "has_robbery": false,
       "matches": [
@@ -1029,7 +1029,7 @@
     },
     {
       "round": 16,
-      "file": "team_match_centers_r16.json",
+      "file": "by-round/team_match_centers_r16.json",
       "match_count": 7,
       "has_robbery": false,
       "matches": [
@@ -1086,7 +1086,7 @@
     },
     {
       "round": 17,
-      "file": "team_match_centers_r17.json",
+      "file": "by-round/team_match_centers_r17.json",
       "match_count": 9,
       "has_robbery": true,
       "matches": [
@@ -1157,7 +1157,7 @@
     },
     {
       "round": 18,
-      "file": "team_match_centers_r18.json",
+      "file": "by-round/team_match_centers_r18.json",
       "match_count": 9,
       "has_robbery": true,
       "matches": [
@@ -1228,7 +1228,7 @@
     },
     {
       "round": 19,
-      "file": "team_match_centers_r19.json",
+      "file": "by-round/team_match_centers_r19.json",
       "match_count": 9,
       "has_robbery": true,
       "matches": [
@@ -1299,7 +1299,7 @@
     },
     {
       "round": 20,
-      "file": "team_match_centers_r20.json",
+      "file": "by-round/team_match_centers_r20.json",
       "match_count": 9,
       "has_robbery": false,
       "matches": [
@@ -1370,7 +1370,7 @@
     },
     {
       "round": 21,
-      "file": "team_match_centers_r21.json",
+      "file": "by-round/team_match_centers_r21.json",
       "match_count": 9,
       "has_robbery": true,
       "matches": [

@@ -375,7 +375,7 @@ build_match_centers_export <- function(match_metrics, latest_round) {
         # Zero-pad so filenames sort correctly in the filesystem:
         # r01, r02 ... r09, r10 ... rather than r1, r10, r2 ...
         rnd_str  <- sprintf("%02d", rnd)
-        filename <- paste0("team_match_centers_r", rnd_str, ".json")
+        filename <- paste0("by-round/team_match_centers_r", rnd_str, ".json")
 
         round_data <- match_metrics |>
             dplyr::filter(round == rnd)

@@ -37,12 +37,14 @@ export_everything <- function(metrics_list) {
     
     json_dir <- file.path('json', CURRENT_SEASON)
     matches_dir <- file.path(json_dir, 'matches')
+    by_round_dir <- file.path(matches_dir, 'by-round')
     
     dirs <- c(
       file.path(json_dir, 'league'),
       file.path(json_dir, 'teams'),
       file.path(json_dir, 'players'),
-      matches_dir
+      matches_dir,
+      by_round_dir
     )
     
     for (d in dirs) {
