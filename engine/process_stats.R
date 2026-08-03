@@ -157,7 +157,10 @@ main <- function() {
         team_pir_ladder            = advanced_metrics$team_pir_ladder,
         meters_gained_metrics      = advanced_metrics$meters_gained_metrics,
         # Streamlined single-source luck metrics
-        luck_unlucky         = luck_unlucky
+        luck_unlucky         = luck_unlucky,
+        # AI-ready story hooks: {team, angle, priority, supporting_stats} rows
+        # for the downstream narrative-writing LLM to draw from
+        story_hooks           = narrative_outputs$story_hooks
     )
     
     export_everything(metrics_list)

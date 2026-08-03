@@ -1,0 +1,283 @@
+[
+  {
+    "team": "Fremantle Dockers",
+    "angle": "riding_the_breaks",
+    "priority": 2.6,
+    "supporting_stats": {
+      "Luck_Rating": 14.8,
+      "Luck_Rating_Per_Game": 0.78,
+      "Expected_Points": 53.2,
+      "Actual_Points": 68
+    }
+  },
+  {
+    "team": "Port Adelaide Power",
+    "angle": "snakebitten",
+    "priority": 2.6,
+    "supporting_stats": {
+      "Luck_Rating": -14.9,
+      "Luck_Rating_Per_Game": -0.78,
+      "Expected_Points": 38.9,
+      "Actual_Points": 24
+    }
+  },
+  {
+    "team": "Western Bulldogs",
+    "angle": "riding_the_breaks",
+    "priority": 2.4,
+    "supporting_stats": {
+      "Luck_Rating": 13.7,
+      "Luck_Rating_Per_Game": 0.72,
+      "Expected_Points": 34.3,
+      "Actual_Points": 48
+    }
+  },
+  {
+    "team": "Essendon Bombers",
+    "angle": "snakebitten",
+    "priority": 2.07,
+    "supporting_stats": {
+      "Luck_Rating": -11.7,
+      "Luck_Rating_Per_Game": -0.62,
+      "Expected_Points": 19.7,
+      "Actual_Points": 8
+    }
+  },
+  {
+    "team": "GWS Giants",
+    "angle": "home_road_split",
+    "priority": 2,
+    "supporting_stats": {
+      "Home_Luck_Rating": 4.9,
+      "Away_Luck_Rating": -11.1,
+      "Luck_Rating": -6.2
+    }
+  },
+  {
+    "team": "Western Bulldogs",
+    "angle": "overplaced",
+    "priority": 2,
+    "supporting_stats": {
+      "Justice_Rank": 13,
+      "Actual_Rank": 7,
+      "Rank_Delta": -6,
+      "Luck_Status": "Riding the breaks",
+      "Luck_Rating": 13.7
+    }
+  },
+  {
+    "team": "Sydney Swans",
+    "angle": "riding_the_breaks",
+    "priority": 1.9,
+    "supporting_stats": {
+      "Luck_Rating": 10.9,
+      "Luck_Rating_Per_Game": 0.57,
+      "Expected_Points": 45.1,
+      "Actual_Points": 56
+    }
+  },
+  {
+    "team": "West Coast Eagles",
+    "angle": "snakebitten",
+    "priority": 1.8,
+    "supporting_stats": {
+      "Luck_Rating": -10.3,
+      "Luck_Rating_Per_Game": -0.54,
+      "Expected_Points": 26.3,
+      "Actual_Points": 16
+    }
+  },
+  {
+    "team": "Collingwood Magpies",
+    "angle": "hot_streak",
+    "priority": 1.73,
+    "supporting_stats": {
+      "Rolling_Games": 5,
+      "Rolling_Luck_Rating": 6.6,
+      "Season_Luck_Rating_Per_Game": 0.28
+    }
+  },
+  {
+    "team": "Port Adelaide Power",
+    "angle": "buried_by_others_luck",
+    "priority": 1.67,
+    "supporting_stats": {
+      "Justice_Rank": 10,
+      "Actual_Rank": 15,
+      "Rank_Delta": 5,
+      "Luck_Status": "Snakebitten",
+      "Luck_Rating": -14.9
+    }
+  },
+  {
+    "team": "Richmond Tigers",
+    "angle": "snakebitten",
+    "priority": 1.63,
+    "supporting_stats": {
+      "Luck_Rating": -9.3,
+      "Luck_Rating_Per_Game": -0.49,
+      "Expected_Points": 17.3,
+      "Actual_Points": 8
+    }
+  },
+  {
+    "team": "Geelong Cats",
+    "angle": "home_road_split",
+    "priority": 1.48,
+    "supporting_stats": {
+      "Home_Luck_Rating": 5.7,
+      "Away_Luck_Rating": -6.1,
+      "Luck_Rating": -0.5
+    }
+  },
+  {
+    "team": "Sydney Swans",
+    "angle": "cold_streak",
+    "priority": 1.42,
+    "supporting_stats": {
+      "Rolling_Games": 5,
+      "Rolling_Luck_Rating": -1.4,
+      "Season_Luck_Rating_Per_Game": 0.57
+    }
+  },
+  {
+    "team": "Essendon Bombers",
+    "angle": "hot_streak",
+    "priority": 1.4,
+    "supporting_stats": {
+      "Rolling_Games": 5,
+      "Rolling_Luck_Rating": 1.1,
+      "Season_Luck_Rating_Per_Game": -0.62
+    }
+  },
+  {
+    "team": "Nth Melbourne Kangaroos",
+    "angle": "cold_streak",
+    "priority": 1.38,
+    "supporting_stats": {
+      "Rolling_Games": 5,
+      "Rolling_Luck_Rating": -4.7,
+      "Season_Luck_Rating_Per_Game": -0.11
+    }
+  },
+  {
+    "team": "Geelong Cats",
+    "angle": "buried_by_others_luck",
+    "priority": 1.33,
+    "supporting_stats": {
+      "Justice_Rank": 5,
+      "Actual_Rank": 9,
+      "Rank_Delta": 4,
+      "Luck_Status": "Getting what they deserve",
+      "Luck_Rating": -0.5
+    }
+  },
+  {
+    "team": "Brisbane Lions",
+    "angle": "hot_streak",
+    "priority": 1.28,
+    "supporting_stats": {
+      "Rolling_Games": 5,
+      "Rolling_Luck_Rating": 4.9,
+      "Season_Luck_Rating_Per_Game": 0.21
+    }
+  },
+  {
+    "team": "Adelaide Crows",
+    "angle": "riding_the_breaks",
+    "priority": 1.27,
+    "supporting_stats": {
+      "Luck_Rating": 7.3,
+      "Luck_Rating_Per_Game": 0.38,
+      "Expected_Points": 40.7,
+      "Actual_Points": 48
+    }
+  },
+  {
+    "team": "Gold Coast Suns",
+    "angle": "cold_streak",
+    "priority": 1.25,
+    "supporting_stats": {
+      "Rolling_Games": 5,
+      "Rolling_Luck_Rating": -5.3,
+      "Season_Luck_Rating_Per_Game": -0.31
+    }
+  },
+  {
+    "team": "GWS Giants",
+    "angle": "snakebitten",
+    "priority": 1.1,
+    "supporting_stats": {
+      "Luck_Rating": -6.2,
+      "Luck_Rating_Per_Game": -0.33,
+      "Expected_Points": 38.2,
+      "Actual_Points": 32
+    }
+  },
+  {
+    "team": "Gold Coast Suns",
+    "angle": "snakebitten",
+    "priority": 1.03,
+    "supporting_stats": {
+      "Luck_Rating": -5.8,
+      "Luck_Rating_Per_Game": -0.31,
+      "Expected_Points": 33.8,
+      "Actual_Points": 28
+    }
+  },
+  {
+    "team": "Collingwood Magpies",
+    "angle": "justice_rank_climb",
+    "priority": 1,
+    "supporting_stats": {
+      "Justice_Rank": 8,
+      "Justice_Rank_Prev": 10,
+      "Justice_Rank_Movement": 2,
+      "Luck_Rating_Change": 0.8
+    }
+  },
+  {
+    "team": "St Kilda Saints",
+    "angle": "justice_rank_climb",
+    "priority": 1,
+    "supporting_stats": {
+      "Justice_Rank": 9,
+      "Justice_Rank_Prev": 11,
+      "Justice_Rank_Movement": 2,
+      "Luck_Rating_Change": 1.1
+    }
+  },
+  {
+    "team": "Port Adelaide Power",
+    "angle": "justice_rank_fall",
+    "priority": 1,
+    "supporting_stats": {
+      "Justice_Rank": 10,
+      "Justice_Rank_Prev": 8,
+      "Justice_Rank_Movement": -2,
+      "Luck_Rating_Change": -0.8
+    }
+  },
+  {
+    "team": "GWS Giants",
+    "angle": "justice_rank_fall",
+    "priority": 1,
+    "supporting_stats": {
+      "Justice_Rank": 11,
+      "Justice_Rank_Prev": 9,
+      "Justice_Rank_Movement": -2,
+      "Luck_Rating_Change": -0.7
+    }
+  },
+  {
+    "team": "Western Bulldogs",
+    "angle": "justice_rank_climb",
+    "priority": 1,
+    "supporting_stats": {
+      "Justice_Rank": 13,
+      "Justice_Rank_Prev": 15,
+      "Justice_Rank_Movement": 2,
+      "Luck_Rating_Change": 0.3
+    }
+  }
+]

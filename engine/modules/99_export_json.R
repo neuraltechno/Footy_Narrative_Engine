@@ -39,6 +39,7 @@ export_everything <- function(metrics_list) {
     
     save_json_file(metrics_list$match_centers, file.path(json_dir, 'matches/team_match_centers.json'))
     save_json_file(metrics_list$robbery_of_the_round, file.path(json_dir, 'league/robbery_of_the_round.json'))
+    save_json_file(metrics_list$story_hooks, file.path(json_dir, 'league/story_hooks.json'))
 
     save_json_file(metrics_list$team_metrics_history, file.path(json_dir, 'teams/team_metrics_history.json'))
     

@@ -133,8 +133,11 @@ calculate_justice_ladder <- function(match_evaluations,
                                       pythagorean_exponent = 2,
                                       rolling_window = 5,
                                       min_sample_games = 4,
-                                      cursed_threshold = -4,  # Swapped to negative (underperformed)
-                                      lucky_threshold = 4) {   # Swapped to positive (overachieved)
+                                      cursed_threshold_per_game = -0.3,  # per-game so it means the same thing at round 3 or round 23
+                                      lucky_threshold_per_game = 0.3,
+                                      buried_threshold = 3,              # Rank_Delta magnitude for ladder-position tags
+                                      undersold_threshold = 1,
+                                      model_scoreboard_gap_threshold = 4) { # |Luck_Rating - Pythagorean_Luck|
     message("INFO: Starting Justice Ladder...")
 
     # 0. Validate schema
@@ -255,22 +258,43 @@ calculate_justice_ladder <- function(match_evaluations,
         mutate(
             Justice_Rank = row_number(),
             Rank_Delta    = Actual_Rank - Justice_Rank,
-            Percent_Delta = round(Expected_Percent - Actual_Percent, 1),
+            # 💡 FIX: Sign now matches Luck_Rating convention - positive = overperformed expectation
+            Percent_Delta = round(Actual_Percent - Expected_Percent, 1),
+            # 💡 FIX: Thresholds are now per-game so the tag means the same thing in round 3
+            # and round 23, instead of getting easier to trip as points accumulate.
             Luck_Status   = case_when(
-                Luck_Rating < cursed_threshold ~ "Cursed (Underperforming System)", # e.g. < -4
-                Luck_Rating > lucky_threshold  ~ "Lucky (Overachieving Outcomes)",  # e.g. > 4
-                TRUE                           ~ "Balanced"
-            )
+                Luck_Rating_Per_Game < cursed_threshold_per_game ~ "Snakebitten",
+                Luck_Rating_Per_Game > lucky_threshold_per_game  ~ "Riding the breaks",
+                TRUE                                             ~ "Getting what they deserve"
+            ),
+            # 💡 NEW: Points-luck (Luck_Status) only tells you whether a team is earning the
+            # points the model expects. It says nothing about whether OTHER teams' luck has
+            # pushed them up or down the actual ladder relative to their deserved position.
+            # This tag answers that second, independent question using Rank_Delta.
+            Ladder_Luck_Status = case_when(
+                Rank_Delta >=  buried_threshold      ~ "Buried by others' luck",
+                Rank_Delta >=  undersold_threshold   ~ "Undersold",
+                Rank_Delta <= -buried_threshold       ~ "Overplaced",
+                Rank_Delta <= -undersold_threshold    ~ "Flattered",
+                TRUE                                  ~ "Right where they belong"
+            ),
+            # 💡 NEW: Luck_Rating (model-based, from win probabilities) and Pythagorean_Luck
+            # (scoreboard-based, from points for/against) usually agree. When they diverge a
+            # lot, that's its own story - e.g. "the model rates them unlucky but they're
+            # winning ugly games their scoreline doesn't support".
+            Model_Vs_Scoreboard_Gap    = round(Luck_Rating - Pythagorean_Luck, 1),
+            Model_Scoreboard_Disagreement = abs(Model_Vs_Scoreboard_Gap) > model_scoreboard_gap_threshold
         ) |>
         select(
             team, Games_Played, Justice_Rank, Actual_Rank, Rank_Delta,
             Expected_Points, Actual_Points, Luck_Rating, Luck_Rating_Per_Game,
             Pythagorean_Expected_Points, Pythagorean_Luck,
+            Model_Vs_Scoreboard_Gap, Model_Scoreboard_Disagreement,
             Home_Luck_Rating, Away_Luck_Rating,
             Rolling_Games, Rolling_Luck_Rating,
             Expected_Percent, Actual_Percent, Percent_Delta,
             Net_xScore_Marg, Strength_Of_Schedule,
-            Low_Sample_Warning, Luck_Status
+            Low_Sample_Warning, Luck_Status, Ladder_Luck_Status
         )
 
     message("INFO: Completed Justice Ladder")
