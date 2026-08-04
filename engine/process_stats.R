@@ -136,7 +136,13 @@ main <- function() {
     luck_unlucky <- calculate_luck_extremes(match_evals, group_by_round = TRUE)
     # ----------------------------------------------------
     
-    power_ranks       <- calculate_power_rankings(team_profiles, match_evals, season_agg$latest_round)
+    # justice_standings (current-round ladder, already computed above) feeds
+    # the single-round power_ranks call directly. build_power_rankings_export
+    # needs a different ladder per historical round instead, so it's given
+    # season_snapshot_dir and reads each round's own snapshot internally -
+    # see 60_power_rankings.R for why.
+    power_ranks       <- calculate_power_rankings(team_profiles, match_evals, season_agg$latest_round, justice_ladder = justice_standings)
+    power_ranks_export <- build_power_rankings_export(team_profiles, match_evals, season_agg$latest_round, snapshot_dir = season_snapshot_dir)
     narrative_outputs <- generate_narrative_summaries(match_evals, justice_standings, season_agg$latest_round)
     
     # 7. Final Export Dictionary compilation
@@ -150,6 +156,10 @@ main <- function() {
         # save_json_file() directly — no logic in 99_export_json.R.
         match_centers_index  = match_centers_export$index,
         match_centers_rounds = match_centers_export$rounds,
+
+        # --- Power Rankings (page-facing name: The Form Pulse) ---
+        power_rankings_index  = power_ranks_export$index,
+        power_rankings_rounds = power_ranks_export$rounds,
 
         robbery_of_the_round = narrative_outputs$robbery_match,
         power_rankings       = power_ranks,

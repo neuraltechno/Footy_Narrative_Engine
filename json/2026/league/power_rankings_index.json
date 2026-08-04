@@ -1,0 +1,205 @@
+{
+  "season": 2026,
+  "latest_round": 21,
+  "round_count": 22,
+  "rounds": [
+    {
+      "round": 0,
+      "file": "by-round/power_rankings_r00.json",
+      "team_count": 10,
+      "rising_count": 0,
+      "falling_count": 0,
+      "leader": "Hawthorn Hawks",
+      "leader_score": 503.3
+    },
+    {
+      "round": 1,
+      "file": "by-round/power_rankings_r01.json",
+      "team_count": 18,
+      "rising_count": 1,
+      "falling_count": 8,
+      "leader": "Fremantle Dockers",
+      "leader_score": 482.9
+    },
+    {
+      "round": 2,
+      "file": "by-round/power_rankings_r02.json",
+      "team_count": 18,
+      "rising_count": 4,
+      "falling_count": 5,
+      "leader": "West Coast Eagles",
+      "leader_score": 492.6
+    },
+    {
+      "round": 3,
+      "file": "by-round/power_rankings_r03.json",
+      "team_count": 18,
+      "rising_count": 6,
+      "falling_count": 5,
+      "leader": "West Coast Eagles",
+      "leader_score": 490.4
+    },
+    {
+      "round": 4,
+      "file": "by-round/power_rankings_r04.json",
+      "team_count": 18,
+      "rising_count": 3,
+      "falling_count": 6,
+      "leader": "Adelaide Crows",
+      "leader_score": 498.7
+    },
+    {
+      "round": 5,
+      "file": "by-round/power_rankings_r05.json",
+      "team_count": 18,
+      "rising_count": 5,
+      "falling_count": 5,
+      "leader": "Adelaide Crows",
+      "leader_score": 514.4
+    },
+    {
+      "round": 6,
+      "file": "by-round/power_rankings_r06.json",
+      "team_count": 18,
+      "rising_count": 4,
+      "falling_count": 5,
+      "leader": "Adelaide Crows",
+      "leader_score": 521.8
+    },
+    {
+      "round": 7,
+      "file": "by-round/power_rankings_r07.json",
+      "team_count": 18,
+      "rising_count": 7,
+      "falling_count": 6,
+      "leader": "Sydney Swans",
+      "leader_score": 490.3
+    },
+    {
+      "round": 8,
+      "file": "by-round/power_rankings_r08.json",
+      "team_count": 18,
+      "rising_count": 5,
+      "falling_count": 8,
+      "leader": "Sydney Swans",
+      "leader_score": 486.6
+    },
+    {
+      "round": 9,
+      "file": "by-round/power_rankings_r09.json",
+      "team_count": 18,
+      "rising_count": 3,
+      "falling_count": 5,
+      "leader": "Melbourne Demons",
+      "leader_score": 481.4
+    },
+    {
+      "round": 10,
+      "file": "by-round/power_rankings_r10.json",
+      "team_count": 18,
+      "rising_count": 6,
+      "falling_count": 9,
+      "leader": "Melbourne Demons",
+      "leader_score": 488.5
+    },
+    {
+      "round": 11,
+      "file": "by-round/power_rankings_r11.json",
+      "team_count": 18,
+      "rising_count": 6,
+      "falling_count": 6,
+      "leader": "Melbourne Demons",
+      "leader_score": 478.8
+    },
+    {
+      "round": 12,
+      "file": "by-round/power_rankings_r12.json",
+      "team_count": 18,
+      "rising_count": 5,
+      "falling_count": 6,
+      "leader": "Melbourne Demons",
+      "leader_score": 480.8
+    },
+    {
+      "round": 13,
+      "file": "by-round/power_rankings_r13.json",
+      "team_count": 18,
+      "rising_count": 6,
+      "falling_count": 4,
+      "leader": "GWS Giants",
+      "leader_score": 502.1
+    },
+    {
+      "round": 14,
+      "file": "by-round/power_rankings_r14.json",
+      "team_count": 18,
+      "rising_count": 3,
+      "falling_count": 8,
+      "leader": "Adelaide Crows",
+      "leader_score": 493.2
+    },
+    {
+      "round": 15,
+      "file": "by-round/power_rankings_r15.json",
+      "team_count": 18,
+      "rising_count": 5,
+      "falling_count": 4,
+      "leader": "Adelaide Crows",
+      "leader_score": 489.5
+    },
+    {
+      "round": 16,
+      "file": "by-round/power_rankings_r16.json",
+      "team_count": 18,
+      "rising_count": 5,
+      "falling_count": 7,
+      "leader": "Brisbane Lions",
+      "leader_score": 503.3
+    },
+    {
+      "round": 17,
+      "file": "by-round/power_rankings_r17.json",
+      "team_count": 18,
+      "rising_count": 4,
+      "falling_count": 5,
+      "leader": "Brisbane Lions",
+      "leader_score": 546.4
+    },
+    {
+      "round": 18,
+      "file": "by-round/power_rankings_r18.json",
+      "team_count": 18,
+      "rising_count": 3,
+      "falling_count": 3,
+      "leader": "Brisbane Lions",
+      "leader_score": 508.7
+    },
+    {
+      "round": 19,
+      "file": "by-round/power_rankings_r19.json",
+      "team_count": 18,
+      "rising_count": 4,
+      "falling_count": 6,
+      "leader": "Adelaide Crows",
+      "leader_score": 491.2
+    },
+    {
+      "round": 20,
+      "file": "by-round/power_rankings_r20.json",
+      "team_count": 18,
+      "rising_count": 6,
+      "falling_count": 6,
+      "leader": "Adelaide Crows",
+      "leader_score": 491.6
+    },
+    {
+      "round": 21,
+      "file": "by-round/power_rankings_r21.json",
+      "team_count": 18,
+      "rising_count": 4,
+      "falling_count": 6,
+      "leader": "Sydney Swans",
+      "leader_score": 485.6
+    }
+  ]
+}

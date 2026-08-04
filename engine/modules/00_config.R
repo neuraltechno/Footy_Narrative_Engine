@@ -266,22 +266,18 @@ POWER_RANKINGS_ROLLING_WINDOW   <- 3     # Trailing rounds averaged into the pow
 POWER_SCORE_WEIGHT_RATING       <- 0.7   # Weight applied to rolling overall_rating
 POWER_SCORE_WEIGHT_VELOCITY     <- 30    # Weight applied to rolling system_velocity
 
-# --- Trend (momentum) thresholds ---
-# Trend now compares a team's power_score across two non-overlapping rolling
-# windows (the current POWER_RANKINGS_ROLLING_WINDOW rounds vs. the
-# POWER_RANKINGS_ROLLING_WINDOW rounds immediately before that), rather than
-# checking the current window's system_velocity against a fixed absolute
-# level. system_velocity (total_player_pir / approx_round_disposals, see
-# 30_team_metrics.R) is a quality-per-possession *level*, not a rate of
-# change, so it was never meaningful to threshold on its own - every team
-# sat well above the old 1.5/0.9 thresholds regardless of form, which is why
-# every team was previously labelled "Surging".
+# --- Trend (ladder movement) thresholds ---
+# Trend compares a team's power_rank this round to their power_rank the
+# PREVIOUS round (not a rolling window - ladder movement is understood
+# round-to-round, not in POWER_RANKINGS_ROLLING_WINDOW-round chunks). It
+# previously compared power_score across two non-overlapping rolling
+# windows ("Surging"/"Faltering"), which read as confusing on the page - a
+# team could be labelled "Faltering" while still sitting #1 on the ladder,
+# and the score-delta magnitude behind the label wasn't shown anywhere. See
+# 60_power_rankings.R for the full history of this metric (it went through
+# a fixed-threshold-on-system_velocity version before that too).
 #
-# These delta values are a starting placeholder (~1.5-2% of a typical
-# power_score, which clusters roughly 400-520) and should be revisited once
-# a real season's worth of round-on-round deltas is available - consider
-# switching to a percentile-based cut (e.g. top/bottom quartile of this
-# round's deltas) if a fixed points threshold proves too strict/loose as the
-# competition's overall pace shifts through the season.
-POWER_TREND_SURGING_DELTA       <- 8     # power_score change vs prior window at/above which a team is labelled "Surging"
-POWER_TREND_FALTERING_DELTA     <- -8    # power_score change vs prior window at/below which a team is labelled "Faltering"
+# These are starting placeholders and should be revisited once a real
+# season's worth of round-on-round rank movement is available.
+POWER_TREND_RISING_RANK_SPOTS   <- 2     # Ladder spots moved up vs prior round at/above which a team is labelled "Rising"
+POWER_TREND_FALLING_RANK_SPOTS  <- 2     # Ladder spots moved down vs prior round at/above which a team is labelled "Falling" (compared against rank_movement's negative, so no minus sign here)

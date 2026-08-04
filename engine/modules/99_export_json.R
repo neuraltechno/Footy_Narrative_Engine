@@ -41,6 +41,7 @@ export_everything <- function(metrics_list) {
     
     dirs <- c(
       file.path(json_dir, 'league'),
+      file.path(json_dir, 'league', 'by-round'),
       file.path(json_dir, 'teams'),
       file.path(json_dir, 'players'),
       matches_dir,
@@ -54,6 +55,10 @@ export_everything <- function(metrics_list) {
     # League
     save_json_file(metrics_list$justice_ladder,        file.path(json_dir, 'league/justice_ladder.json'))
     save_json_file(metrics_list$power_rankings,        file.path(json_dir, 'league/power_rankings.json'))
+    save_json_file(metrics_list$power_rankings_index,  file.path(json_dir, 'league/power_rankings_index.json'))
+    for (filename in names(metrics_list$power_rankings_rounds)) {
+        save_json_file(metrics_list$power_rankings_rounds[[filename]], file.path(json_dir, 'league/by-round', filename))
+    }
     save_json_file(metrics_list$robbery_of_the_round,  file.path(json_dir, 'league/robbery_of_the_round.json'))
     save_json_file(metrics_list$story_hooks,           file.path(json_dir, 'league/story_hooks.json'))
     save_json_file(metrics_list$luck_unlucky,          file.path(json_dir, 'league/luck_unlucky.json'))

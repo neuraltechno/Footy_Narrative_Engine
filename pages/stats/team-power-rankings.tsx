@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import fs from 'fs';
 import path from 'path';
+import Head from 'next/head';
 import SiteHeader from '../../components/SiteHeader';
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -12,7 +13,22 @@ import SiteHeader from '../../components/SiteHeader';
 // per-team line breakdown and season sparkline below the fold.
 // ─────────────────────────────────────────────────────────────────────────
 
-type Trend = 'Surging' | 'Steady' | 'Faltering' | 'New / Insufficient History';
+type RoundIndexEntry = {
+  round: number;
+  file: string;
+  team_count: number;
+  rising_count: number;
+  falling_count: number;
+  leader: string | null;
+  leader_score: number | null;
+};
+
+type PowerRankingsIndex = {
+  season: number;
+  latest_round: number;
+  round_count: number;
+  rounds: RoundIndexEntry[];
+};
 
 type PowerRanking = {
   team: string;
@@ -37,6 +53,13 @@ type PowerRanking = {
   strength_adjusted_power_score_delta: number | null;
   trend: Trend;
   power_rank: number;
+  // The actual AFL ladder spot (Actual_Rank from 50_justice_ladder.R's
+  // Justice Ladder - real competition points/percentage, nothing
+  // probabilistic). Shown alongside power_rank for context - the two are
+  // expected to diverge, that's the point of a form metric. null if no
+  // Justice Ladder snapshot was available for this round (see
+  // 60_power_rankings.R's justice_ladder/snapshot_dir handling).
+  ladder_position: number | null;
 };
 
 type TeamRoundMetrics = {
@@ -56,6 +79,8 @@ type TeamRoundMetrics = {
   system_velocity: number;
   overall_rating: number;
 };
+
+type PowerRankingsTab = 'rankings' | 'form_trend' | 'line_breakdown' | 'system_velocity';
 
 // ─────────────────────────────────────────────────────────────────────────
 // Data fetching
@@ -78,17 +103,33 @@ export const getStaticProps = async () => {
     const leagueDir = (file: string) => path.join(process.cwd(), 'json', currentSeason, 'league', file);
     const teamsDir = (file: string) => path.join(process.cwd(), 'json', currentSeason, 'teams', file);
 
-    const powerRankings: PowerRanking[] = safeRead(leagueDir('power_rankings.json'), []);
+    const index: PowerRankingsIndex = safeRead(leagueDir('power_rankings_index.json'), {
+      season: currentSeason,
+      latest_round: 0,
+      round_count: 0,
+      rounds: [],
+    });
+
+    const allRounds: Record<number, PowerRanking[]> = {};
+    for (const entry of index.rounds) {
+      allRounds[entry.round] = safeRead(leagueDir(entry.file), []);
+    }
+
     const teamHistory: TeamRoundMetrics[] = safeRead(teamsDir('team_metrics_history.json'), []);
 
     return {
-      props: { powerRankings, teamHistory, currentSeason },
+      props: { index, allRounds, teamHistory, currentSeason },
       revalidate: 60,
     };
   } catch (error) {
     console.error('Static build compilation failed for power rankings pipeline:', error);
     return {
-      props: { powerRankings: [], teamHistory: [], currentSeason: '' },
+      props: {
+        index: { season: '', latest_round: 0, round_count: 0, rounds: [] },
+        allRounds: {},
+        teamHistory: [],
+        currentSeason: '',
+      },
       revalidate: 10,
     };
   }
@@ -120,9 +161,9 @@ function monogramColor(team: string): string {
 }
 
 const TREND_STYLE: Record<Trend, { border: string; text: string; glyph: string }> = {
-  Surging: { border: 'border-[var(--fern-light)]', text: 'text-[var(--fern-light)]', glyph: '▲' },
+  Rising: { border: 'border-[var(--fern-light)]', text: 'text-[var(--fern-light)]', glyph: '▲' },
   Steady: { border: 'border-[var(--slate)]', text: 'text-[var(--slate)]', glyph: '▬' },
-  Faltering: { border: 'border-[var(--oxblood-light)]', text: 'text-[var(--oxblood-light)]', glyph: '▼' },
+  Falling: { border: 'border-[var(--oxblood-light)]', text: 'text-[var(--oxblood-light)]', glyph: '▼' },
   'New / Insufficient History': { border: 'border-[var(--slate)]', text: 'text-[var(--slate)]', glyph: '•' },
 };
 
@@ -161,7 +202,7 @@ function TrendBadge({ trend }: { trend: Trend }) {
   );
 }
 
-// Shows the actual number behind the trend label - "Surging"/"Faltering" on
+// Shows the actual number behind the trend label - "Rising"/"Falling" on
 // their own don't say by how much, or make it obvious why two teams with
 // similar power scores can carry opposite badges.
 function DeltaChip({ delta }: { delta: number | null | undefined }) {
@@ -185,6 +226,44 @@ function EmptyState({ text }: { text: string }) {
   return (
     <div className="rounded-sm border border-dashed border-[var(--hairline)] px-6 py-16 text-center">
       <p className="font-mono text-xs uppercase tracking-wide text-[var(--slate)]">{text}</p>
+    </div>
+  );
+}
+
+// The signature device for this page: manila-style ledger tabs, staggered
+// slightly like real folder tabs. Copied from top-games.tsx so both ledger
+// pages share the exact same tab styling/behaviour.
+function LedgerTabs({
+  tabs,
+  active,
+  onSelect,
+}: {
+  tabs: { key: PowerRankingsTab; label: string; count: number }[];
+  active: PowerRankingsTab;
+  onSelect: (key: PowerRankingsTab) => void;
+}) {
+  return (
+    <div className="mb-0 flex flex-wrap items-end gap-1">
+      {tabs.map((tab, i) => {
+        const isActive = tab.key === active;
+        return (
+          <button
+            key={tab.key}
+            onClick={() => onSelect(tab.key)}
+            style={{ transform: isActive ? 'translateY(0)' : `translateY(${2 + (i % 2)}px)` }}
+            className={`rounded-t-sm border border-b-0 px-4 py-2.5 text-left transition-colors ${
+              isActive
+                ? 'border-[var(--hairline)] bg-[var(--panel)] text-[var(--parchment)]'
+                : 'border-transparent bg-[var(--ink)] text-[var(--slate)] hover:text-[var(--parchment)]'
+            }`}
+          >
+            <div className="font-mono text-[9px] uppercase tracking-[0.14em]">{tab.label}</div>
+            <div className={`font-display text-sm ${isActive ? 'text-[var(--brass)]' : 'text-[var(--slate)]'}`}>
+              {tab.count}
+            </div>
+          </button>
+        );
+      })}
     </div>
   );
 }
@@ -234,6 +313,188 @@ function Sparkline({ values, width = 168, height = 32, color = 'var(--brass)' }:
 }
 
 // ─────────────────────────────────────────────────────────────────────────
+// Season charts (hand-rolled SVG, same approach as Sparkline above - no
+// chart library dependency)
+// ─────────────────────────────────────────────────────────────────────────
+
+type ChartSeries = {
+  key: string;
+  color: string;
+  points: { round: number; value: number }[];
+  emphasized?: boolean;
+};
+
+function MultiSeriesChart({ series, width = 640, height = 220 }: { series: ChartSeries[]; width?: number; height?: number }) {
+  const allPoints = series.flatMap((s) => s.points);
+  if (allPoints.length < 2) {
+    return <div className="font-mono text-[10px] text-[var(--slate)]">Not enough rounds yet to chart.</div>;
+  }
+
+  const rounds = allPoints.map((p) => p.round);
+  const values = allPoints.map((p) => p.value);
+  const minRound = Math.min(...rounds);
+  const maxRound = Math.max(...rounds);
+  const minValue = Math.min(...values);
+  const maxValue = Math.max(...values);
+  const roundRange = maxRound - minRound || 1;
+  const valueRange = maxValue - minValue || 1;
+  const padY = 12;
+
+  const toXY = (p: { round: number; value: number }) => {
+    const x = ((p.round - minRound) / roundRange) * width;
+    const y = padY + (1 - (p.value - minValue) / valueRange) * (height - padY * 2);
+    return { x, y };
+  };
+
+  // Draw non-emphasized lines first so emphasized ones sit visibly on top
+  const ordered = [...series].sort((a, b) => (a.emphasized ? 1 : 0) - (b.emphasized ? 1 : 0));
+
+  return (
+    <div>
+      <svg width="100%" viewBox={`0 0 ${width} ${height}`} className="overflow-visible">
+        {ordered.map((s) => {
+          const coords = s.points.map(toXY);
+          const pointsAttr = coords.map((c) => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(' ');
+          const last = coords[coords.length - 1];
+          return (
+            <g key={s.key}>
+              <polyline
+                points={pointsAttr}
+                fill="none"
+                stroke={s.color}
+                strokeWidth={s.emphasized ? 2.5 : 1}
+                strokeOpacity={s.emphasized ? 1 : 0.3}
+                strokeLinejoin="round"
+                strokeLinecap="round"
+              />
+              {s.emphasized && last && <circle cx={last.x} cy={last.y} r={3} fill={s.color} />}
+            </g>
+          );
+        })}
+      </svg>
+      <div className="mt-2 flex items-center justify-between font-mono text-[9px] uppercase tracking-wide text-[var(--slate)]">
+        <span>Round {minRound}</span>
+        <span>{formatStatValue(minValue)} – {formatStatValue(maxValue)}</span>
+        <span>Round {maxRound}</span>
+      </div>
+    </div>
+  );
+}
+
+// Used for both the Form Score Trend and System Velocity tabs - every club
+// plotted faded, one club highlighted via the Focus Club selector.
+function TeamCompareChartPanel({
+  title,
+  unitLabel,
+  seriesMap,
+  allTeams,
+  focusTeam,
+  onFocusChange,
+}: {
+  title: string;
+  unitLabel: string;
+  seriesMap: Map<string, { round: number; value: number }[]>;
+  allTeams: string[];
+  focusTeam: string;
+  onFocusChange: (team: string) => void;
+}) {
+  const series: ChartSeries[] = allTeams
+    .map((team) => ({
+      key: team,
+      color: monogramColor(team),
+      points: seriesMap.get(team) ?? [],
+      emphasized: team === focusTeam,
+    }))
+    .filter((s) => s.points.length > 0);
+
+  return (
+    <div>
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--brass)]">{title}</div>
+        <label className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wide text-[var(--slate)]">
+          Focus club
+          <select
+            value={focusTeam}
+            onChange={(e) => onFocusChange(e.target.value)}
+            className="rounded-sm border border-[var(--hairline)] bg-[var(--ink)] px-2 py-1 font-mono text-[11px] text-[var(--parchment)] focus:border-[var(--brass)] focus:outline-none"
+          >
+            {allTeams.map((team) => (
+              <option key={team} value={team}>
+                {team}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+      <MultiSeriesChart series={series} />
+      <div className="mt-3 flex items-center gap-2 font-mono text-[10px] text-[var(--slate)]">
+        <span className="inline-block h-2 w-2 rounded-full" style={{ backgroundColor: monogramColor(focusTeam) }} />
+        {focusTeam || 'No club selected'} highlighted · {unitLabel} · every other club shown faded for context
+      </div>
+    </div>
+  );
+}
+
+// Used for the Line Breakdown tab - a single club's Engine Room / Iron
+// Curtain / Arsenal trend, since overlaying all 18 clubs × 3 lines would be
+// unreadable.
+function LineBreakdownChartPanel({
+  points,
+  focusTeam,
+  allTeams,
+  onFocusChange,
+}: {
+  points: { round: number; engine_room_pir: number; iron_curtain_pir: number; the_arsenal_pir: number }[];
+  focusTeam: string;
+  allTeams: string[];
+  onFocusChange: (team: string) => void;
+}) {
+  const series: ChartSeries[] = LINE_CATEGORIES.map((cat) => ({
+    key: cat.key as string,
+    color: cat.color,
+    points: points.map((p) => ({ round: p.round, value: Number(p[cat.key as keyof typeof p]) || 0 })),
+    emphasized: true,
+  }));
+
+  return (
+    <div>
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--brass)]">Line Breakdown, Season to Date</div>
+        <label className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wide text-[var(--slate)]">
+          Club
+          <select
+            value={focusTeam}
+            onChange={(e) => onFocusChange(e.target.value)}
+            className="rounded-sm border border-[var(--hairline)] bg-[var(--ink)] px-2 py-1 font-mono text-[11px] text-[var(--parchment)] focus:border-[var(--brass)] focus:outline-none"
+          >
+            {allTeams.map((team) => (
+              <option key={team} value={team}>
+                {team}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+      {points.length < 2 ? (
+        <EmptyState text="Not enough rounds yet for this club." />
+      ) : (
+        <>
+          <MultiSeriesChart series={series} />
+          <div className="mt-3 flex flex-wrap gap-4 font-mono text-[10px] uppercase tracking-wide text-[var(--slate)]">
+            {LINE_CATEGORIES.map((cat) => (
+              <span key={cat.key as string} className="flex items-center gap-1.5">
+                <span className="inline-block h-2 w-2 rounded-full" style={{ backgroundColor: cat.color }} />
+                {cat.label} · {cat.sub}
+              </span>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────
 // Team row (rank list item + expandable detail)
 // ─────────────────────────────────────────────────────────────────────────
 
@@ -262,6 +523,11 @@ function TeamRow({
         <div className="min-w-0 flex-1">
           <div className="font-display truncate text-base font-medium text-[var(--parchment)]">{ranking.team}</div>
           <div className="flex flex-wrap items-center gap-2">
+            {ranking.ladder_position != null && (
+              <span className="inline-flex items-center gap-1 rounded-sm border border-[var(--hairline)] px-2 py-0.5 font-mono text-[10px] uppercase tracking-wide text-[var(--slate)]">
+                Ladder №{ranking.ladder_position}
+              </span>
+            )}
             <TrendBadge trend={ranking.trend} />
             <DeltaChip delta={ranking.strength_adjusted_power_score_delta} />
             {thinSample && (
@@ -274,7 +540,7 @@ function TeamRow({
         <div className="flex gap-6 text-right">
           <div>
             <div className="font-display text-2xl font-semibold text-[var(--brass)]">{formatStatValue(ranking.strength_adjusted_power_score)}</div>
-            <div className="font-mono text-[9px] uppercase tracking-wide text-[var(--slate)]">Power Score</div>
+            <div className="font-mono text-[9px] uppercase tracking-wide text-[var(--slate)]">Form Score</div>
             <div className="font-mono text-[9px] text-[var(--slate)]/60">raw {formatStatValue(ranking.power_score)}</div>
           </div>
         </div>
@@ -365,35 +631,165 @@ function TeamRow({
   );
 }
 
+function RoundNavigator({
+  rounds,
+  selectedRound,
+  latestRound,
+  onSelect,
+}: {
+  rounds: RoundIndexEntry[];
+  selectedRound: number;
+  latestRound: number;
+  onSelect: (round: number) => void;
+}) {
+  const sortedRounds = [...rounds].sort((a, b) => a.round - b.round);
+  const idx = sortedRounds.findIndex((r) => r.round === selectedRound);
+  const hasPrev = idx > 0;
+  const hasNext = idx < sortedRounds.length - 1;
+
+  const navBtn = `rounded-sm border border-[var(--hairline)] px-2.5 py-1 font-mono text-[11px] transition-colors
+    hover:border-[var(--slate)] disabled:cursor-not-allowed disabled:opacity-30
+    focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--brass)]`;
+
+  return (
+    <div className="flex items-center gap-2">
+      <button
+        className={navBtn}
+        disabled={!hasPrev}
+        onClick={() => hasPrev && onSelect(sortedRounds[idx - 1].round)}
+        aria-label="Previous round"
+      >
+        ←
+      </button>
+
+      <select
+        value={selectedRound}
+        onChange={(e) => onSelect(Number(e.target.value))}
+        className="rounded-sm border border-[var(--hairline)] bg-[var(--panel)] px-2.5 py-1 font-mono text-[11px] text-[var(--parchment)] focus:border-[var(--brass)] focus:outline-none"
+      >
+        {sortedRounds.map((r) => (
+          <option key={r.round} value={r.round}>
+            Round {r.round}{r.round === latestRound ? ' (latest)' : ''}
+          </option>
+        ))}
+      </select>
+
+      <button
+        className={navBtn}
+        disabled={!hasNext}
+        onClick={() => hasNext && onSelect(sortedRounds[idx + 1].round)}
+        aria-label="Next round"
+      >
+        →
+      </button>
+    </div>
+  );
+}
+
 // ─────────────────────────────────────────────────────────────────────────
 // Page
 // ─────────────────────────────────────────────────────────────────────────
 
 export default function TeamPowerRankings({
-  powerRankings,
+  index,
+  allRounds,
   teamHistory,
   currentSeason,
 }: {
-  powerRankings: PowerRanking[];
+  index: PowerRankingsIndex;
+  allRounds: Record<number, PowerRanking[]>;
   teamHistory: TeamRoundMetrics[];
   currentSeason: string;
 }) {
+  const [selectedRound, setSelectedRound] = useState<number>(index.latest_round);
   const [query, setQuery] = useState('');
   const [expandedTeam, setExpandedTeam] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<PowerRankingsTab>('rankings');
+  const [focusTeamOverride, setFocusTeamOverride] = useState<string | null>(null);
 
-  const latestRound = useMemo(
-    () => (teamHistory.length ? Math.max(...teamHistory.map((r) => r.round)) : null),
-    [teamHistory]
-  );
+  const powerRankings = allRounds[selectedRound] ?? [];
+  const isLatestRound = selectedRound === index.latest_round;
+
+  const handleRoundSelect = (round: number) => {
+    if (round === selectedRound) return;
+    setSelectedRound(round);
+    setQuery('');
+    setExpandedTeam(null);
+  };
+
+  const switchTab = (tab: PowerRankingsTab) => {
+    if (tab === activeTab) return;
+    setActiveTab(tab);
+    setQuery('');
+    setExpandedTeam(null);
+  };
+
+  // Every club that appears anywhere in the round-by-round export, for the
+  // chart tabs' Focus Club selector - not just clubs present in the
+  // currently selected round.
+  const allTeams = useMemo(() => {
+    const set = new Set<string>();
+    Object.values(allRounds).forEach((rows) => rows.forEach((r) => set.add(r.team)));
+    return Array.from(set).sort();
+  }, [allRounds]);
+
+  const defaultFocusTeam = useMemo(() => {
+    const latest = [...(allRounds[index.latest_round] ?? [])].sort((a, b) => a.power_rank - b.power_rank);
+    return latest[0]?.team ?? allTeams[0] ?? '';
+  }, [allRounds, index.latest_round, allTeams]);
+
+  const focusTeam = focusTeamOverride ?? defaultFocusTeam;
+
+  // Form Score across every round, per club - built from the round-by-round
+  // export (allRounds) rather than team_metrics_history, since Form Score
+  // only exists on the power rankings side of the pipeline.
+  const formScoreSeries = useMemo(() => {
+    const map = new Map<string, { round: number; value: number }[]>();
+    Object.values(allRounds).forEach((rows) => {
+      rows.forEach((r) => {
+        const list = map.get(r.team) ?? [];
+        list.push({ round: r.round, value: r.strength_adjusted_power_score });
+        map.set(r.team, list);
+      });
+    });
+    map.forEach((list) => list.sort((a, b) => a.round - b.round));
+    return map;
+  }, [allRounds]);
+
+  // System velocity across every round, per club - from team_metrics_history
+  // (already the full season, not just the selected round).
+  const velocitySeries = useMemo(() => {
+    const map = new Map<string, { round: number; value: number }[]>();
+    teamHistory.forEach((row) => {
+      const list = map.get(row.team) ?? [];
+      list.push({ round: row.round, value: row.system_velocity });
+      map.set(row.team, list);
+    });
+    map.forEach((list) => list.sort((a, b) => a.round - b.round));
+    return map;
+  }, [teamHistory]);
+
+  // Engine Room / Iron Curtain / Arsenal, season to date, for whichever
+  // club is selected in the Line Breakdown tab.
+  const lineBreakdownPoints = useMemo(() => {
+    return teamHistory
+      .filter((row) => row.team === focusTeam)
+      .sort((a, b) => a.round - b.round)
+      .map((row) => ({
+        round: row.round,
+        engine_room_pir: row.engine_room_pir,
+        iron_curtain_pir: row.iron_curtain_pir,
+        the_arsenal_pir: row.the_arsenal_pir,
+      }));
+  }, [teamHistory, focusTeam]);
 
   const latestRoundByTeam = useMemo(() => {
     const map = new Map<string, TeamRoundMetrics>();
-    if (latestRound == null) return map;
     for (const row of teamHistory) {
-      if (row.round === latestRound) map.set(row.team, row);
+      if (row.round === selectedRound) map.set(row.team, row);
     }
     return map;
-  }, [teamHistory, latestRound]);
+  }, [teamHistory, selectedRound]);
 
   const lineMaxima = useMemo(() => {
     const maxima: Record<string, number> = {};
@@ -405,14 +801,14 @@ export default function TeamPowerRankings({
 
   const velocityHistoryByTeam = useMemo(() => {
     const map = new Map<string, number[]>();
-    const sorted = [...teamHistory].sort((a, b) => a.round - b.round);
+    const sorted = [...teamHistory].filter(r => r.round <= selectedRound).sort((a, b) => a.round - b.round);
     for (const row of sorted) {
       const list = map.get(row.team) ?? [];
       list.push(row.system_velocity);
       map.set(row.team, list);
     }
     return map;
-  }, [teamHistory]);
+  }, [teamHistory, selectedRound]);
 
   const filteredRankings = useMemo(() => {
     return [...powerRankings]
@@ -420,69 +816,139 @@ export default function TeamPowerRankings({
       .sort((a, b) => a.power_rank - b.power_rank);
   }, [powerRankings, query]);
 
-  const surgingCount = powerRankings.filter((r) => r.trend === 'Surging').length;
-  const falteringCount = powerRankings.filter((r) => r.trend === 'Faltering').length;
+  const risingCount = powerRankings.filter((r) => r.trend === 'Rising').length;
+  const fallingCount = powerRankings.filter((r) => r.trend === 'Falling').length;
+
+  const tabs: { key: PowerRankingsTab; label: string; count: number }[] = [
+    { key: 'rankings', label: `Round ${selectedRound}`, count: powerRankings.length },
+    { key: 'form_trend', label: 'Form Score Trend', count: index.round_count },
+    { key: 'line_breakdown', label: 'Line Breakdown', count: index.round_count },
+    { key: 'system_velocity', label: 'System Velocity', count: index.round_count },
+  ];
 
   return (
     <>
-      
-
       <main className="font-body min-h-screen bg-[var(--ink)] px-6 py-12 text-[var(--parchment)] sm:px-10 lg:px-16">
         <div className="mx-auto max-w-5xl">
           
                     <SiteHeader />
           
           {/* ── Header ───────────────────────────────────────────── */}
+          <Head>
+            <title>The Form Pulse — AFL Power Rankings | Footy Narrative Engine</title>
+          </Head>
           <header className="mb-10 border-b border-[var(--hairline)] pb-8">
             <div className="mb-3 flex items-center gap-3 font-mono text-[11px] tracking-[0.25em] text-[var(--brass)]">
               <span className="inline-block h-px w-8 bg-[var(--brass)]" />
-              LEDGER · {currentSeason} SEASON{latestRound ? ` · ROUND ${latestRound}` : ''}
+              LEDGER · {currentSeason} SEASON · ROUND {selectedRound}
+              {isLatestRound && <span className="text-[var(--slate)]">· LATEST</span>}
             </div>
             <h1 className="font-display text-4xl font-semibold tracking-tight text-[var(--parchment)] sm:text-5xl">
-              Power Rankings
+              The Form Pulse
             </h1>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--slate)]">
               Every team ranked on a rolling {powerRankings[0]?.rounds_in_window ? `${Math.max(...powerRankings.map((r) => r.rounds_in_window))}-round` : 'trailing'} form
               window, adjusted for the strength of the sides they've actually played — not a single result, and not a
-              soft draw. {surgingCount} club{surgingCount === 1 ? ' is' : 's are'} surging,{' '}
-              {falteringCount} {falteringCount === 1 ? 'is' : 'are'} faltering. Open a team to see its Engine Room / Iron
-              Curtain / Arsenal split, its draw difficulty, and its velocity trend for the season.
+              soft draw. This is form, not the ladder: {risingCount} club{risingCount === 1 ? ' is' : 's are'} building
+              form, {fallingCount} {fallingCount === 1 ? 'is' : 'are'} cooling off. Open a team to see its Engine Room
+              / Iron Curtain / Arsenal split, its draw difficulty, and its velocity trend for the season.
+            </p>
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--slate)]">
+              Form Score adjusts each team's raw output for who they actually played this window — beating a strong
+              side is worth more than cruising past a weak one, and vice versa. The <span className="text-[var(--slate)]/70">raw</span> figure
+              under each score is the same output before that adjustment, for comparison.
             </p>
           </header>
 
-          {/* ── Search ───────────────────────────────────────────── */}
-          <div className="mb-6">
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search club…"
-              className="w-full max-w-xs rounded-sm border border-[var(--hairline)] bg-[var(--panel)] px-3 py-2 font-mono text-xs text-[var(--parchment)] placeholder:text-[var(--slate)] focus:border-[var(--brass)] focus:outline-none"
-            />
-          </div>
+          {/* ── Ledger tabs ──────────────────────────────────────── */}
+          <LedgerTabs tabs={tabs} active={activeTab} onSelect={switchTab} />
 
-          {/* ── Ranked list ──────────────────────────────────────── */}
-          {filteredRankings.length === 0 ? (
-            <EmptyState text="No teams match the current search." />
-          ) : (
-            <div className="space-y-2">
-              {filteredRankings.map((ranking) => (
-                <TeamRow
-                  key={ranking.team}
-                  ranking={ranking}
-                  latestRoundLine={latestRoundByTeam.get(ranking.team)}
-                  velocityHistory={velocityHistoryByTeam.get(ranking.team) ?? []}
-                  lineMaxima={lineMaxima}
-                  expanded={expandedTeam === ranking.team}
-                  onToggle={() => setExpandedTeam(expandedTeam === ranking.team ? null : ranking.team)}
-                />
-              ))}
-            </div>
-          )}
+          <div className="rounded-b-sm rounded-tr-sm border border-[var(--hairline)] bg-[var(--panel)] p-5 sm:p-6">
+            {activeTab === 'rankings' && (
+              <>
+                {/* ── Round navigator ──────────────────────────────── */}
+                <div className="mb-6 flex items-center justify-between gap-4 rounded-sm border border-[var(--hairline)] bg-[var(--ink)] px-4 py-3">
+                  <span className="font-mono text-[10px] uppercase tracking-wide text-[var(--slate)]">
+                    {index.round_count} round{index.round_count === 1 ? '' : 's'} available
+                  </span>
+                  <RoundNavigator
+                    rounds={index.rounds}
+                    selectedRound={selectedRound}
+                    latestRound={index.latest_round}
+                    onSelect={handleRoundSelect}
+                  />
+                </div>
+
+                {/* ── Search ───────────────────────────────────────── */}
+                <div className="mb-6">
+                  <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search club…"
+                    className="w-full max-w-xs rounded-sm border border-[var(--hairline)] bg-[var(--ink)] px-3 py-2 font-mono text-xs text-[var(--parchment)] placeholder:text-[var(--slate)] focus:border-[var(--brass)] focus:outline-none"
+                  />
+                </div>
+
+                {/* ── Ranked list ──────────────────────────────────── */}
+                {filteredRankings.length === 0 ? (
+                  <EmptyState text="No teams match the current search." />
+                ) : (
+                  <div className="space-y-2">
+                    {filteredRankings.map((ranking) => (
+                      <TeamRow
+                        key={ranking.team}
+                        ranking={ranking}
+                        latestRoundLine={latestRoundByTeam.get(ranking.team)}
+                        velocityHistory={velocityHistoryByTeam.get(ranking.team) ?? []}
+                        lineMaxima={lineMaxima}
+                        expanded={expandedTeam === ranking.team}
+                        onToggle={() => setExpandedTeam(expandedTeam === ranking.team ? null : ranking.team)}
+                      />
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
+
+            {/* ── Form Score, season to date ───────────────────────── */}
+            {activeTab === 'form_trend' && (
+              <TeamCompareChartPanel
+                title="Form Score, Season to Date"
+                unitLabel="Form Score"
+                seriesMap={formScoreSeries}
+                allTeams={allTeams}
+                focusTeam={focusTeam}
+                onFocusChange={setFocusTeamOverride}
+              />
+            )}
+
+            {/* ── System velocity, season to date ──────────────────── */}
+            {activeTab === 'system_velocity' && (
+              <TeamCompareChartPanel
+                title="System Velocity, Season to Date"
+                unitLabel="System Velocity"
+                seriesMap={velocitySeries}
+                allTeams={allTeams}
+                focusTeam={focusTeam}
+                onFocusChange={setFocusTeamOverride}
+              />
+            )}
+
+            {/* ── Line breakdown, season to date (single club) ─────── */}
+            {activeTab === 'line_breakdown' && (
+              <LineBreakdownChartPanel
+                points={lineBreakdownPoints}
+                focusTeam={focusTeam}
+                allTeams={allTeams}
+                onFocusChange={setFocusTeamOverride}
+              />
+            )}
+          </div>
 
           {/* ── Legend ───────────────────────────────────────────── */}
           <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-wide text-[var(--slate)]">
-            <span>Power Score = (Rolling Overall Rating × 0.7) + (Rolling System Velocity × 30), then scaled by opponent strength faced</span>
+            <span>Form Score = (Rolling Overall Rating × 0.7) + (Rolling System Velocity × 30), then scaled by opponent strength faced</span>
             <span>Draw Difficulty = strength of opponents actually played this window vs. the league average - beating tough teams counts for more</span>
             <span>System Velocity = team PIR per disposal, a shape-of-play read independent of raw PIR volume</span>
             <span>Engine Room = Midfield + Ruck · Iron Curtain = Backs · The Arsenal = Forwards</span>
