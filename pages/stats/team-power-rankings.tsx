@@ -144,6 +144,23 @@ function formatStatValue(value: number | null | undefined, decimals = 1): string
   return Number.isInteger(value) ? String(value) : value.toFixed(decimals);
 }
 
+// Shared shape used by every season-long "all clubs, one stat" chart
+// (System Velocity, Engine Room, Iron Curtain, Arsenal) - groups by team,
+// sorted by round.
+function buildCategorySeries(
+  rows: TeamRoundMetrics[],
+  key: keyof TeamRoundMetrics
+): Map<string, { round: number; value: number }[]> {
+  const map = new Map<string, { round: number; value: number }[]>();
+  rows.forEach((row) => {
+    const list = map.get(row.team) ?? [];
+    list.push({ round: row.round, value: Number(row[key]) || 0 });
+    map.set(row.team, list);
+  });
+  map.forEach((list) => list.sort((a, b) => a.round - b.round));
+  return map;
+}
+
 function initials(team: string): string {
   const words = team.trim().split(/\s+/);
   if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
@@ -158,6 +175,19 @@ function monogramColor(team: string): string {
   let hash = 0;
   for (let i = 0; i < team.length; i++) hash = (hash * 31 + team.charCodeAt(i)) >>> 0;
   return `var(${MONOGRAM_PALETTE[hash % MONOGRAM_PALETTE.length]})`;
+}
+
+// monogramColor only cycles through 4 theme colors (fine for a badge with
+// the team's initials printed inside it) - on an 18-line season chart that
+// means several clubs would render in the exact same color, which defeats
+// the point. chartColor instead spaces every club evenly around the hue
+// wheel based on its position in the full team list, so every club gets a
+// genuinely distinct color regardless of how many colors the theme defines.
+function chartColor(team: string, allTeams: string[]): string {
+  const idx = allTeams.indexOf(team);
+  if (idx === -1 || allTeams.length === 0) return 'var(--slate)';
+  const hue = (idx / allTeams.length) * 360;
+  return `hsl(${hue.toFixed(0)}, 68%, 62%)`;
 }
 
 const TREND_STYLE: Record<Trend, { border: string; text: string; glyph: string }> = {
@@ -324,7 +354,19 @@ type ChartSeries = {
   emphasized?: boolean;
 };
 
-function MultiSeriesChart({ series, width = 640, height = 220 }: { series: ChartSeries[]; width?: number; height?: number }) {
+function MultiSeriesChart({
+  series,
+  width = 640,
+  height = 220,
+  onSeriesClick,
+}: {
+  series: ChartSeries[];
+  width?: number;
+  height?: number;
+  onSeriesClick?: (key: string) => void;
+}) {
+  const [tooltip, setTooltip] = useState<{ x: number; y: number; team: string; round: number; value: number } | null>(null);
+
   const allPoints = series.flatMap((s) => s.points);
   if (allPoints.length < 2) {
     return <div className="font-mono text-[10px] text-[var(--slate)]">Not enough rounds yet to chart.</div>;
@@ -339,50 +381,126 @@ function MultiSeriesChart({ series, width = 640, height = 220 }: { series: Chart
   const roundRange = maxRound - minRound || 1;
   const valueRange = maxValue - minValue || 1;
   const padY = 12;
+  const padX = 34; // room for the Y-axis value labels on the left
 
   const toXY = (p: { round: number; value: number }) => {
-    const x = ((p.round - minRound) / roundRange) * width;
+    const x = padX + ((p.round - minRound) / roundRange) * (width - padX);
     const y = padY + (1 - (p.value - minValue) / valueRange) * (height - padY * 2);
     return { x, y };
   };
 
-  // Draw non-emphasized lines first so emphasized ones sit visibly on top
-  const ordered = [...series].sort((a, b) => (a.emphasized ? 1 : 0) - (b.emphasized ? 1 : 0));
+  const hoveredKey = tooltip?.team ?? null;
+
+  // Draw plain lines first, focused/hovered lines last so they sit on top
+  const ordered = [...series].sort((a, b) => {
+    const aUp = a.emphasized || a.key === hoveredKey ? 1 : 0;
+    const bUp = b.emphasized || b.key === hoveredKey ? 1 : 0;
+    return aUp - bUp;
+  });
+
+  const yTicks = [minValue, (minValue + maxValue) / 2, maxValue];
+
+  function handleMove(e: React.MouseEvent<SVGPolylineElement>, s: ChartSeries, coords: { x: number; y: number }[]) {
+    const svg = (e.target as SVGElement).ownerSVGElement;
+    if (!svg) return;
+    const rect = svg.getBoundingClientRect();
+    const scaleX = width / rect.width;
+    const mouseX = (e.clientX - rect.left) * scaleX;
+    let nearestIdx = 0;
+    let minDist = Infinity;
+    coords.forEach((c, i) => {
+      const d = Math.abs(c.x - mouseX);
+      if (d < minDist) {
+        minDist = d;
+        nearestIdx = i;
+      }
+    });
+    const point = s.points[nearestIdx];
+    const c = coords[nearestIdx];
+    setTooltip({ x: c.x, y: c.y, team: s.key, round: point.round, value: point.value });
+  }
+
+  // Tooltip box position, nudged so it never renders off either edge
+  const tooltipBoxWidth = 132;
+  const tooltipX = tooltip ? Math.min(Math.max(tooltip.x + 8, 0), width - tooltipBoxWidth) : 0;
+  const tooltipY = tooltip ? Math.max(tooltip.y - 32, 2) : 0;
 
   return (
     <div>
-      <svg width="100%" viewBox={`0 0 ${width} ${height}`} className="overflow-visible">
+      <svg width="100%" viewBox={`0 0 ${width} ${height}`} className="overflow-visible" onMouseLeave={() => setTooltip(null)}>
+        {/* Y-axis gridlines + value labels */}
+        {yTicks.map((v, i) => {
+          const y = padY + (1 - (v - minValue) / valueRange) * (height - padY * 2);
+          return (
+            <g key={i}>
+              <line x1={padX - 4} x2={width} y1={y} y2={y} stroke="var(--hairline)" strokeWidth={0.5} strokeDasharray="2,3" />
+              <text x={0} y={y + 3} fontSize={8} fill="var(--slate)" fontFamily="monospace">
+                {formatStatValue(v)}
+              </text>
+            </g>
+          );
+        })}
+
         {ordered.map((s) => {
           const coords = s.points.map(toXY);
           const pointsAttr = coords.map((c) => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(' ');
           const last = coords[coords.length - 1];
+          const isUp = s.emphasized || s.key === hoveredKey;
           return (
-            <g key={s.key}>
+            <g
+              key={s.key}
+              onClick={() => onSeriesClick?.(s.key)}
+              className={onSeriesClick ? 'cursor-pointer' : undefined}
+            >
+              {/* Invisible wide hit-area so thin faded lines are still easy to click/hover */}
+              <polyline
+                points={pointsAttr}
+                fill="none"
+                stroke="transparent"
+                strokeWidth={12}
+                style={{ pointerEvents: 'stroke' }}
+                onMouseMove={(e) => handleMove(e, s, coords)}
+              />
               <polyline
                 points={pointsAttr}
                 fill="none"
                 stroke={s.color}
-                strokeWidth={s.emphasized ? 2.5 : 1}
-                strokeOpacity={s.emphasized ? 1 : 0.3}
+                strokeWidth={isUp ? 2.5 : 1}
+                strokeOpacity={isUp ? 1 : 0.3}
                 strokeLinejoin="round"
                 strokeLinecap="round"
+                style={{ pointerEvents: 'none' }}
               />
-              {s.emphasized && last && <circle cx={last.x} cy={last.y} r={3} fill={s.color} />}
+              {isUp && last && <circle cx={last.x} cy={last.y} r={3} fill={s.color} style={{ pointerEvents: 'none' }} />}
             </g>
           );
         })}
+
+        {/* Hover tooltip - team, round, and exact value at the nearest point */}
+        {tooltip && (
+          <g transform={`translate(${tooltipX}, ${tooltipY})`} style={{ pointerEvents: 'none' }}>
+            <rect width={tooltipBoxWidth} height={34} rx={3} fill="var(--ink)" stroke="var(--hairline)" strokeWidth={0.75} />
+            <text x={7} y={14} fontSize={9} fontWeight={600} fill="var(--parchment)" fontFamily="monospace">
+              {tooltip.team}
+            </text>
+            <text x={7} y={26} fontSize={9} fill="var(--slate)" fontFamily="monospace">
+              Round {tooltip.round} · {formatStatValue(tooltip.value)}
+            </text>
+          </g>
+        )}
       </svg>
       <div className="mt-2 flex items-center justify-between font-mono text-[9px] uppercase tracking-wide text-[var(--slate)]">
         <span>Round {minRound}</span>
-        <span>{formatStatValue(minValue)} – {formatStatValue(maxValue)}</span>
         <span>Round {maxRound}</span>
       </div>
     </div>
   );
 }
 
-// Used for both the Form Score Trend and System Velocity tabs - every club
-// plotted faded, one club highlighted via the Focus Club selector.
+// Used for the Form Score, System Velocity, and Line Breakdown tabs - every
+// club plotted, one club highlighted (via the selector, a click on its
+// line, or a hover), everyone else faded. Hovering any line also shows its
+// club name as a native tooltip.
 function TeamCompareChartPanel({
   title,
   unitLabel,
@@ -401,7 +519,7 @@ function TeamCompareChartPanel({
   const series: ChartSeries[] = allTeams
     .map((team) => ({
       key: team,
-      color: monogramColor(team),
+      color: chartColor(team, allTeams),
       points: seriesMap.get(team) ?? [],
       emphasized: team === focusTeam,
     }))
@@ -426,70 +544,11 @@ function TeamCompareChartPanel({
           </select>
         </label>
       </div>
-      <MultiSeriesChart series={series} />
+      <MultiSeriesChart series={series} onSeriesClick={onFocusChange} />
       <div className="mt-3 flex items-center gap-2 font-mono text-[10px] text-[var(--slate)]">
-        <span className="inline-block h-2 w-2 rounded-full" style={{ backgroundColor: monogramColor(focusTeam) }} />
-        {focusTeam || 'No club selected'} highlighted · {unitLabel} · every other club shown faded for context
+        <span className="inline-block h-2 w-2 rounded-full" style={{ backgroundColor: chartColor(focusTeam, allTeams) }} />
+        {focusTeam || 'No club selected'} highlighted · {unitLabel} · click or hover any line to identify a club
       </div>
-    </div>
-  );
-}
-
-// Used for the Line Breakdown tab - a single club's Engine Room / Iron
-// Curtain / Arsenal trend, since overlaying all 18 clubs × 3 lines would be
-// unreadable.
-function LineBreakdownChartPanel({
-  points,
-  focusTeam,
-  allTeams,
-  onFocusChange,
-}: {
-  points: { round: number; engine_room_pir: number; iron_curtain_pir: number; the_arsenal_pir: number }[];
-  focusTeam: string;
-  allTeams: string[];
-  onFocusChange: (team: string) => void;
-}) {
-  const series: ChartSeries[] = LINE_CATEGORIES.map((cat) => ({
-    key: cat.key as string,
-    color: cat.color,
-    points: points.map((p) => ({ round: p.round, value: Number(p[cat.key as keyof typeof p]) || 0 })),
-    emphasized: true,
-  }));
-
-  return (
-    <div>
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <div className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--brass)]">Line Breakdown, Season to Date</div>
-        <label className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wide text-[var(--slate)]">
-          Club
-          <select
-            value={focusTeam}
-            onChange={(e) => onFocusChange(e.target.value)}
-            className="rounded-sm border border-[var(--hairline)] bg-[var(--ink)] px-2 py-1 font-mono text-[11px] text-[var(--parchment)] focus:border-[var(--brass)] focus:outline-none"
-          >
-            {allTeams.map((team) => (
-              <option key={team} value={team}>
-                {team}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
-      {points.length < 2 ? (
-        <EmptyState text="Not enough rounds yet for this club." />
-      ) : (
-        <>
-          <MultiSeriesChart series={series} />
-          <div className="mt-3 flex flex-wrap gap-4 font-mono text-[10px] uppercase tracking-wide text-[var(--slate)]">
-            {LINE_CATEGORIES.map((cat) => (
-              <span key={cat.key as string} className="flex items-center gap-1.5">
-                <span className="inline-block h-2 w-2 rounded-full" style={{ backgroundColor: cat.color }} />
-                {cat.label} · {cat.sub}
-              </span>
-            ))}
-          </div>
-        </>
-      )}
     </div>
   );
 }
@@ -758,30 +817,20 @@ export default function TeamPowerRankings({
 
   // System velocity across every round, per club - from team_metrics_history
   // (already the full season, not just the selected round).
-  const velocitySeries = useMemo(() => {
-    const map = new Map<string, { round: number; value: number }[]>();
-    teamHistory.forEach((row) => {
-      const list = map.get(row.team) ?? [];
-      list.push({ round: row.round, value: row.system_velocity });
-      map.set(row.team, list);
-    });
-    map.forEach((list) => list.sort((a, b) => a.round - b.round));
-    return map;
-  }, [teamHistory]);
+  const velocitySeries = useMemo(() => buildCategorySeries(teamHistory, 'system_velocity'), [teamHistory]);
 
-  // Engine Room / Iron Curtain / Arsenal, season to date, for whichever
-  // club is selected in the Line Breakdown tab.
-  const lineBreakdownPoints = useMemo(() => {
-    return teamHistory
-      .filter((row) => row.team === focusTeam)
-      .sort((a, b) => a.round - b.round)
-      .map((row) => ({
-        round: row.round,
-        engine_room_pir: row.engine_room_pir,
-        iron_curtain_pir: row.iron_curtain_pir,
-        the_arsenal_pir: row.the_arsenal_pir,
-      }));
-  }, [teamHistory, focusTeam]);
+  // Engine Room / Iron Curtain / Arsenal, season to date, one series-map per
+  // category, all clubs - same "compare chart" shape as Form Score/Velocity
+  // above, so each line category gets its own all-clubs chart rather than
+  // cramming one club's three lines onto a single chart.
+  const engineRoomSeries = useMemo(() => buildCategorySeries(teamHistory, 'engine_room_pir'), [teamHistory]);
+  const ironCurtainSeries = useMemo(() => buildCategorySeries(teamHistory, 'iron_curtain_pir'), [teamHistory]);
+  const arsenalSeries = useMemo(() => buildCategorySeries(teamHistory, 'the_arsenal_pir'), [teamHistory]);
+  const lineCategorySeriesMaps: Record<string, Map<string, { round: number; value: number }[]>> = {
+    engine_room_pir: engineRoomSeries,
+    iron_curtain_pir: ironCurtainSeries,
+    the_arsenal_pir: arsenalSeries,
+  };
 
   const latestRoundByTeam = useMemo(() => {
     const map = new Map<string, TeamRoundMetrics>();
@@ -935,14 +984,21 @@ export default function TeamPowerRankings({
               />
             )}
 
-            {/* ── Line breakdown, season to date (single club) ─────── */}
+            {/* ── Line breakdown, season to date - one chart per category, all clubs ── */}
             {activeTab === 'line_breakdown' && (
-              <LineBreakdownChartPanel
-                points={lineBreakdownPoints}
-                focusTeam={focusTeam}
-                allTeams={allTeams}
-                onFocusChange={setFocusTeamOverride}
-              />
+              <div className="space-y-10">
+                {LINE_CATEGORIES.map((cat) => (
+                  <TeamCompareChartPanel
+                    key={cat.key as string}
+                    title={`${cat.label} · ${cat.sub}, Season to Date`}
+                    unitLabel={cat.label}
+                    seriesMap={lineCategorySeriesMaps[cat.key as string]}
+                    allTeams={allTeams}
+                    focusTeam={focusTeam}
+                    onFocusChange={setFocusTeamOverride}
+                  />
+                ))}
+              </div>
             )}
           </div>
 
