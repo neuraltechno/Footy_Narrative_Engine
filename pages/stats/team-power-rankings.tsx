@@ -553,6 +553,75 @@ function TeamCompareChartPanel({
   );
 }
 
+
+function LadderGap({ ranking }: { ranking: PowerRanking }) {
+  if (ranking.ladder_position == null) return null;
+  const gap = ranking.ladder_position - ranking.power_rank;
+  if (gap === 0) {
+    return <span className="font-mono text-[9px] uppercase tracking-wide text-[var(--slate)]">Form = ladder</span>;
+  }
+  return (
+    <span className={`font-mono text-[9px] uppercase tracking-wide ${
+      gap > 0 ? 'text-[var(--fern-light)]' : 'text-[var(--oxblood-light)]'
+    }`}>
+      {gap > 0 ? `↑ ${gap} above ladder` : `↓ ${Math.abs(gap)} below ladder`}
+    </span>
+  );
+}
+
+function FormVsLadderBar({ ranking }: { ranking: PowerRanking }) {
+  if (ranking.ladder_position == null) return null;
+  const gap = ranking.ladder_position - ranking.power_rank;
+  const formPct = Math.max(3, ((18 - ranking.power_rank) / 17) * 100);
+  const ladderPct = Math.max(3, ((18 - ranking.ladder_position) / 17) * 100);
+  return (
+    <div className="mt-3">
+      <div className="mb-1 flex items-center justify-between font-mono text-[8px] uppercase tracking-wide text-[var(--slate)]">
+        <span>Ladder vs Form</span><LadderGap ranking={ranking} />
+      </div>
+      <div className="relative h-1.5 overflow-hidden rounded-full bg-[var(--ink)]">
+        <div className="absolute inset-y-0 left-0 rounded-full bg-[var(--slate)]/35" style={{ width: `${ladderPct}%` }} />
+        <div
+          className={`absolute inset-y-0 left-0 rounded-full ${
+            gap > 0 ? 'bg-[var(--fern-light)]' : gap < 0 ? 'bg-[var(--oxblood-light)]' : 'bg-[var(--brass)]'
+          }`}
+          style={{ width: `${formPct}%` }}
+        />
+      </div>
+      <div className="mt-1 flex justify-between font-mono text-[8px] uppercase tracking-wide text-[var(--slate)]/60">
+        <span>18</span><span>Ladder {ranking.ladder_position} · Form {ranking.power_rank}</span><span>1</span>
+      </div>
+    </div>
+  );
+}
+
+function PulseStoryCard({ ranking, mode }: { ranking: PowerRanking; mode: 'riser' | 'faller' }) {
+  const gap = ranking.ladder_position == null ? 0 : ranking.ladder_position - ranking.power_rank;
+  const rising = mode === 'riser';
+  const meaningfulGap = rising ? gap > 0 : gap < 0;
+  return (
+    <div className="rounded-sm border border-[var(--hairline)] bg-[var(--ink)] p-4">
+      <div className="flex items-center gap-3">
+        <TeamMonogram team={ranking.team} />
+        <div className="min-w-0 flex-1">
+          <div className="font-display text-sm text-[var(--parchment)]">{ranking.team}</div>
+          <div className="font-mono text-[8px] uppercase tracking-wide text-[var(--slate)]">
+            Form №{ranking.power_rank} · Ladder №{ranking.ladder_position ?? '—'}
+          </div>
+        </div>
+        <div className={`font-display text-lg font-semibold ${rising ? 'text-[var(--fern-light)]' : 'text-[var(--oxblood-light)]'}`}>
+          {ranking.rank_movement > 0 ? '+' : ''}{ranking.rank_movement}
+        </div>
+      </div>
+      <p className="mt-3 text-xs leading-relaxed text-[var(--slate)]">
+        {meaningfulGap
+          ? `${ranking.team} is currently ${Math.abs(gap)} ${Math.abs(gap) === 1 ? 'spot' : 'spots'} ${rising ? 'ahead of' : 'behind'} its ladder position.`
+          : `${ranking.team} has ${rising ? 'climbed' : 'slipped'} ${Math.abs(ranking.rank_movement)} ${Math.abs(ranking.rank_movement) === 1 ? 'spot' : 'spots'} in the Form Pulse.`}
+      </p>
+    </div>
+  );
+}
+
 // ─────────────────────────────────────────────────────────────────────────
 // Team row (rank list item + expandable detail)
 // ─────────────────────────────────────────────────────────────────────────
@@ -588,6 +657,7 @@ function TeamRow({
               </span>
             )}
             <TrendBadge trend={ranking.trend} />
+            <LadderGap ranking={ranking} />
             <DeltaChip delta={ranking.strength_adjusted_power_score_delta} />
             {thinSample && (
               <span className="font-mono text-[9px] uppercase tracking-wide text-[var(--slate)]">
@@ -605,6 +675,9 @@ function TeamRow({
         </div>
         <span className="font-mono text-[9px] uppercase tracking-wide text-[var(--slate)]">{expanded ? '▲' : '▼'}</span>
       </button>
+      <div className="px-4 pb-3 sm:pl-[7.5rem]">
+        <FormVsLadderBar ranking={ranking} />
+      </div>
 
       {expanded && (
         <div className="border-t border-[var(--hairline)] px-4 py-4">
@@ -867,6 +940,23 @@ export default function TeamPowerRankings({
 
   const risingCount = powerRankings.filter((r) => r.trend === 'Rising').length;
   const fallingCount = powerRankings.filter((r) => r.trend === 'Falling').length;
+  const pulseRiser = useMemo(
+    () => [...powerRankings].sort((a, b) => b.rank_movement - a.rank_movement)[0],
+    [powerRankings]
+  );
+  const pulseFaller = useMemo(
+    () => [...powerRankings].sort((a, b) => a.rank_movement - b.rank_movement)[0],
+    [powerRankings]
+  );
+  const biggestMismatch = useMemo(
+    () => [...powerRankings]
+      .filter((r) => r.ladder_position != null)
+      .sort((a, b) =>
+        Math.abs((b.ladder_position ?? b.power_rank) - b.power_rank) -
+        Math.abs((a.ladder_position ?? a.power_rank) - a.power_rank)
+      )[0],
+    [powerRankings]
+  );
 
   const tabs: { key: PowerRankingsTab; label: string; count: number }[] = [
     { key: 'rankings', label: `Round ${selectedRound}`, count: powerRankings.length },
@@ -884,30 +974,69 @@ export default function TeamPowerRankings({
           
           {/* ── Header ───────────────────────────────────────────── */}
           <Head>
-            <title>The Form Pulse — AFL Power Rankings | Footy Narrative Engine</title>
+            <title>The Form Pulse — Who Is Playing Best Right Now? | Footy Narrative Engine</title>
           </Head>
-          <header className="mb-10 border-b border-[var(--hairline)] pb-8">
+          <header className="mb-7 border-b border-[var(--hairline)] pb-7">
             <div className="mb-3 flex items-center gap-3 font-mono text-[11px] tracking-[0.25em] text-[var(--brass)]">
               <span className="inline-block h-px w-8 bg-[var(--brass)]" />
               LEDGER · {currentSeason} SEASON · ROUND {selectedRound}
               {isLatestRound && <span className="text-[var(--slate)]">· LATEST</span>}
             </div>
-            <h1 className="font-display text-4xl font-semibold tracking-tight text-[var(--parchment)] sm:text-5xl">
-              The Form Pulse
-            </h1>
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--slate)]">
-              Every team ranked on a rolling {powerRankings[0]?.rounds_in_window ? `${Math.max(...powerRankings.map((r) => r.rounds_in_window))}-round` : 'trailing'} form
-              window, adjusted for the strength of the sides they've actually played — not a single result, and not a
-              soft draw. This is form, not the ladder: {risingCount} club{risingCount === 1 ? ' is' : 's are'} building
-              form, {fallingCount} {fallingCount === 1 ? 'is' : 'are'} cooling off. Open a team to see its Engine Room
-              / Iron Curtain / Arsenal split, its draw difficulty, and its velocity trend for the season.
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <h1 className="font-display text-4xl font-semibold tracking-tight text-[var(--parchment)] sm:text-5xl">The Form Pulse</h1>
+                <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--brass)]">
+                  Who is playing the best football right now?
+                </p>
+              </div>
+              <div className="rounded-sm border border-[var(--hairline)] bg-[var(--ink)] px-3 py-2 sm:text-right">
+                <div className="font-mono text-[8px] uppercase tracking-wide text-[var(--slate)]">Rolling form window</div>
+                <div className="font-display text-lg text-[var(--parchment)]">{powerRankings[0]?.rounds_in_window ?? '—'} rounds</div>
+              </div>
+            </div>
+            <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[var(--slate)]">
+              The Form Pulse is deliberately different from the AFL ladder. It measures recent team output over a rolling window,
+              then adjusts that output for the quality of opposition actually faced. The ladder tells you what a team has earned;
+              the Form Pulse asks how strongly it is performing <span className="text-[var(--parchment)]">right now</span>.
             </p>
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--slate)]">
-              Form Score adjusts each team's raw output for who they actually played this window — beating a strong
-              side is worth more than cruising past a weak one, and vice versa. The <span className="text-[var(--slate)]/70">raw</span> figure
-              under each score is the same output before that adjustment, for comparison.
-            </p>
+            <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[9px] uppercase tracking-wide text-[var(--slate)]">
+              <span><span className="text-[var(--fern-light)]">↑</span> {risingCount} rising</span>
+              <span><span className="text-[var(--oxblood-light)]">↓</span> {fallingCount} falling</span>
+              <span>Strength-adjusted form</span>
+              <span>Ladder shown for context</span>
+            </div>
           </header>
+
+          {isLatestRound && powerRankings.length > 0 && (
+            <section className="mb-7">
+              <div className="mb-3">
+                <div className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--brass)]">What the Pulse is telling us</div>
+                <div className="mt-1 text-xs text-[var(--slate)]">The useful signal is where recent performance disagrees with the actual ladder.</div>
+              </div>
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+                {pulseRiser && <PulseStoryCard ranking={pulseRiser} mode="riser" />}
+                {pulseFaller && <PulseStoryCard ranking={pulseFaller} mode="faller" />}
+                {biggestMismatch && (
+                  <div className="rounded-sm border border-[var(--hairline)] bg-[var(--ink)] p-4">
+                    <div className="font-mono text-[9px] uppercase tracking-[0.14em] text-[var(--brass)]">Biggest ladder mismatch</div>
+                    <div className="mt-3 flex items-center gap-3">
+                      <TeamMonogram team={biggestMismatch.team} />
+                      <div>
+                        <div className="font-display text-sm text-[var(--parchment)]">{biggestMismatch.team}</div>
+                        <div className="font-mono text-[8px] uppercase tracking-wide text-[var(--slate)]">
+                          Ladder №{biggestMismatch.ladder_position} · Form №{biggestMismatch.power_rank}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-3 font-display text-xl font-semibold text-[var(--brass)]">
+                      {Math.abs((biggestMismatch.ladder_position ?? biggestMismatch.power_rank) - biggestMismatch.power_rank)} spots apart
+                    </div>
+                    <p className="mt-1 text-xs leading-relaxed text-[var(--slate)]">This is where the Form Pulse is most clearly asking a different question from the ladder.</p>
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
 
           {/* ── Ledger tabs ──────────────────────────────────────── */}
           <LedgerTabs tabs={tabs} active={activeTab} onSelect={switchTab} />
@@ -928,14 +1057,21 @@ export default function TeamPowerRankings({
                   />
                 </div>
 
-                {/* ── Search ───────────────────────────────────────── */}
-                <div className="mb-6">
+                {/* ── Search + reading guide ───────────────────────── */}
+                <div className="mb-5 flex flex-col gap-3 rounded-sm border border-[var(--hairline)] bg-[var(--ink)] p-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <div className="font-mono text-[9px] uppercase tracking-[0.14em] text-[var(--brass)]">How to read it</div>
+                    <div className="mt-1 text-xs text-[var(--slate)]">
+                      Form № is the Pulse ranking. The gap below shows whether recent performance sits above or below the actual ladder.
+                    </div>
+                  </div>
                   <input
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search club…"
-                    className="w-full max-w-xs rounded-sm border border-[var(--hairline)] bg-[var(--ink)] px-3 py-2 font-mono text-xs text-[var(--parchment)] placeholder:text-[var(--slate)] focus:border-[var(--brass)] focus:outline-none"
+                    aria-label="Search club"
+                    className="w-full rounded-sm border border-[var(--hairline)] bg-[var(--panel)] px-3 py-2 font-mono text-xs text-[var(--parchment)] placeholder:text-[var(--slate)] focus:border-[var(--brass)] focus:outline-none sm:max-w-xs"
                   />
                 </div>
 

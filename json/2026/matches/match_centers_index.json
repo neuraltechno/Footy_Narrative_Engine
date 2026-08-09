@@ -1,7 +1,7 @@
 {
   "season": 2026,
-  "latest_round": 21,
-  "round_count": 22,
+  "latest_round": 22,
+  "round_count": 23,
   "rounds": [
     {
       "round": 0,
@@ -1435,6 +1435,77 @@
           "away_team": "Adelaide Crows",
           "score_string": "73 - 145",
           "winner": "Adelaide Crows",
+          "is_robbery": false
+        }
+      ]
+    },
+    {
+      "round": 22,
+      "file": "by-round/team_match_centers_r22.json",
+      "match_count": 9,
+      "has_robbery": true,
+      "matches": [
+        {
+          "home_team": "Western Bulldogs",
+          "away_team": "Nth Melbourne Kangaroos",
+          "score_string": "77 - 100",
+          "winner": "Nth Melbourne Kangaroos",
+          "is_robbery": false
+        },
+        {
+          "home_team": "Brisbane Lions",
+          "away_team": "Hawthorn Hawks",
+          "score_string": "125 - 58",
+          "winner": "Brisbane Lions",
+          "is_robbery": false
+        },
+        {
+          "home_team": "Melbourne Demons",
+          "away_team": "Fremantle Dockers",
+          "score_string": "113 - 109",
+          "winner": "Melbourne Demons",
+          "is_robbery": false
+        },
+        {
+          "home_team": "Sydney Swans",
+          "away_team": "Port Adelaide Power",
+          "score_string": "167 - 70",
+          "winner": "Sydney Swans",
+          "is_robbery": false
+        },
+        {
+          "home_team": "Geelong Cats",
+          "away_team": "Essendon Bombers",
+          "score_string": "117 - 50",
+          "winner": "Geelong Cats",
+          "is_robbery": false
+        },
+        {
+          "home_team": "Adelaide Crows",
+          "away_team": "Richmond Tigers",
+          "score_string": "63 - 54",
+          "winner": "Adelaide Crows",
+          "is_robbery": true
+        },
+        {
+          "home_team": "GWS Giants",
+          "away_team": "Gold Coast Suns",
+          "score_string": "77 - 79",
+          "winner": "Gold Coast Suns",
+          "is_robbery": false
+        },
+        {
+          "home_team": "West Coast Eagles",
+          "away_team": "Collingwood Magpies",
+          "score_string": "98 - 117",
+          "winner": "Collingwood Magpies",
+          "is_robbery": false
+        },
+        {
+          "home_team": "St Kilda Saints",
+          "away_team": "Carlton Blues",
+          "score_string": "62 - 106",
+          "winner": "Carlton Blues",
           "is_robbery": false
         }
       ]

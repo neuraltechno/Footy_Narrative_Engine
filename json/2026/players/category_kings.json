@@ -1,31 +1,31 @@
 {
-  "generated_round": 21,
+  "generated_round": 22,
   "categories": {
     "disposal": {
       "label": "Disposal Kings",
       "stat_description": "Average disposal-category score per game",
-      "gap_to_second": 3.3,
+      "gap_to_second": 1.2,
       "leaders": [
         {
           "rank": 1,
-          "playerId": "CD_I1015507",
-          "givenName": "Nasiah",
-          "surname": "Wanganeen-Milera",
-          "team": "St Kilda Saints",
-          "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1015507.png?im=Scale,width=0.6,height=0.6",
-          "score": 82.6,
-          "movement": "same",
-          "streak": 2
-        },
-        {
-          "rank": 2,
           "playerId": "CD_I996708",
           "givenName": "Bailey",
           "surname": "Dale",
           "team": "Western Bulldogs",
           "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/996708.png?im=Scale,width=0.6,height=0.6",
           "score": 79.3,
-          "movement": "same"
+          "movement": "up",
+          "streak": 1
+        },
+        {
+          "rank": 2,
+          "playerId": "CD_I1015507",
+          "givenName": "Nasiah",
+          "surname": "Wanganeen-Milera",
+          "team": "St Kilda Saints",
+          "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1015507.png?im=Scale,width=0.6,height=0.6",
+          "score": 78.1,
+          "movement": "down"
         },
         {
           "rank": 3,
@@ -34,7 +34,7 @@
           "surname": "Blakey",
           "team": "Sydney Swans",
           "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1006028.png?im=Scale,width=0.6,height=0.6",
-          "score": 77.2,
+          "score": 76.6,
           "movement": "same"
         },
         {
@@ -44,7 +44,7 @@
           "surname": "Ash",
           "team": "GWS Giants",
           "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1009253.png?im=Scale,width=0.6,height=0.6",
-          "score": 75.8,
+          "score": 75.1,
           "movement": "same"
         },
         {
@@ -62,7 +62,7 @@
     "contest_clearance": {
       "label": "Clearance Kings",
       "stat_description": "Average contested-clearance-category score per game",
-      "gap_to_second": 0.3,
+      "gap_to_second": 1.3,
       "leaders": [
         {
           "rank": 1,
@@ -71,9 +71,9 @@
           "surname": "Cripps",
           "team": "Carlton Blues",
           "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/990704.png?im=Scale,width=0.6,height=0.6",
-          "score": 137.6,
-          "movement": "up",
-          "streak": 1
+          "score": 136,
+          "movement": "same",
+          "streak": 2
         },
         {
           "rank": 2,
@@ -82,8 +82,8 @@
           "surname": "Oliver",
           "team": "GWS Giants",
           "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/996701.png?im=Scale,width=0.6,height=0.6",
-          "score": 137.3,
-          "movement": "down"
+          "score": 134.7,
+          "movement": "same"
         },
         {
           "rank": 3,
@@ -92,7 +92,7 @@
           "surname": "Neale",
           "team": "Brisbane Lions",
           "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/293535.png?im=Scale,width=0.6,height=0.6",
-          "score": 125.9,
+          "score": 126.7,
           "movement": "same"
         },
         {
@@ -102,7 +102,7 @@
           "surname": "Heeney",
           "team": "Sydney Swans",
           "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/298539.png?im=Scale,width=0.6,height=0.6",
-          "score": 123.3,
+          "score": 122.7,
           "movement": "same"
         },
         {
@@ -112,7 +112,7 @@
           "surname": "Newcombe",
           "team": "Hawthorn Hawks",
           "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1020895.png?im=Scale,width=0.6,height=0.6",
-          "score": 122,
+          "score": 122.7,
           "movement": "same"
         }
       ]
@@ -120,7 +120,7 @@
     "damaging_impact": {
       "label": "Damage Kings",
       "stat_description": "Average damaging-impact-category score per game",
-      "gap_to_second": 3.3,
+      "gap_to_second": 4.6,
       "leaders": [
         {
           "rank": 1,
@@ -129,9 +129,9 @@
           "surname": "Gunston",
           "team": "Hawthorn Hawks",
           "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/291351.png?im=Scale,width=0.6,height=0.6",
-          "score": 84,
+          "score": 82.2,
           "movement": "same",
-          "streak": 13
+          "streak": 14
         },
         {
           "rank": 2,
@@ -140,7 +140,7 @@
           "surname": "Watson",
           "team": "Hawthorn Hawks",
           "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1023473.png?im=Scale,width=0.6,height=0.6",
-          "score": 80.7,
+          "score": 77.6,
           "movement": "same"
         },
         {
@@ -150,7 +150,7 @@
           "surname": "Morris",
           "team": "Brisbane Lions",
           "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1028019.png?im=Scale,width=0.6,height=0.6",
-          "score": 74.7,
+          "score": 76.1,
           "movement": "same"
         },
         {
@@ -160,25 +160,25 @@
           "surname": "Curnow",
           "team": "Sydney Swans",
           "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/996731.png?im=Scale,width=0.6,height=0.6",
-          "score": 72.1,
+          "score": 74.3,
           "movement": "same"
         },
         {
           "rank": 5,
-          "playerId": "CD_I1009399",
-          "givenName": "Luke",
-          "surname": "Jackson",
-          "team": "Fremantle Dockers",
-          "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1009399.png?im=Scale,width=0.6,height=0.6",
-          "score": 70.4,
-          "movement": "same"
+          "playerId": "CD_I1012014",
+          "givenName": "Chad",
+          "surname": "Warner",
+          "team": "Sydney Swans",
+          "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1012014.png?im=Scale,width=0.6,height=0.6",
+          "score": 72.4,
+          "movement": "new"
         }
       ]
     },
     "defensive_grit": {
       "label": "Grit Kings",
       "stat_description": "Average defensive-grit-category score per game",
-      "gap_to_second": 2,
+      "gap_to_second": 0.7,
       "leaders": [
         {
           "rank": 1,
@@ -189,7 +189,7 @@
           "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/295446.png?im=Scale,width=0.6,height=0.6",
           "score": 144.1,
           "movement": "same",
-          "streak": 11
+          "streak": 12
         },
         {
           "rank": 2,
@@ -198,7 +198,7 @@
           "surname": "Andrews",
           "team": "Brisbane Lions",
           "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/996059.png?im=Scale,width=0.6,height=0.6",
-          "score": 142.1,
+          "score": 143.4,
           "movement": "same"
         },
         {
@@ -208,7 +208,7 @@
           "surname": "McCartin",
           "team": "Sydney Swans",
           "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1008198.png?im=Scale,width=0.6,height=0.6",
-          "score": 141.7,
+          "score": 139.8,
           "movement": "same"
         },
         {
@@ -223,12 +223,12 @@
         },
         {
           "rank": 5,
-          "playerId": "CD_I296422",
-          "givenName": "Callum",
-          "surname": "Wilkie",
-          "team": "St Kilda Saints",
-          "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/296422.png?im=Scale,width=0.6,height=0.6",
-          "score": 133.8,
+          "playerId": "CD_I1005247",
+          "givenName": "Sam",
+          "surname": "Taylor",
+          "team": "GWS Giants",
+          "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1005247.png?im=Scale,width=0.6,height=0.6",
+          "score": 131.4,
           "movement": "new"
         }
       ]
@@ -236,7 +236,7 @@
     "ruck": {
       "label": "Ruck Kings",
       "stat_description": "Average ruck-category score per game",
-      "gap_to_second": 2.7,
+      "gap_to_second": 1.8,
       "leaders": [
         {
           "rank": 1,
@@ -247,36 +247,36 @@
           "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/293957.png?im=Scale,width=0.6,height=0.6",
           "score": 24.5,
           "movement": "same",
-          "streak": 16
+          "streak": 17
         },
         {
           "rank": 2,
-          "playerId": "CD_I290528",
-          "givenName": "Max",
-          "surname": "Gawn",
-          "team": "Melbourne Demons",
-          "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/290528.png?im=Scale,width=0.6,height=0.6",
-          "score": 21.8,
-          "movement": "same"
-        },
-        {
-          "rank": 3,
-          "playerId": "CD_I992330",
-          "givenName": "Jordon",
-          "surname": "Sweet",
-          "team": "Port Adelaide Power",
-          "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/992330.png?im=Scale,width=0.6,height=0.6",
-          "score": 21.7,
-          "movement": "up"
-        },
-        {
-          "rank": 4,
           "playerId": "CD_I1021013",
           "givenName": "Ned",
           "surname": "Moyle",
           "team": "Gold Coast Suns",
           "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1021013.png?im=Scale,width=0.6,height=0.6",
-          "score": 21.4,
+          "score": 22.7,
+          "movement": "up"
+        },
+        {
+          "rank": 3,
+          "playerId": "CD_I290528",
+          "givenName": "Max",
+          "surname": "Gawn",
+          "team": "Melbourne Demons",
+          "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/290528.png?im=Scale,width=0.6,height=0.6",
+          "score": 21.9,
+          "movement": "down"
+        },
+        {
+          "rank": 4,
+          "playerId": "CD_I992330",
+          "givenName": "Jordon",
+          "surname": "Sweet",
+          "team": "Port Adelaide Power",
+          "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/992330.png?im=Scale,width=0.6,height=0.6",
+          "score": 21.2,
           "movement": "down"
         },
         {
@@ -286,7 +286,7 @@
           "surname": "Reeves",
           "team": "Hawthorn Hawks",
           "photoURL": "https://s.afl.com.au/staticfile/AFL Tenant/AFL/Players/ChampIDImages/AFL/2026014/1001024.png?im=Scale,width=0.6,height=0.6",
-          "score": 20.2,
+          "score": 19.9,
           "movement": "same"
         }
       ]

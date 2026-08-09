@@ -1,7 +1,7 @@
 {
   "season": 2026,
-  "latest_round": 21,
-  "round_count": 22,
+  "latest_round": 22,
+  "round_count": 23,
   "rounds": [
     {
       "round": 0,
@@ -200,6 +200,15 @@
       "falling_count": 6,
       "leader": "Sydney Swans",
       "leader_score": 485.6
+    },
+    {
+      "round": 22,
+      "file": "by-round/power_rankings_r22.json",
+      "team_count": 18,
+      "rising_count": 6,
+      "falling_count": 6,
+      "leader": "Collingwood Magpies",
+      "leader_score": 496.7
     }
   ]
 }

@@ -1,14 +1,14 @@
 [
   {
-    "round": 21,
-    "lucky_team": "Richmond Tigers",
-    "unlucky_team": "West Coast Eagles",
-    "home_team": "Richmond Tigers",
-    "away_team": "West Coast Eagles",
-    "home_score": 84,
-    "away_score": 73,
-    "home_xscore": 74.4,
-    "away_xscore": 81.8,
-    "luck_variance": 2.3139
+    "round": 22,
+    "lucky_team": "Adelaide Crows",
+    "unlucky_team": "Richmond Tigers",
+    "home_team": "Adelaide Crows",
+    "away_team": "Richmond Tigers",
+    "home_score": 63,
+    "away_score": 54,
+    "home_xscore": 55.8,
+    "away_xscore": 56.4,
+    "luck_variance": 2.0256
   }
 ]
