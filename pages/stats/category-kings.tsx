@@ -132,7 +132,8 @@ export default function CategoryKings({ data, currentSeason }: { data: CategoryK
   const longestReign = useMemo(() => {
     let best: { key: string; player: KingLeader } | null = null;
     categoryKeys.forEach((key) => {
-      const king = data.categories[key].leaders.find((p) => p.rank === 1 && p.streak);
+      const cat = data.categories[key] as { leaders?: KingLeader[]; gap_to_second?: number | null };
+      const king = cat?.leaders?.find((p) => p.rank === 1 && p.streak);
       if (king && (!best || (king.streak ?? 0) > (best.player.streak ?? 0))) {
         best = { key, player: king };
       }
