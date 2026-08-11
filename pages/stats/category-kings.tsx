@@ -129,11 +129,11 @@ export default function CategoryKings({ data, currentSeason }: { data: CategoryK
 
   // Longest-reigning king across every category - streak is only ever set
   // on the #1 entry, so this is a straight max over rank-1 rows.
-  const longestReign = useMemo(() => {
+  const longestReign = useMemo< { key: string; player: KingLeader } | null >(() => {
     let best: { key: string; player: KingLeader } | null = null;
     categoryKeys.forEach((key) => {
       const cat = data.categories[key] as { leaders?: KingLeader[]; gap_to_second?: number | null };
-      const king = cat?.leaders?.find((p) => p.rank === 1 && p.streak);
+      const king = cat?.leaders?.find((p) => p.rank === 1 && Boolean(p.streak));
       if (king && (!best || (king.streak ?? 0) > (best.player.streak ?? 0))) {
         best = { key, player: king };
       }
@@ -141,12 +141,12 @@ export default function CategoryKings({ data, currentSeason }: { data: CategoryK
     return best;
   }, [categoryKeys, data.categories]);
 
-  // Widest margin between #1 and #2 - "running away with it" material.
-  const widestGap = useMemo(() => {
+  const widestGap = useMemo< { key: string; gap: number } | null >(() => {
     let best: { key: string; gap: number } | null = null;
     categoryKeys.forEach((key) => {
-      const gap = data.categories[key].gap_to_second;
-      if (gap !== null && (!best || gap > best.gap)) {
+      const cat = data.categories[key] as { leaders?: KingLeader[]; gap_to_second?: number | null };
+      const gap = cat?.gap_to_second;
+      if (gap !== null && gap !== undefined && (!best || gap > best.gap)) {
         best = { key, gap };
       }
     });
@@ -155,11 +155,14 @@ export default function CategoryKings({ data, currentSeason }: { data: CategoryK
 
   // Freshly-crowned kings this round - a genuinely new #1, not just a new
   // face somewhere in the top 5.
-  const newKings = useMemo(
+  const newKings = useMemo< Array<{ key: string; player: KingLeader }> >(
     () =>
       categoryKeys
-        .map((key) => ({ key, player: data.categories[key].leaders.find((p) => p.rank === 1) }))
-        .filter((entry) => entry.player && entry.player.movement === 'new'),
+        .map((key) => {
+          const cat = data.categories[key] as { leaders?: KingLeader[]; gap_to_second?: number | null };
+          return { key, player: cat?.leaders?.find((p) => p.rank === 1) };
+        })
+        .filter((entry): entry is { key: string; player: KingLeader } => Boolean(entry.player && entry.player.movement === 'new')),
     [categoryKeys, data.categories]
   );
 
@@ -194,7 +197,7 @@ export default function CategoryKings({ data, currentSeason }: { data: CategoryK
               <HighlightCard
                 eyebrow="Longest Reign"
                 name={`${longestReign.player.givenName.charAt(0)}. ${longestReign.player.surname}`}
-                detail={`${longestReign.player.streak} rounds atop ${data.categories[longestReign.key].label}`}
+                detail={`${longestReign.player.streak} rounds atop ${data.categories[longestReign.key]?.label || longestReign.key}`}
                 color={CATEGORY_COLOR[longestReign.key]}
               />
             ) : (
