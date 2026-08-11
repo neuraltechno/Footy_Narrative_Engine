@@ -30,6 +30,8 @@ type PowerRankingsIndex = {
   rounds: RoundIndexEntry[];
 };
 
+type Trend = 'rising' | 'falling' | 'stable' | 'new';
+
 type PowerRanking = {
   team: string;
   round: number;
