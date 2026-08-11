@@ -1,0 +1,1173 @@
+[
+  {
+    "team": "Adelaide Crows",
+    "lead_priority": 6.75,
+    "lead_tone": "brass",
+    "stamps": [
+      {
+        "label": "Robbed the Result",
+        "tone": "brass"
+      },
+      {
+        "label": "Riding the Breaks",
+        "tone": "brass"
+      },
+      {
+        "label": "Underperforming the Ladder",
+        "tone": "oxblood"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Round 22 was daylight robbery. Adelaide Crows beat Richmond Tigers 54-63 despite trailing the expected-score model by -0.6 points. It's part of a pattern - Adelaide Crows are running at +9.8 for the season, one of the friendlier bounces of the ball in the competition."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "diverging",
+          "min": -11.2,
+          "max": 11.2,
+          "markerA": {
+            "label": "Expected Margin",
+            "value": 0.6,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Actual Margin",
+            "value": -9,
+            "tone": "parchment"
+          },
+          "footnote": "Adelaide Crows vs Richmond Tigers, Round 22"
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "Adelaide Crows have had the rub of the green all year - 56 actual points against a model-expected 46.2, a cushion of +9.8 (+0.5 a game)."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "points",
+          "min": 0,
+          "max": 64.4,
+          "markerA": {
+            "label": "Model Expected",
+            "value": 46.2,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Actual",
+            "value": 56,
+            "tone": "parchment"
+          }
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "Adelaide Crows sit 5th on the ladder, but their underlying output only ranks 11th - the form hasn't caught up to the results, and the trend is falling."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "rank",
+          "min": 1,
+          "max": 18,
+          "invert": true,
+          "markerA": {
+            "label": "Underlying Form Rank",
+            "value": 11,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Ladder Position",
+            "value": 5,
+            "tone": "parchment"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "team": "Richmond Tigers",
+    "lead_priority": 6.75,
+    "lead_tone": "oxblood",
+    "stamps": [
+      {
+        "label": "Robbed Blind",
+        "tone": "oxblood"
+      },
+      {
+        "label": "Snakebitten",
+        "tone": "oxblood"
+      },
+      {
+        "label": "Outperforming the Ladder",
+        "tone": "fern"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Round 22 went the other way. Richmond Tigers lost to Adelaide Crows 63-54 after the model had them up by 0.6 points on expected score. It's the season in miniature - Richmond Tigers sit at -9 for the year, one of the least fortunate ledgers in the league."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "diverging",
+          "min": -11.2,
+          "max": 11.2,
+          "markerA": {
+            "label": "Expected Margin",
+            "value": 0.6,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Actual Margin",
+            "value": -9,
+            "tone": "parchment"
+          },
+          "footnote": "Richmond Tigers vs Adelaide Crows, Round 22"
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "Richmond Tigers have been one of the competition's unluckiest sides this season - 12 points on the board against a model-expected 21, a shortfall of 9 (-0.4 a game)."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "points",
+          "min": 0,
+          "max": 24.1,
+          "markerA": {
+            "label": "Model Expected",
+            "value": 21,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Actual",
+            "value": 12,
+            "tone": "parchment"
+          }
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "The performances say more than the ladder does: Richmond Tigers rank 12th in the league on underlying output, well clear of their 17th-placed ladder spot, and the trend is rising."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "rank",
+          "min": 1,
+          "max": 18,
+          "invert": true,
+          "markerA": {
+            "label": "Underlying Form Rank",
+            "value": 12,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Ladder Position",
+            "value": 17,
+            "tone": "parchment"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "team": "Hawthorn Hawks",
+    "lead_priority": 4.33,
+    "lead_tone": "oxblood",
+    "stamps": [
+      {
+        "label": "Underperforming the Ladder",
+        "tone": "oxblood"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Hawthorn Hawks sit 3rd on the ladder, but their underlying output only ranks 16th - the form hasn't caught up to the results, and the trend is steady."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "rank",
+          "min": 1,
+          "max": 18,
+          "invert": true,
+          "markerA": {
+            "label": "Underlying Form Rank",
+            "value": 16,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Ladder Position",
+            "value": 3,
+            "tone": "parchment"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "team": "Gold Coast Suns",
+    "lead_priority": 3.67,
+    "lead_tone": "fern",
+    "stamps": [
+      {
+        "label": "Outperforming the Ladder",
+        "tone": "fern"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "The performances say more than the ladder does: Gold Coast Suns rank 3rd in the league on underlying output, well clear of their 14th-placed ladder spot, and the trend is rising."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "rank",
+          "min": 1,
+          "max": 18,
+          "invert": true,
+          "markerA": {
+            "label": "Underlying Form Rank",
+            "value": 3,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Ladder Position",
+            "value": 14,
+            "tone": "parchment"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "team": "Port Adelaide Power",
+    "lead_priority": 2.6,
+    "lead_tone": "oxblood",
+    "stamps": [
+      {
+        "label": "Snakebitten",
+        "tone": "oxblood"
+      },
+      {
+        "label": "Outperforming the Ladder",
+        "tone": "fern"
+      },
+      {
+        "label": "Buried by Others' Luck",
+        "tone": "oxblood"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Port Adelaide Power have been one of the competition's unluckiest sides this season - 24 points on the board against a model-expected 40.3, a shortfall of 16.3 (-0.8 a game)."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "points",
+          "min": 0,
+          "max": 46.3,
+          "markerA": {
+            "label": "Model Expected",
+            "value": 40.3,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Actual",
+            "value": 24,
+            "tone": "parchment"
+          }
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "The performances say more than the ladder does: Port Adelaide Power rank 10th in the league on underlying output, well clear of their 15th-placed ladder spot, and the trend is falling."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "rank",
+          "min": 1,
+          "max": 18,
+          "invert": true,
+          "markerA": {
+            "label": "Underlying Form Rank",
+            "value": 10,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Ladder Position",
+            "value": 15,
+            "tone": "parchment"
+          }
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "By the Justice Ladder's reckoning Port Adelaide Power should sit 12th - 3 spots better than their actual 15th, buried by results elsewhere going against them."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "rank",
+          "min": 1,
+          "max": 18,
+          "invert": true,
+          "markerA": {
+            "label": "Justice Rank",
+            "value": 12,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Actual Rank",
+            "value": 15,
+            "tone": "parchment"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "team": "Collingwood Magpies",
+    "lead_priority": 2.33,
+    "lead_tone": "fern",
+    "stamps": [
+      {
+        "label": "Outperforming the Ladder",
+        "tone": "fern"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "The performances say more than the ladder does: Collingwood Magpies rank 1st in the league on underlying output, well clear of their 8th-placed ladder spot, and the trend is rising."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "rank",
+          "min": 1,
+          "max": 18,
+          "invert": true,
+          "markerA": {
+            "label": "Underlying Form Rank",
+            "value": 1,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Ladder Position",
+            "value": 8,
+            "tone": "parchment"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "team": "GWS Giants",
+    "lead_priority": 2.33,
+    "lead_tone": "fern",
+    "stamps": [
+      {
+        "label": "Snakebitten",
+        "tone": "oxblood"
+      },
+      {
+        "label": "Outperforming the Ladder",
+        "tone": "fern"
+      },
+      {
+        "label": "Home/Road Split",
+        "tone": "slate"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "GWS Giants have been one of the competition's unluckiest sides this season - 36 points on the board against a model-expected 42.7, a shortfall of 6.7 (-0.3 a game)."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "points",
+          "min": 0,
+          "max": 49.1,
+          "markerA": {
+            "label": "Model Expected",
+            "value": 42.7,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Actual",
+            "value": 36,
+            "tone": "parchment"
+          }
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "The performances say more than the ladder does: GWS Giants rank 5th in the league on underlying output, well clear of their 12th-placed ladder spot, and the trend is rising."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "rank",
+          "min": 1,
+          "max": 18,
+          "invert": true,
+          "markerA": {
+            "label": "Underlying Form Rank",
+            "value": 5,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Ladder Position",
+            "value": 12,
+            "tone": "parchment"
+          }
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "There's a real venue split in GWS Giants' season - a luck index of +3.1 at home against -9.9 on the road."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "diverging",
+          "min": -12.4,
+          "max": 12.4,
+          "markerA": {
+            "label": "Home",
+            "value": 3.1,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Away",
+            "value": -9.9,
+            "tone": "parchment"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "team": "Fremantle Dockers",
+    "lead_priority": 2.27,
+    "lead_tone": "brass",
+    "stamps": [
+      {
+        "label": "Riding the Breaks",
+        "tone": "brass"
+      },
+      {
+        "label": "Underperforming the Ladder",
+        "tone": "oxblood"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Fremantle Dockers have had the rub of the green all year - 72 actual points against a model-expected 57.7, a cushion of +14.3 (+0.7 a game)."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "points",
+          "min": 0,
+          "max": 82.8,
+          "markerA": {
+            "label": "Model Expected",
+            "value": 57.7,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Actual",
+            "value": 72,
+            "tone": "parchment"
+          }
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "Fremantle Dockers sit 1st on the ladder, but their underlying output only ranks 7th - the form hasn't caught up to the results, and the trend is steady."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "rank",
+          "min": 1,
+          "max": 18,
+          "invert": true,
+          "markerA": {
+            "label": "Underlying Form Rank",
+            "value": 7,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Ladder Position",
+            "value": 1,
+            "tone": "parchment"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "team": "West Coast Eagles",
+    "lead_priority": 2.17,
+    "lead_tone": "oxblood",
+    "stamps": [
+      {
+        "label": "Snakebitten",
+        "tone": "oxblood"
+      },
+      {
+        "label": "Cold Streak",
+        "tone": "oxblood"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "West Coast Eagles have been one of the competition's unluckiest sides this season - 16 points on the board against a model-expected 29.6, a shortfall of 13.6 (-0.7 a game)."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "points",
+          "min": 0,
+          "max": 34,
+          "markerA": {
+            "label": "Model Expected",
+            "value": 29.6,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Actual",
+            "value": 16,
+            "tone": "parchment"
+          }
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "West Coast Eagles' form has cooled - their luck index over the last 5 games sits at -6.7, well below their season rate of -0.7 a game."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "diverging",
+          "min": -8.4,
+          "max": 8.4,
+          "markerA": {
+            "label": "Expected Pace",
+            "value": -3.2,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Last 5 Games",
+            "value": -6.7,
+            "tone": "parchment"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "team": "Sydney Swans",
+    "lead_priority": 2,
+    "lead_tone": "brass",
+    "stamps": [
+      {
+        "label": "Riding the Breaks",
+        "tone": "brass"
+      },
+      {
+        "label": "Cold Streak",
+        "tone": "oxblood"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Sydney Swans have had the rub of the green all year - 64 actual points against a model-expected 51.5, a cushion of +12.5 (+0.6 a game)."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "points",
+          "min": 0,
+          "max": 73.6,
+          "markerA": {
+            "label": "Model Expected",
+            "value": 51.5,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Actual",
+            "value": 64,
+            "tone": "parchment"
+          }
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "Sydney Swans' form has cooled - their luck index over the last 5 games sits at -0.1, well below their season rate of +0.6 a game."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "diverging",
+          "min": -3.8,
+          "max": 3.8,
+          "markerA": {
+            "label": "Expected Pace",
+            "value": 3,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Last 5 Games",
+            "value": -0.1,
+            "tone": "parchment"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "team": "St Kilda Saints",
+    "lead_priority": 2,
+    "lead_tone": "oxblood",
+    "stamps": [
+      {
+        "label": "Snakebitten",
+        "tone": "oxblood"
+      },
+      {
+        "label": "Underperforming the Ladder",
+        "tone": "oxblood"
+      },
+      {
+        "label": "Falling Fast",
+        "tone": "oxblood"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "St Kilda Saints have been one of the competition's unluckiest sides this season - 36 points on the board against a model-expected 42.5, a shortfall of 6.5 (-0.3 a game)."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "points",
+          "min": 0,
+          "max": 48.9,
+          "markerA": {
+            "label": "Model Expected",
+            "value": 42.5,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Actual",
+            "value": 36,
+            "tone": "parchment"
+          }
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "St Kilda Saints sit 11th on the ladder, but their underlying output only ranks 17th - the form hasn't caught up to the results, and the trend is falling."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "rank",
+          "min": 1,
+          "max": 18,
+          "invert": true,
+          "markerA": {
+            "label": "Underlying Form Rank",
+            "value": 17,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Ladder Position",
+            "value": 11,
+            "tone": "parchment"
+          }
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "St Kilda Saints slid 2 spots on the Justice Ladder this week, down to 11th from 9th."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "rank",
+          "min": 1,
+          "max": 18,
+          "invert": true,
+          "markerA": {
+            "label": "Previous Rank",
+            "value": 9,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Current Rank",
+            "value": 11,
+            "tone": "parchment"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "team": "Western Bulldogs",
+    "lead_priority": 2,
+    "lead_tone": "oxblood",
+    "stamps": [
+      {
+        "label": "Riding the Breaks",
+        "tone": "brass"
+      },
+      {
+        "label": "Underperforming the Ladder",
+        "tone": "oxblood"
+      },
+      {
+        "label": "Overplaced",
+        "tone": "oxblood"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Western Bulldogs have had the rub of the green all year - 48 actual points against a model-expected 36.8, a cushion of +11.2 (+0.5 a game)."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "points",
+          "min": 0,
+          "max": 55.2,
+          "markerA": {
+            "label": "Model Expected",
+            "value": 36.8,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Actual",
+            "value": 48,
+            "tone": "parchment"
+          }
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "Western Bulldogs sit 9th on the ladder, but their underlying output only ranks 15th - the form hasn't caught up to the results, and the trend is falling."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "rank",
+          "min": 1,
+          "max": 18,
+          "invert": true,
+          "markerA": {
+            "label": "Underlying Form Rank",
+            "value": 15,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Ladder Position",
+            "value": 9,
+            "tone": "parchment"
+          }
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "Western Bulldogs' 9th spot on the real ladder flatters them - strip the luck out and the model has them 15th, 6 places lower."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "rank",
+          "min": 1,
+          "max": 18,
+          "invert": true,
+          "markerA": {
+            "label": "Justice Rank",
+            "value": 15,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Actual Rank",
+            "value": 9,
+            "tone": "parchment"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "team": "Essendon Bombers",
+    "lead_priority": 2,
+    "lead_tone": "oxblood",
+    "stamps": [
+      {
+        "label": "Snakebitten",
+        "tone": "oxblood"
+      },
+      {
+        "label": "Outperforming the Ladder",
+        "tone": "fern"
+      },
+      {
+        "label": "Hot Streak",
+        "tone": "fern"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Essendon Bombers have been one of the competition's unluckiest sides this season - 8 points on the board against a model-expected 20.5, a shortfall of 12.5 (-0.6 a game)."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "points",
+          "min": 0,
+          "max": 23.6,
+          "markerA": {
+            "label": "Model Expected",
+            "value": 20.5,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Actual",
+            "value": 8,
+            "tone": "parchment"
+          }
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "The performances say more than the ladder does: Essendon Bombers rank 13th in the league on underlying output, well clear of their 18th-placed ladder spot, and the trend is rising."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "rank",
+          "min": 1,
+          "max": 18,
+          "invert": true,
+          "markerA": {
+            "label": "Underlying Form Rank",
+            "value": 13,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Ladder Position",
+            "value": 18,
+            "tone": "parchment"
+          }
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "Essendon Bombers have turned it on lately - their luck index over the last 5 games is running at +1.6, well above their season rate of -0.6 a game."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "diverging",
+          "min": -3.8,
+          "max": 3.8,
+          "markerA": {
+            "label": "Expected Pace",
+            "value": -3,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Last 5 Games",
+            "value": 1.6,
+            "tone": "parchment"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "team": "Nth Melbourne Kangaroos",
+    "lead_priority": 1.67,
+    "lead_tone": "oxblood",
+    "stamps": [
+      {
+        "label": "Underperforming the Ladder",
+        "tone": "oxblood"
+      },
+      {
+        "label": "Cold Streak",
+        "tone": "oxblood"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Nth Melbourne Kangaroos sit 13th on the ladder, but their underlying output only ranks 18th - the form hasn't caught up to the results, and the trend is steady."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "rank",
+          "min": 1,
+          "max": 18,
+          "invert": true,
+          "markerA": {
+            "label": "Underlying Form Rank",
+            "value": 18,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Ladder Position",
+            "value": 13,
+            "tone": "parchment"
+          }
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "Nth Melbourne Kangaroos' form has cooled - their luck index over the last 5 games sits at -4.3, well below their season rate of -0.1 a game."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "diverging",
+          "min": -5.4,
+          "max": 5.4,
+          "markerA": {
+            "label": "Expected Pace",
+            "value": -0.4,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Last 5 Games",
+            "value": -4.3,
+            "tone": "parchment"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "team": "Melbourne Demons",
+    "lead_priority": 1.43,
+    "lead_tone": "brass",
+    "stamps": [
+      {
+        "label": "Riding the Breaks",
+        "tone": "brass"
+      },
+      {
+        "label": "Outperforming the Ladder",
+        "tone": "fern"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Melbourne Demons have had the rub of the green all year - 56 actual points against a model-expected 47, a cushion of +9 (+0.4 a game)."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "points",
+          "min": 0,
+          "max": 64.4,
+          "markerA": {
+            "label": "Model Expected",
+            "value": 47,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Actual",
+            "value": 56,
+            "tone": "parchment"
+          }
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "The performances say more than the ladder does: Melbourne Demons rank 2nd in the league on underlying output, well clear of their 6th-placed ladder spot, and the trend is rising."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "rank",
+          "min": 1,
+          "max": 18,
+          "invert": true,
+          "markerA": {
+            "label": "Underlying Form Rank",
+            "value": 2,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Ladder Position",
+            "value": 6,
+            "tone": "parchment"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "team": "Brisbane Lions",
+    "lead_priority": 1.33,
+    "lead_tone": "oxblood",
+    "stamps": [
+      {
+        "label": "Underperforming the Ladder",
+        "tone": "oxblood"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Brisbane Lions sit 4th on the ladder, but their underlying output only ranks 8th - the form hasn't caught up to the results, and the trend is steady."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "rank",
+          "min": 1,
+          "max": 18,
+          "invert": true,
+          "markerA": {
+            "label": "Underlying Form Rank",
+            "value": 8,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Ladder Position",
+            "value": 4,
+            "tone": "parchment"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "team": "Geelong Cats",
+    "lead_priority": 1.3,
+    "lead_tone": "slate",
+    "stamps": [
+      {
+        "label": "Home/Road Split",
+        "tone": "slate"
+      },
+      {
+        "label": "Hot Streak",
+        "tone": "fern"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "There's a real venue split in Geelong Cats' season - a luck index of +6 at home against -4.4 on the road."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "diverging",
+          "min": -7.5,
+          "max": 7.5,
+          "markerA": {
+            "label": "Home",
+            "value": 6,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Away",
+            "value": -4.4,
+            "tone": "parchment"
+          }
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "Geelong Cats have turned it on lately - their luck index over the last 5 games is running at +3.9, well above their season rate of +0.1 a game."
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "compare_track",
+          "subtype": "diverging",
+          "min": -4.9,
+          "max": 4.9,
+          "markerA": {
+            "label": "Expected Pace",
+            "value": 0.4,
+            "tone": "brass"
+          },
+          "markerB": {
+            "label": "Last 5 Games",
+            "value": 3.9,
+            "tone": "parchment"
+          }
+        }
+      }
+    ]
+  }
+]

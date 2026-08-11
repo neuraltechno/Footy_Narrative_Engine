@@ -30,6 +30,7 @@ type TeamJustice = {
   Strength_Of_Schedule: number;
   Low_Sample_Warning: boolean;
   Luck_Status: string;
+  Ladder_Luck_Status: string;
   Justice_Rank_Prev: number;
   Luck_Rating_Prev: number;
   Justice_Rank_Movement: number;
@@ -59,17 +60,28 @@ export async function getServerSideProps() {
 // Small presentational helpers
 // ─────────────────────────────────────────────────────────────────────────
 
-function verdict(status: string) {
-  if (status.startsWith('Lucky')) {
-    return { label: 'LUCKY', tone: 'brass' as const };
-  }
-  if (status.startsWith('Cursed')) {
-    return { label: 'CURSED', tone: 'oxblood' as const };
-  }
-  return { label: 'BALANCED', tone: 'slate' as const };
-}
+// Presentation-only lookup: which color each R-generated tag renders in.
+// This is NOT classification logic - the keys are just the literal strings
+// 50_justice_ladder.R writes into Luck_Status / Ladder_Luck_Status. If R
+// adds/renames a tag and it's missing here, it still renders (falls back to
+// 'slate') - it just won't have a bespoke color until this map is updated.
+type Tone = 'brass' | 'oxblood' | 'fern' | 'slate';
 
-function ToneText({ tone, children, className = '' }: { tone: 'brass' | 'oxblood' | 'fern' | 'slate'; children: React.ReactNode; className?: string }) {
+const LUCK_STATUS_TONE: Record<string, Tone> = {
+  'Riding the breaks': 'brass',
+  'Snakebitten': 'oxblood',
+  'Getting what they deserve': 'slate',
+};
+
+const LADDER_LUCK_STATUS_TONE: Record<string, Tone> = {
+  "Buried by others' luck": 'oxblood',
+  'Undersold': 'fern',
+  'Overplaced': 'oxblood',
+  'Flattered': 'brass',
+  'Right where they belong': 'slate',
+};
+
+function ToneText({ tone, children, className = '' }: { tone: Tone; children: React.ReactNode; className?: string }) {
   const map = {
     brass: 'text-[var(--brass)]',
     oxblood: 'text-[var(--oxblood-light)]',
@@ -79,19 +91,22 @@ function ToneText({ tone, children, className = '' }: { tone: 'brass' | 'oxblood
   return <span className={`${map[tone]} ${className}`}>{children}</span>;
 }
 
-function Stamp({ status }: { status: string }) {
-  const { label, tone } = verdict(status);
+// Renders a tag exactly as it comes from the JSON (Luck_Status or
+// Ladder_Luck_Status) - no relabeling. `toneMap` only picks a color.
+function Stamp({ status, toneMap }: { status: string; toneMap: Record<string, Tone> }) {
+  const tone: Tone = toneMap[status] ?? 'slate';
   const border = {
     brass: 'border-[var(--brass)] text-[var(--brass)]',
     oxblood: 'border-[var(--oxblood-light)] text-[var(--oxblood-light)]',
+    fern: 'border-[var(--fern-light)] text-[var(--fern-light)]',
     slate: 'border-[var(--slate)] text-[var(--slate)]',
   }[tone];
   return (
     <span
-      className={`inline-block select-none rounded-sm border-[1.5px] px-2 py-0.5 font-mono text-[10px] font-bold tracking-[0.18em] ${border}`}
+      className={`inline-block select-none rounded-sm border-[1.5px] px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-[0.1em] ${border}`}
       style={{ transform: 'rotate(-2deg)' }}
     >
-      {label}
+      {status}
     </span>
   );
 }
@@ -255,7 +270,7 @@ export default function JusticeLadder({ data, currentSeason }: { data: TeamJusti
                   <th className="p-4 font-medium">Verdict Δ</th>
                   <th className="p-4 font-medium">Points (Exp / Act)</th>
                   <th className="p-4 font-medium">Luck Index</th>
-                  <th className="p-4 font-medium">Ruling</th>
+                  <th className="p-4 font-medium">Ruling / Ladder Effect</th>
                   <th className="w-8 p-4" />
                 </tr>
               </thead>
@@ -301,7 +316,10 @@ export default function JusticeLadder({ data, currentSeason }: { data: TeamJusti
                           </ToneText>
                         </td>
                         <td className="p-4 align-top">
-                          <Stamp status={team.Luck_Status} />
+                          <div className="flex flex-col items-start gap-1.5">
+                            <Stamp status={team.Luck_Status} toneMap={LUCK_STATUS_TONE} />
+                            <Stamp status={team.Ladder_Luck_Status} toneMap={LADDER_LUCK_STATUS_TONE} />
+                          </div>
                         </td>
                         <td className="p-4 align-top text-[var(--slate)]">
                           <svg

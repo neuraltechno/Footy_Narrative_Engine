@@ -128,16 +128,16 @@ build_team_game_level <- function(match_evaluations, sigma, draw_scale) {
 #
 ##########################################################
 calculate_justice_ladder <- function(match_evaluations,
-                                      sigma = 37,
-                                      draw_scale = 0.025,
-                                      pythagorean_exponent = 2,
-                                      rolling_window = 5,
-                                      min_sample_games = 4,
-                                      cursed_threshold_per_game = -0.3,  # per-game so it means the same thing at round 3 or round 23
-                                      lucky_threshold_per_game = 0.3,
-                                      buried_threshold = 3,              # Rank_Delta magnitude for ladder-position tags
-                                      undersold_threshold = 1,
-                                      model_scoreboard_gap_threshold = 4) { # |Luck_Rating - Pythagorean_Luck|
+                                      sigma = JUSTICE_SIGMA,
+                                      draw_scale = JUSTICE_DRAW_SCALE,
+                                      pythagorean_exponent = JUSTICE_PYTHAGOREAN_EXPONENT,
+                                      rolling_window = JUSTICE_ROLLING_WINDOW,
+                                      min_sample_games = JUSTICE_MIN_SAMPLE_GAMES,
+                                      cursed_threshold_per_game = JUSTICE_CURSED_THRESHOLD_PER_GAME,  # per-game so it means the same thing at round 3 or round 23
+                                      lucky_threshold_per_game = JUSTICE_LUCKY_THRESHOLD_PER_GAME,
+                                      buried_threshold = JUSTICE_BURIED_THRESHOLD,              # Rank_Delta magnitude for ladder-position tags
+                                      undersold_threshold = JUSTICE_UNDERSOLD_THRESHOLD,
+                                      model_scoreboard_gap_threshold = JUSTICE_MODEL_SCOREBOARD_GAP_THRESHOLD) { # |Luck_Rating - Pythagorean_Luck|
     message("INFO: Starting Justice Ladder...")
 
     # 0. Validate schema
@@ -311,8 +311,8 @@ calculate_justice_ladder <- function(match_evaluations,
 #
 ##########################################################
 calculate_luck_extremes <- function(match_evaluations,
-                                     sigma = 37,
-                                     draw_scale = 0.025,
+                                     sigma = JUSTICE_SIGMA,
+                                     draw_scale = JUSTICE_DRAW_SCALE,
                                      top_n = 3,
                                      group_by_round = TRUE) {
     

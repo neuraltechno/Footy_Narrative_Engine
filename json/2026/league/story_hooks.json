@@ -1,5 +1,65 @@
 [
   {
+    "team": "Adelaide Crows",
+    "angle": "robbery_beneficiary",
+    "priority": 6.75,
+    "supporting_stats": {
+      "round": 22,
+      "opponent": "Richmond Tigers",
+      "home_team": "Adelaide Crows",
+      "away_team": "Richmond Tigers",
+      "home_score": 63,
+      "away_score": 54,
+      "home_xscore": 55.8,
+      "away_xscore": 56.4,
+      "luck_variance": 2.0256,
+      "compounds_with_season_pattern": true
+    }
+  },
+  {
+    "team": "Richmond Tigers",
+    "angle": "robbery_victim",
+    "priority": 6.75,
+    "supporting_stats": {
+      "round": 22,
+      "opponent": "Adelaide Crows",
+      "home_team": "Adelaide Crows",
+      "away_team": "Richmond Tigers",
+      "home_score": 63,
+      "away_score": 54,
+      "home_xscore": 55.8,
+      "away_xscore": 56.4,
+      "luck_variance": 2.0256,
+      "compounds_with_season_pattern": true
+    }
+  },
+  {
+    "team": "Hawthorn Hawks",
+    "angle": "form_vs_luck_divergence",
+    "priority": 4.33,
+    "supporting_stats": {
+      "direction": "underperforming_ladder",
+      "ladder_position": 3,
+      "power_rank": 16,
+      "power_trend": "Steady",
+      "Luck_Status": "Getting what they deserve",
+      "Luck_Rating": 5.3
+    }
+  },
+  {
+    "team": "Gold Coast Suns",
+    "angle": "form_vs_luck_divergence",
+    "priority": 3.67,
+    "supporting_stats": {
+      "direction": "outperforming_ladder",
+      "ladder_position": 14,
+      "power_rank": 3,
+      "power_trend": "Rising",
+      "Luck_Status": "Getting what they deserve",
+      "Luck_Rating": -6
+    }
+  },
+  {
     "team": "Port Adelaide Power",
     "angle": "snakebitten",
     "priority": 2.6,
@@ -7,7 +67,34 @@
       "Luck_Rating": -16.3,
       "Luck_Rating_Per_Game": -0.78,
       "Expected_Points": 40.3,
-      "Actual_Points": 24
+      "Actual_Points": 24,
+      "Luck_Status": "Snakebitten"
+    }
+  },
+  {
+    "team": "Collingwood Magpies",
+    "angle": "form_vs_luck_divergence",
+    "priority": 2.33,
+    "supporting_stats": {
+      "direction": "outperforming_ladder",
+      "ladder_position": 8,
+      "power_rank": 1,
+      "power_trend": "Rising",
+      "Luck_Status": "Getting what they deserve",
+      "Luck_Rating": 4.7
+    }
+  },
+  {
+    "team": "GWS Giants",
+    "angle": "form_vs_luck_divergence",
+    "priority": 2.33,
+    "supporting_stats": {
+      "direction": "outperforming_ladder",
+      "ladder_position": 12,
+      "power_rank": 5,
+      "power_trend": "Rising",
+      "Luck_Status": "Snakebitten",
+      "Luck_Rating": -6.7
     }
   },
   {
@@ -18,7 +105,8 @@
       "Luck_Rating": 14.3,
       "Luck_Rating_Per_Game": 0.68,
       "Expected_Points": 57.7,
-      "Actual_Points": 72
+      "Actual_Points": 72,
+      "Luck_Status": "Riding the breaks"
     }
   },
   {
@@ -29,7 +117,21 @@
       "Luck_Rating": -13.6,
       "Luck_Rating_Per_Game": -0.65,
       "Expected_Points": 29.6,
-      "Actual_Points": 16
+      "Actual_Points": 16,
+      "Luck_Status": "Snakebitten"
+    }
+  },
+  {
+    "team": "Fremantle Dockers",
+    "angle": "form_vs_luck_divergence",
+    "priority": 2,
+    "supporting_stats": {
+      "direction": "underperforming_ladder",
+      "ladder_position": 1,
+      "power_rank": 7,
+      "power_trend": "Steady",
+      "Luck_Status": "Riding the breaks",
+      "Luck_Rating": 14.3
     }
   },
   {
@@ -40,7 +142,34 @@
       "Luck_Rating": 12.5,
       "Luck_Rating_Per_Game": 0.6,
       "Expected_Points": 51.5,
-      "Actual_Points": 64
+      "Actual_Points": 64,
+      "Luck_Status": "Riding the breaks"
+    }
+  },
+  {
+    "team": "Adelaide Crows",
+    "angle": "form_vs_luck_divergence",
+    "priority": 2,
+    "supporting_stats": {
+      "direction": "underperforming_ladder",
+      "ladder_position": 5,
+      "power_rank": 11,
+      "power_trend": "Falling",
+      "Luck_Status": "Riding the breaks",
+      "Luck_Rating": 9.8
+    }
+  },
+  {
+    "team": "St Kilda Saints",
+    "angle": "form_vs_luck_divergence",
+    "priority": 2,
+    "supporting_stats": {
+      "direction": "underperforming_ladder",
+      "ladder_position": 11,
+      "power_rank": 17,
+      "power_trend": "Falling",
+      "Luck_Status": "Snakebitten",
+      "Luck_Rating": -6.5
     }
   },
   {
@@ -51,6 +180,20 @@
       "Justice_Rank": 15,
       "Actual_Rank": 9,
       "Rank_Delta": -6,
+      "Luck_Status": "Riding the breaks",
+      "Ladder_Luck_Status": "Overplaced",
+      "Luck_Rating": 11.2
+    }
+  },
+  {
+    "team": "Western Bulldogs",
+    "angle": "form_vs_luck_divergence",
+    "priority": 2,
+    "supporting_stats": {
+      "direction": "underperforming_ladder",
+      "ladder_position": 9,
+      "power_rank": 15,
+      "power_trend": "Falling",
       "Luck_Status": "Riding the breaks",
       "Luck_Rating": 11.2
     }
@@ -63,7 +206,8 @@
       "Luck_Rating": -12.5,
       "Luck_Rating_Per_Game": -0.6,
       "Expected_Points": 20.5,
-      "Actual_Points": 8
+      "Actual_Points": 8,
+      "Luck_Status": "Snakebitten"
     }
   },
   {
@@ -74,7 +218,60 @@
       "Luck_Rating": 11.2,
       "Luck_Rating_Per_Game": 0.53,
       "Expected_Points": 36.8,
-      "Actual_Points": 48
+      "Actual_Points": 48,
+      "Luck_Status": "Riding the breaks"
+    }
+  },
+  {
+    "team": "Port Adelaide Power",
+    "angle": "form_vs_luck_divergence",
+    "priority": 1.67,
+    "supporting_stats": {
+      "direction": "outperforming_ladder",
+      "ladder_position": 15,
+      "power_rank": 10,
+      "power_trend": "Falling",
+      "Luck_Status": "Snakebitten",
+      "Luck_Rating": -16.3
+    }
+  },
+  {
+    "team": "Nth Melbourne Kangaroos",
+    "angle": "form_vs_luck_divergence",
+    "priority": 1.67,
+    "supporting_stats": {
+      "direction": "underperforming_ladder",
+      "ladder_position": 13,
+      "power_rank": 18,
+      "power_trend": "Steady",
+      "Luck_Status": "Getting what they deserve",
+      "Luck_Rating": -1.7
+    }
+  },
+  {
+    "team": "Richmond Tigers",
+    "angle": "form_vs_luck_divergence",
+    "priority": 1.67,
+    "supporting_stats": {
+      "direction": "outperforming_ladder",
+      "ladder_position": 17,
+      "power_rank": 12,
+      "power_trend": "Rising",
+      "Luck_Status": "Snakebitten",
+      "Luck_Rating": -9
+    }
+  },
+  {
+    "team": "Essendon Bombers",
+    "angle": "form_vs_luck_divergence",
+    "priority": 1.67,
+    "supporting_stats": {
+      "direction": "outperforming_ladder",
+      "ladder_position": 18,
+      "power_rank": 13,
+      "power_trend": "Rising",
+      "Luck_Status": "Snakebitten",
+      "Luck_Rating": -12.5
     }
   },
   {
@@ -95,7 +292,8 @@
       "Luck_Rating": 9.8,
       "Luck_Rating_Per_Game": 0.47,
       "Expected_Points": 46.2,
-      "Actual_Points": 56
+      "Actual_Points": 56,
+      "Luck_Status": "Riding the breaks"
     }
   },
   {
@@ -116,7 +314,8 @@
       "Luck_Rating": 9,
       "Luck_Rating_Per_Game": 0.43,
       "Expected_Points": 47,
-      "Actual_Points": 56
+      "Actual_Points": 56,
+      "Luck_Status": "Riding the breaks"
     }
   },
   {
@@ -127,7 +326,34 @@
       "Luck_Rating": -9,
       "Luck_Rating_Per_Game": -0.43,
       "Expected_Points": 21,
-      "Actual_Points": 12
+      "Actual_Points": 12,
+      "Luck_Status": "Snakebitten"
+    }
+  },
+  {
+    "team": "Brisbane Lions",
+    "angle": "form_vs_luck_divergence",
+    "priority": 1.33,
+    "supporting_stats": {
+      "direction": "underperforming_ladder",
+      "ladder_position": 4,
+      "power_rank": 8,
+      "power_trend": "Steady",
+      "Luck_Status": "Getting what they deserve",
+      "Luck_Rating": 3.7
+    }
+  },
+  {
+    "team": "Melbourne Demons",
+    "angle": "form_vs_luck_divergence",
+    "priority": 1.33,
+    "supporting_stats": {
+      "direction": "outperforming_ladder",
+      "ladder_position": 6,
+      "power_rank": 2,
+      "power_trend": "Rising",
+      "Luck_Status": "Riding the breaks",
+      "Luck_Rating": 9
     }
   },
   {
@@ -178,7 +404,8 @@
       "Luck_Rating": -6.7,
       "Luck_Rating_Per_Game": -0.32,
       "Expected_Points": 42.7,
-      "Actual_Points": 36
+      "Actual_Points": 36,
+      "Luck_Status": "Snakebitten"
     }
   },
   {
@@ -199,7 +426,8 @@
       "Luck_Rating": -6.5,
       "Luck_Rating_Per_Game": -0.31,
       "Expected_Points": 42.5,
-      "Actual_Points": 36
+      "Actual_Points": 36,
+      "Luck_Status": "Snakebitten"
     }
   },
   {
@@ -222,6 +450,7 @@
       "Actual_Rank": 15,
       "Rank_Delta": 3,
       "Luck_Status": "Snakebitten",
+      "Ladder_Luck_Status": "Buried by others' luck",
       "Luck_Rating": -16.3
     }
   }

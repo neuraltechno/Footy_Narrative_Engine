@@ -61,6 +61,7 @@ export_everything <- function(metrics_list) {
     }
     save_json_file(metrics_list$robbery_of_the_round,  file.path(json_dir, 'league/robbery_of_the_round.json'))
     save_json_file(metrics_list$story_hooks,           file.path(json_dir, 'league/story_hooks.json'))
+    save_json_file(metrics_list$team_narratives,       file.path(json_dir, 'league/team_narratives.json'))
     save_json_file(metrics_list$luck_unlucky,          file.path(json_dir, 'league/luck_unlucky.json'))
 
     # Teams

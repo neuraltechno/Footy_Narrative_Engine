@@ -260,6 +260,39 @@ XSCORE_W_GOAL_AS_BEHIND   <- 0.30   # Weight of goal count in the "behind-value"
 XSCORE_W_BEHIND_AS_BEHIND <- 0.50   # Weight of behind count in the "behind-value" term
 
 # ==========================================================================
+# Justice Ladder Tuning Parameters (50_justice_ladder.R)
+# ==========================================================================
+JUSTICE_SIGMA                          <- 37     # Std-dev of the win-probability normal-CDF model
+JUSTICE_DRAW_SCALE                     <- 0.025  # Gaussian draw-bump scale, centred on an even contest
+JUSTICE_PYTHAGOREAN_EXPONENT           <- 2      # Exponent used in the Pythagorean win-pct cross-check
+JUSTICE_ROLLING_WINDOW                 <- 5      # Trailing games considered "recent form" for Rolling_Luck_Rating
+JUSTICE_MIN_SAMPLE_GAMES               <- 4      # Games played below which Low_Sample_Warning is raised
+JUSTICE_CURSED_THRESHOLD_PER_GAME      <- -0.3   # Luck_Rating_Per_Game at/below which Luck_Status = "Snakebitten"
+JUSTICE_LUCKY_THRESHOLD_PER_GAME       <- 0.3    # Luck_Rating_Per_Game at/above which Luck_Status = "Riding the breaks"
+JUSTICE_BURIED_THRESHOLD               <- 3      # |Rank_Delta| at/above which Ladder_Luck_Status = "Buried"/"Overplaced"
+JUSTICE_UNDERSOLD_THRESHOLD            <- 1      # |Rank_Delta| at/above which Ladder_Luck_Status = "Undersold"/"Flattered"
+JUSTICE_MODEL_SCOREBOARD_GAP_THRESHOLD <- 4      # |Luck_Rating - Pythagorean_Luck| that counts as model/scoreboard disagreement
+
+# ==========================================================================
+# Narrative Story Hooks Tuning Parameters (90_narratives.R)
+# ==========================================================================
+# NOTE: the snakebitten / riding_the_breaks / buried_by_others_luck /
+# overplaced / model_scoreboard_split hooks deliberately do NOT get their
+# own separately-declared threshold constants here. They are narrative
+# wrappers around Luck_Status / Ladder_Luck_Status / Model_Scoreboard_
+# Disagreement, which are themselves already built from the JUSTICE_*
+# constants above in 50_justice_ladder.R - 90_narratives.R reads those
+# columns directly rather than re-deriving them, so re-declaring separate
+# NARRATIVE_* numbers for the same conditions would reintroduce the exact
+# threshold-drift risk this centralisation is meant to remove. Only
+# genuinely narrative-only thresholds (no equivalent column already on the
+# ladder) get their own constants below.
+NARRATIVE_HOME_ROAD_SPLIT_THRESHOLD    <- 8      # |Home_Luck_Rating - Away_Luck_Rating| to trigger a home_road_split hook
+NARRATIVE_RANK_MOVEMENT_THRESHOLD      <- 2      # |Justice_Rank_Movement| to trigger a justice_rank_climb/fall hook
+NARRATIVE_FORM_DIVERGENCE_THRESHOLD    <- 3      # |ladder_position - power_rank| to trigger a form_vs_luck_divergence hook
+NARRATIVE_COMEBACK_MIN_DEFICIT         <- 20     # Points overcome/surrendered at/above which a comeback_win / surrendered_lead hook fires
+
+# ==========================================================================
 # Power Rankings Tuning Parameters (60_power_rankings.R)
 # ==========================================================================
 POWER_RANKINGS_ROLLING_WINDOW   <- 3     # Trailing rounds averaged into the power score ("current form" window)

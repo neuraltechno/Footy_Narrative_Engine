@@ -28,6 +28,7 @@ source("engine/modules/40_match_metrics.R")
 source("engine/modules/50_justice_ladder.R")
 source("engine/modules/60_power_rankings.R")
 source("engine/modules/90_narratives.R")
+source("engine/modules/95_narrative_copy.R")
 source("engine/modules/99_export_json.R")
 
 main <- function() {
@@ -143,7 +144,8 @@ main <- function() {
     # see 60_power_rankings.R for why.
     power_ranks       <- calculate_power_rankings(team_profiles, match_evals, season_agg$latest_round, justice_ladder = justice_standings)
     power_ranks_export <- build_power_rankings_export(team_profiles, match_evals, season_agg$latest_round, snapshot_dir = season_snapshot_dir)
-    narrative_outputs <- generate_narrative_summaries(match_evals, justice_standings, season_agg$latest_round)
+    narrative_outputs <- generate_narrative_summaries(match_evals, justice_standings, season_agg$latest_round, power_ranks = power_ranks)
+    team_narratives <- generate_narrative_copy(narrative_outputs$story_hooks)
     
     # 7. Final Export Dictionary compilation
     metrics_list <- list(
@@ -181,7 +183,13 @@ main <- function() {
         luck_unlucky         = luck_unlucky,
         # AI-ready story hooks: {team, angle, priority, supporting_stats} rows
         # for the downstream narrative-writing LLM to draw from
-        story_hooks           = narrative_outputs$story_hooks
+        story_hooks           = narrative_outputs$story_hooks,
+        # Publish-ready article copy + chart specs, one row per team,
+        # derived from story_hooks - see 95_narrative_copy.R. This is what
+        # the Team Insights page actually renders; story_hooks.json stays
+        # around as the upstream AI-ready layer other consumers can draw
+        # their own copy from.
+        team_narratives        = team_narratives
     )
     
     export_everything(metrics_list)
