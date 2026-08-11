@@ -612,13 +612,13 @@ function PulseStoryCard({ ranking, mode }: { ranking: PowerRanking; mode: 'riser
           </div>
         </div>
         <div className={`font-display text-lg font-semibold ${rising ? 'text-[var(--fern-light)]' : 'text-[var(--oxblood-light)]'}`}>
-          {ranking.rank_movement > 0 ? '+' : ''}{ranking.rank_movement}
+          {(ranking.strength_adjusted_power_score_delta ?? 0) > 0 ? '+' : ''}{formatStatValue(ranking.strength_adjusted_power_score_delta)}
         </div>
       </div>
       <p className="mt-3 text-xs leading-relaxed text-[var(--slate)]">
         {meaningfulGap
           ? `${ranking.team} is currently ${Math.abs(gap)} ${Math.abs(gap) === 1 ? 'spot' : 'spots'} ${rising ? 'ahead of' : 'behind'} its ladder position.`
-          : `${ranking.team} has ${rising ? 'climbed' : 'slipped'} ${Math.abs(ranking.rank_movement)} ${Math.abs(ranking.rank_movement) === 1 ? 'spot' : 'spots'} in the Form Pulse.`}
+          : `${ranking.team} has ${rising ? 'risen' : 'fallen'} ${formatStatValue(Math.abs(ranking.strength_adjusted_power_score_delta ?? 0))} points in the Form Pulse.`}
       </p>
     </div>
   );
@@ -943,11 +943,17 @@ export default function TeamPowerRankings({
   const risingCount = powerRankings.filter((r) => r.trend === 'Rising').length;
   const fallingCount = powerRankings.filter((r) => r.trend === 'Falling').length;
   const pulseRiser = useMemo(
-    () => [...powerRankings].sort((a, b) => b.rank_movement - a.rank_movement)[0],
+    () =>
+      [...powerRankings].sort(
+        (a, b) => (b.strength_adjusted_power_score_delta ?? 0) - (a.strength_adjusted_power_score_delta ?? 0)
+      )[0],
     [powerRankings]
   );
   const pulseFaller = useMemo(
-    () => [...powerRankings].sort((a, b) => a.rank_movement - b.rank_movement)[0],
+    () =>
+      [...powerRankings].sort(
+        (a, b) => (a.strength_adjusted_power_score_delta ?? 0) - (b.strength_adjusted_power_score_delta ?? 0)
+      )[0],
     [powerRankings]
   );
   const biggestMismatch = useMemo(
